@@ -1,0 +1,110 @@
+/* FitAppCalorieIntake.css */
+.calorie-intake{
+  margin-top: 5rem;
+  width: 100;
+  position: relative;
+}
+.calorie-intake__inner {
+  width: 90%;
+  border-radius: 12px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.calorie-intake__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.calorie-intake__amount {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.calorie-intake__sections {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+}
+
+.calorie-intake__section {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .calorie-intake__section--products {
+  background-color: #e0f7e9;
+}
+
+.calorie-intake__section--allergens {
+  background-color: #ffe4e4;
+} */
+
+.calorie-intake__section-title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.calorie-intake__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.calorie-intake__item {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: white;
+}
+
+.calorie-intake__wanted-item{
+  background-color: var(--dark-green);
+}
+.calorie-intake__unwanted-item{
+  background-color: #CBCBCB;
+}
+.calorie-intake__unwanted-item{
+  background-color: #d0d0d0;
+}
+
+.calorie-intake__wanted-item--selected {
+  background-color: var(--light-green);
+  
+}
+
+.calorie-intake__unwanted-item--selected {
+  background-color: red;
+}
+
+.calorie-intake__input {
+  margin-top: 20px;
+  padding: 10px;
+  width: 80%;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.calorie-intake__button {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: var(--light-green);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
