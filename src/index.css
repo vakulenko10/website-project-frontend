@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* index.css */
 
 /* Reset some default styles */
@@ -11,6 +15,7 @@
 
 html {
     font-size: 16px;
+    
 }
 
 /* body {
@@ -27,6 +32,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* @apply bg-blue-500 text-white font-bold py-2 px-4 rounded; */
 }
 /* Root Variables */
 :root {

@@ -7,7 +7,7 @@ export const Home = () => {
     return (
         <main>
             {/* <AdminPanel/> */}
-            
+            <h1 className="text-black">sadgasg</h1>
         </main>
     )
 }
