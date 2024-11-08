@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         // Background Colors
-        bg1: '#BAA291',  // Example color, replace with your own
+        bg1: '#BAA291', 
         bg2: '#A08873',
         bg3: '#5B0101',
         bg4: '#A5A29B',
@@ -15,12 +15,10 @@ module.exports = {
         text1: '#FFFFFF',
         text2: '#DEDEDE',
         text3: '#5B0101',
-        text4: 'rgba(222, 222, 222, 0.6)',
+        text4: 'rgba(222, 222, 222, 0.6)', // Make sure to use this correctly in Tailwind classes
         text5: '#745D46',
-        text6: '#D5A005', 
-        text7: '#000000', 
-        text8: '#5B0101',
-
+        text6: '#D5A005',
+        text7: '#000000',
 
         // Additional Colors
         color1: '#A5A29B',
@@ -32,18 +30,15 @@ module.exports = {
         color7: '#CAC9C4',
         color8: '#710102',
         color9: '#C4C1AE',
-        color10: '#745D46',
-        color11: '#5A3E24',
-        color12: '#745D46',
+        color10: '#5A3E24',
       },
       fontFamily: {
-        // Custom Fonts
-        sans: ['Montserrat', 'sans-serif'],
-        serif: ['EB Garamond', 'serif'],
+        // Custom Fonts with fallbacks
+        sans: ['Montserrat', 'Arial', 'sans-serif'],
+        serif: ['EB Garamond', 'Georgia', 'serif'],
         display: ['Miniver', 'cursive'],
       },
     },
   },
   plugins: [],
-}
-
+};
