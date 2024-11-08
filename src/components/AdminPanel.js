@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthData } from '../auth/AuthWrapper';
 
 const AdminPanel = () => {
   const [productData, setProductData] = useState({
@@ -12,7 +13,7 @@ const AdminPanel = () => {
   });
   const [productId, setProductId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-
+  const {token} = AuthData();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData(prevState => ({
@@ -42,7 +43,7 @@ const AdminPanel = () => {
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('jwt_token')}` // Adjust based on token storage
+          Authorization: `Bearer ${token}` // Adjust based on token storage
         },
         body: JSON.stringify(productData)
       });

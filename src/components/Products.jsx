@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
+import { fetchProducts, updateProduct } from '../services';
 
 const Products = () => {
-  const {user, addToCart} = AuthData()
-  console.log("user:", user)
-  console.log(user.isAdmin)
+  const { user, addToCart, token } = AuthData();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(user.isAdmin); 
-  console.log("isAdmin:",isAdmin)// Admin status state
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -19,28 +16,22 @@ const Products = () => {
     images: []
   });
   const [editingProductId, setEditingProductId] = useState(null);
-  
-  // Fetch products on component load
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/products', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const data = await response.json();
-      setProducts(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setLoading(false);
-    }
-  };
 
+  // Fetch products on component load
   useEffect(() => {
-    fetchProducts();
-    const adminStatus = localStorage.getItem('is_admin') === 'true'; // Assume admin status in localStorage
-    setIsAdmin(adminStatus);
-  }, []);
+    const fetchProductsData = async () => {
+      setLoading(true); // Ensure loading state is set before fetching
+      const productsResponse = await fetchProducts(token);
+      if (productsResponse) {
+        setProducts(productsResponse);
+      } else {
+        console.error('Failed to fetch products');
+      }
+      setLoading(false);
+    };
+
+    fetchProductsData();
+  }, [token]);
 
   // Handle form changes
   const handleChange = (e) => {
@@ -51,31 +42,17 @@ const Products = () => {
   // Handle submit for creating or updating product
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = editingProductId
-      ? `http://localhost:5000/products/${editingProductId}`
-      : 'http://localhost:5000/products';
-    const method = editingProductId ? 'PUT' : 'POST';
-    console.log("url:", url)
-    console.log("method:", method)
     try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('jwt')}` // Adjust token retrieval as needed
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-      if (response.ok) {
+      const data = await updateProduct(editingProductId, token, formData);
+      if (data) {
         alert(data.message || 'Product saved successfully');
         setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] });
         setEditingProductId(null);
         setIsEditing(false);
-        fetchProducts(); // Refresh product list
+        const updatedProducts = await fetchProducts(token); // Refresh product list
+        if (updatedProducts) setProducts(updatedProducts);
       } else {
-        alert(`Error: ${data.error}`);
+        alert('Error saving product');
       }
     } catch (error) {
       console.error('Error saving product:', error);
@@ -84,7 +61,7 @@ const Products = () => {
 
   // Start editing a product
   const handleEdit = (product) => {
-    if (user.isAdmin) { // Check if user is admin before allowing edit
+    if (user.isAdmin) {
       setIsEditing(true);
       setEditingProductId(product.id);
       setFormData({
@@ -96,7 +73,7 @@ const Products = () => {
         images: product.images
       });
     } else {
-      alert("You do not have permission to edit products.");
+      alert('You do not have permission to edit products.');
     }
   };
 
@@ -104,7 +81,6 @@ const Products = () => {
 
   return (
     <div>
-      
       {user.isAdmin && (
         <>
           <h2>{isEditing ? 'Edit Product' : 'Create New Product'}</h2>
@@ -114,8 +90,14 @@ const Products = () => {
             <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
             <input type="text" name="material" value={formData.material} onChange={handleChange} placeholder="Material" />
             <input type="text" name="color" value={formData.color} onChange={handleChange} placeholder="Color" />
-            <input type="text" name="images" value={formData.images[0] || ''} onChange={(e) => handleChange({ target: { name: 'images', value: [e.target.value] } })} placeholder="Image URL" />
-            <button type="submit" onClick={handleSubmit}>{isEditing ? 'Update Product' : 'Create Product'}</button>
+            <input
+              type="text"
+              name="images"
+              value={formData.images[0] || ''}
+              onChange={(e) => handleChange({ target: { name: 'images', value: [e.target.value] } })}
+              placeholder="Image URL"
+            />
+            <button type="submit">{isEditing ? 'Update Product' : 'Create Product'}</button>
           </form>
         </>
       )}
@@ -130,7 +112,7 @@ const Products = () => {
             <p className="product-price">${product.price.toFixed(2)}</p>
             <p className="product-material">Material: {product.material}</p>
             <p className="product-color">Color: {product.color}</p>
-            <button onClick={() => addToCart(product.id, 1)}>add to the cart</button>
+            <button onClick={() => addToCart(product.id, 1)}>Add to Cart</button>
             {user.isAdmin && <button onClick={() => handleEdit(product)}>Edit</button>}
           </div>
         ))}

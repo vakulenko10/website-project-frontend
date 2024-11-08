@@ -3,7 +3,7 @@ import { AuthData } from '../auth/AuthWrapper';
 
 const Cart = () => {
   const { cart, loading, updateCart } = AuthData();
-  const [localCart, setLocalCart] = useState(cart.items);
+  const [localCart, setLocalCart] = useState(cart?cart.items:[]);
 
   const handleQuantityChange = (index, newQuantity) => {
     const updatedCart = [...localCart];
@@ -13,6 +13,7 @@ const Cart = () => {
   };
 
   const handleUpdateCart = () => {
+    console.log("localcart:", localCart)
     const updatedItems = localCart.map(item => ({
       product_id: item.product_id,
       quantity: item.quantity,
@@ -30,12 +31,12 @@ const Cart = () => {
       ) : (
         <div>
           <ul>
-            {localCart.map((item, index) => (
+            {localCart && localCart.map((item, index) => (
               <li key={item.product_id}>
                 <span>Product ID: {item.product_id}</span>
                 <span>Price per item: ${item.price}</span>
                 <span>Total: ${item.suma.toFixed(2)}</span>
-                <input
+                <input 
                   type="number"
                   min="1"
                   value={item.quantity}

@@ -2,34 +2,36 @@ import React, { useEffect, useState } from 'react';
 import './Orders.css';
 import { AuthData } from '../../../auth/AuthWrapper';
 import Checkout from '../../Checkout';
+import { editTheOrder, getOrders } from '../../../services';
 
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [editOrder, setEditOrder] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { user } = AuthData();
+    const { user, token } = AuthData();
 
     const fetchOrders = async () => {
+        setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/orders', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                },
-            });
-            const data = await response.json();
+          const data = await getOrders(token);
+          if (data) {
             setOrders(data);
-            setLoading(false);
+          } else {
+            console.error('Failed to fetch orders.');
+          }
         } catch (error) {
-            console.error('Error fetching orders:', error);
-            setLoading(false);
+          console.error('Error fetching orders:', error);
+        } finally {
+          setLoading(false); // Ensure loading is set to false even if an error occurs
         }
-    };
+      };
+      
 
-    useEffect(() => {
-        fetchOrders();
-    }, []);
+      useEffect(() => {
+        if (token) {
+          fetchOrders();
+        }
+      }, [token]);
 
     // Handler for payment success
     const handlePaymentSuccess = (orderId, newStatus) => {
@@ -46,34 +48,37 @@ export const Orders = () => {
         setEditOrder((prevOrder) => ({ ...prevOrder, [field]: value }));
     };
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     const submitEditOrder = async () => {
+        setErrorMessage(''); // Clear any previous error messages
         try {
-            const response = await fetch(`http://localhost:5000/orders/${editOrder.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                },
-                body: JSON.stringify(editOrder),
-            });
-            if (response.ok) {
-                alert('Order updated successfully!');
-                setEditOrder(null);
-                fetchOrders();
-            } else {
-                const errorData = await response.json();
-                alert(`Error updating order: ${errorData.error}`);
-            }
+          console.log('Submitting edit for order:', editOrder);
+      
+          const editOrderResponse = await editTheOrder(editOrder.id, editOrder, token);
+      
+          if (editOrderResponse?.success) {
+            alert(editOrderResponse.message);
+            setEditOrder(null);
+            fetchOrders(); // Refetch orders after successful edit
+          } else {
+            console.error('Error response:', editOrderResponse.error);
+            setErrorMessage(editOrderResponse.error || 'Failed to update order.');
+          }
         } catch (error) {
-            console.error('Error updating order:', error);
+          console.error('Unexpected error while updating order:', error);
+          setErrorMessage('An unexpected error occurred while updating the order.');
         }
-    };
+      };
+      
+      
 
     if (loading) return <div>Loading orders...</div>;
 
     return (
         <main>
             <div className="page orders">
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <h2>Orders Page</h2>
                 <h3>Your Orders</h3>
                 {user.isAdmin && editOrder && (
@@ -95,7 +100,7 @@ export const Orders = () => {
                     </div>
                 )}
                 <div className="orders-list">
-                    {orders.map((order) => (
+                    {orders && orders.map((order) => (
                         <div key={order.id} className="order-card">
                             <h1>Order number: {order.id}</h1>
                             <p>Status: {order.status}</p>

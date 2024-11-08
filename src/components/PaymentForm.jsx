@@ -1,6 +1,7 @@
 // PaymentForm.js
 import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { AuthData } from '../auth/AuthWrapper';
 
 const PaymentForm = ({ order, onPaymentSuccess }) => {
   const stripe = useStripe();
@@ -9,7 +10,7 @@ const PaymentForm = ({ order, onPaymentSuccess }) => {
   const [error, setError] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [success, setSuccess] = useState(null);
-
+  const {token} = AuthData()
   const handlePayment = async (event) => {
     event.preventDefault();
 
@@ -23,7 +24,7 @@ const PaymentForm = ({ order, onPaymentSuccess }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ order_id: order.id, total: order.total }),
       });

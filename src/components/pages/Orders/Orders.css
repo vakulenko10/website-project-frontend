@@ -85,3 +85,45 @@ button[type="button"] {
 button[type="button"]:hover {
     background-color: #0056b3;
 }
+
+/* src/components/Orders.css */
+
+/* Overlay for payment form */
+.payment-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's on top */
+}
+
+/* Container for the payment form */
+.payment-form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Close button for the payment form */
+.close-payment-form {
+    margin-top: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close-payment-form:hover {
+    background-color: darkred;
+}
+
