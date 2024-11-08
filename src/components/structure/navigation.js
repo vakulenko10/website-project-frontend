@@ -5,6 +5,7 @@
 // import { Private } from "../pages/Private"
 import Pages from '../pages/index';
 import { Orders } from '../pages/Orders/Orders';
+import Shop from '../pages/Shop/Shop';
 
 const { Home, About, Login, Profile, CreateRecipe, Signup} = Pages;
 
@@ -20,4 +21,5 @@ export const nav = [
     { path:     "/profile",  name: "Profile",     element: <Profile />,    isMenu: true,     isPrivate: true  },
     { path: "/signup", name: "Sign up", element: <Signup/>, isMenu: false, isPrivate: false},
     { path:     "/orders",  name: "Orders",     element: <Orders />,    isMenu: true,     isPrivate: true  },
+    { path:     "/shop",  name: "Shop",     element: <Shop />,    isMenu: true,     isPrivate: true  },
 ]

@@ -7,8 +7,7 @@ export const Home = () => {
     return (
         <main>
             {/* <AdminPanel/> */}
-            <Products />
-            <Cart />
+            
         </main>
     )
 }
