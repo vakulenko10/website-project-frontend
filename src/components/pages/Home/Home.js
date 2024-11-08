@@ -5,9 +5,9 @@ import Products from "../../Products"
 export const Home = () => {
 
     return (
-        <main>
+        <main className="bg-bg1 h-svh">
             {/* <AdminPanel/> */}
-            <h1 className="text-black">sadgasg</h1>
+            <h1 className="text-text1 font-serif">sadgasg</h1>
         </main>
     )
 }
