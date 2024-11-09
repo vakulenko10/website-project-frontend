@@ -1,0 +1,112 @@
+/* Main container styling */
+.main {
+  display: flex;
+  justify-content: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Zmniejszenie odstępu między kartami */
+  justify-content: center;
+}
+
+/* Product card styling */
+.product-card {
+  background-color: #ffffff;
+  width: 280px; /* Dopasowanie szerokości kart do średniej wielkości */
+  height: auto; /* Zmieniamy wysokość na automatyczną, aby karta była bardziej responsywna */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Zmniejszenie wnętrza kart */
+  border: none; /* Usunięcie obramowania */
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease; /* Dodanie efektu zmiany tła */
+}
+
+.product-card:hover {
+  transform: translateY(-8px); /* Mniejszy efekt unoszenia karty */
+  background-color: #BAA291; /* Zmiana tła na jaśniejsze przy najedżdżaniu */
+}
+
+/* Zwiększenie rozmiaru zdjęć */
+.product-image {
+  max-width: 100%;
+  height: 250px; /* Ustawienie wysokości zdjęcia na 250px */
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+/* Product name and price styling */
+.product-name {
+  font-size: 1.25rem; /* Dopasowanie czcionki dla nazwy produktu */
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+.product-price {
+  font-size: 1.25rem; /* Dopasowanie czcionki dla ceny */
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form styling */
+.form-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.form-button {
+  background-color: #baa291;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #a5a29b;
+}
+
+.edit-button {
+  background-color: #f0ad4e;
+}
+
+.edit-button:hover {
+  background-color: #ec971f;
+}
+
+/* Button styling - Add to Cart */
+.product-card .action-button {
+  background-color: transparent; /* Usuń tło */
+  color: #baa291; /* Ustaw kolor tekstu */
+  padding: 8px 16px;
+  border: 2px solid #baa291; /* Dodaj obramowanie */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Efekt przejścia dla tła i koloru */
+}
+
+.product-card .action-button:hover {
+  background-color: #BAA291; /* Tło przy najechaniu */
+  color: white; /* Zmien kolor tekstu przy najechaniu */
+}
+
+

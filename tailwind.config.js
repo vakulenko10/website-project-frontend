@@ -35,7 +35,7 @@ module.exports = {
       fontFamily: {
         // Custom Fonts with fallbacks
         sans: ['Montserrat', 'Arial', 'sans-serif'],
-        serif: ['EB Garamond', 'Georgia', 'serif'],
+        serif: ['Bricolage Grotesque', 'Georgia', 'serif'],
         display: ['Miniver', 'cursive'],
       },
     },
