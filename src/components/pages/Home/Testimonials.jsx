@@ -62,7 +62,7 @@ const Testimonials = () => {
         {/* </div> */}
       </div>
       <div
-          className={`absolute h-[140vh]  bottom-0 md:h-1/3 bg-bg4 w-screen md:top-3/4 z-100`}
+          className={`absolute h-[140vh]  bottom-0 md:h-[90vh] 2xl:h-[100vh] 2xl:top-1/2 bg-bg4 w-screen md:top-3/4 z-100`}
           style={{
             backgroundImage:
               "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
