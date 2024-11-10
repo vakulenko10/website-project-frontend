@@ -6,6 +6,7 @@ import './Home.css'
 import HeroSection from './HeroSection'
 import IntroSection from "./IntroSection"
 import ProductHighlight from "./ProductHighlight"
+import Testimonials from "./Testimonials"
 export const Home = () => {
 
     return (
@@ -13,7 +14,7 @@ export const Home = () => {
             <HeroSection/>
             <IntroSection/> 
             <ProductHighlight/>
-    
+            <Testimonials/>
     
          </main>
     )

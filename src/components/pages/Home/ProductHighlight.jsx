@@ -14,7 +14,7 @@ const ProductHighlight = () => {
   const currentProduct = highLightProducts[currentIndex];
  
   return (
-    <section className={`productHighlight relative h-screen ${currentProduct.bgColor} `}>
+    <section className={`productHighlight relative h-[110vh] ${currentProduct.bgColor} `}>
       <img
         src='https://res.cloudinary.com/dujdz2jbl/image/upload/v1731247273/frontend/nlefqmzwmqbzfi66rjab.png'
         alt="Background"
