@@ -216,8 +216,8 @@ import { fetchProducts, updateProduct } from '../services';
 import './pages/Shop/Shop.css';
 
 const Products = () => {
-  const { user, addToCart, token } = AuthData();
-  const [products, setProducts] = useState([]);
+  const { user, addToCart, token, products, setProducts } = AuthData();
+  // const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({

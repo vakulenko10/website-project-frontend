@@ -8,7 +8,7 @@ export const AuthWrapper = ({ children }) => {
   const [cart, setCart] = useState({ items: [], total: 0.0 });
   const [loading, setLoading] = useState(true);
   const [token, setToken ] = useState(null)
- 
+  const [products, setProducts] = useState(null)
   const handleSignup = async (username, email, password, role = 'user') => {
     const message = await signup(username, password, email, role);
     if (message) {
@@ -81,7 +81,7 @@ useEffect(() => {
   }
 }, [token]);
   return (
-    <AuthContext.Provider value={{ user, logout, handleLogin, handleSignup, cart, loading, addToCart, fetchCart, updateCart, token, setToken}}>
+    <AuthContext.Provider value={{ user, logout, handleLogin, handleSignup, cart, loading, addToCart, fetchCart, updateCart, token, setToken, products, setProducts}}>
       {children}
     </AuthContext.Provider>
   );

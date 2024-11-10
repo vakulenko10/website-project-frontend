@@ -3,31 +3,56 @@ import { AuthData } from '../auth/AuthWrapper';
 import './Cart.css';
 
 const Cart = () => {
-  const { cart, loading, updateCart } = AuthData();
+  const { cart, loading, updateCart, products } = AuthData();
   const [localCart, setLocalCart] = useState([]);
 
-  // Funkcja pomocnicza do uzyskania URL zdjęcia na podstawie product_id
-  const getImageByProductId = (productId) => {
-    const product = cart.items.find(item => item.product_id === productId);
-    if (product && product.images && product.images.length > 0) {
-      return product.images[0].url; // Zakładam, że chcemy pierwszy URL zdjęcia
-    }
-    return ''; // Zwracamy pusty string, jeśli brak zdjęcia
-  };
+  const getProductDetailsForCart = (cartItems, allProducts) => {
+  return cartItems.map(cartItem => {
+    const productDetails = allProducts.find(product => product.id === cartItem.product_id);
+    return {
+      ...cartItem,
+      images: productDetails?.images || [], // Use product images if available, otherwise an empty array
+      name: productDetails?.name || 'Unknown Product', // Use product name if available
+    };
+  });
+};
+useEffect(() => {
+  if (cart && cart.items && products) {
+    // Get detailed product information for each item in the cart
+    const cartWithDetails = getProductDetailsForCart(cart.items, products);
 
-  useEffect(() => {
-    if (cart && cart.items) {
-      // Mapowanie elementów koszyka z dodatkowymi informacjami (w tym URL zdjęcia)
-      const cartWithDetails = cart.items.map(item => ({
-        ...item,
-        suma: item.price * item.quantity,
-        // Używamy funkcji do uzyskania URL zdjęcia na podstawie product_id
-        images: getImageByProductId(item.product_id),
-        name: item.name, // Nazwa produktu
-      }));
-      setLocalCart(cartWithDetails);
-    }
-  }, [cart]);
+    // Map additional details like 'suma' (total price per item)
+    const detailedCart = cartWithDetails.map(item => ({
+      ...item,
+      suma: item.price * item.quantity,
+    }));
+
+    setLocalCart(detailedCart);
+  }
+}, [cart, products]);
+
+  // Funkcja pomocnicza do uzyskania URL zdjęcia na podstawie product_id
+  // const getImageByProductId = (productId) => {
+  //   const product = cart.items.find(item => item.product_id === productId);
+  //   if (product && product.images && product.images.length > 0) {
+  //     return product.images[0].url; // Zakładam, że chcemy pierwszy URL zdjęcia
+  //   }
+  //   return ''; // Zwracamy pusty string, jeśli brak zdjęcia
+  // };
+
+  // useEffect(() => {
+  //   if (cart && cart.items) {
+  //     // Mapowanie elementów koszyka z dodatkowymi informacjami (w tym URL zdjęcia)
+  //     const cartWithDetails = cart.items.map(item => ({
+  //       ...item,
+  //       suma: item.price * item.quantity,
+  //       // Używamy funkcji do uzyskania URL zdjęcia na podstawie product_id
+  //       images: getImageByProductId(item.product_id),
+  //       name: item.name, // Nazwa produktu
+  //     }));
+  //     setLocalCart(cartWithDetails);
+  //   }
+  // }, [cart]);
 
   const handleQuantityChange = (index, newQuantity) => {
     if (newQuantity < 1) return; // Zabezpieczenie przed złą ilością
