@@ -29,7 +29,7 @@ const HeroSection = () => {
 
             <h2 className="text-2xl text-text1 font-serif tracking-normal">anfi handmade.</h2>
             <div className="text-6xl font-bold font-sans leading-tight">
-            <h1 clasName="font-serif ">
+            <h1 className="font-serif ">
             <span className="text-text2 font-serif z-1 leading-tight lg:text-[5rem] mb-10 mr-5 md:mr-3">the</span>
             <span className="text-color5 font-serif leading-tight lg:text-[5rem] mb-10 md:ml-3">best</span>
             

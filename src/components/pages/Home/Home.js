@@ -5,12 +5,14 @@ import Products from "../../Products"
 import './Home.css'
 import HeroSection from './HeroSection'
 import IntroSection from "./IntroSection"
+import ProductHighlight from "./ProductHighlight"
 export const Home = () => {
 
     return (
         <main>
             <HeroSection/>
-            <IntroSection/>
+            <IntroSection/> 
+            <ProductHighlight/>
     
     
          </main>

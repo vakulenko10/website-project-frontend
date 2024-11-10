@@ -21,7 +21,7 @@ const IntroSection = () => {
 
       <Container>
         
-        <div class="angry-grid z-10 w-full p-10">
+        <div className="angry-grid z-10 w-full p-10">
           <img
             id="item-3"
             src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731174349/frontend/h8aaqo6mbzzwo0rnpqez.png"
