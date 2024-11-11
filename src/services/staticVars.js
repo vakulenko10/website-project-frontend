@@ -70,3 +70,36 @@ export const highLightProducts = [
     },
     // Add more products as needed
   ];
+
+ export const testimonialsData = [
+    {
+      name: "Lisa",
+      text: "This is even more adorable than pictured. And you sent me two! Thank you so much!",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+    {
+      name: "John",
+      text: "Amazing quality, exceeded my expectations. Will definitely buy again!",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+    {
+      name: "Emma",
+      text: "Beautiful craftsmanship! Highly recommend.",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+    {
+      name: "Sophia",
+      text: "Absolutely loved it, the perfect gift for my friend.",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+    {
+      name: "Michael",
+      text: "Fast shipping and great customer service. A++",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+    {
+      name: "Michael",
+      text: "Fast shipping and great customer service. A++",
+      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
+    },
+  ];
