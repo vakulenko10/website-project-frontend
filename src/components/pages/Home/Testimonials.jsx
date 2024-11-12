@@ -25,11 +25,11 @@ const Testimonials = () => {
 
       <div className="relative  flex flex-col items-center justify-center bg-transparent">
         
-          <div className="min-h-screen  top-[-2rem] md:top-[-3rem] flex  w-full relative justify-center items-center " >
+          <div className="min-h-screen  mt-[-2rem] md:mt-[-3rem] flex  w-full relative justify-center items-center " >
             <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731428132/frontend/o0wp7lbmd1isb7otgzpz.png" alt="bakground" className="object-cover md:object-fill md:w-full absolute h-full inset-0" />
             <Container classes="relative flex justify-center items-center box-border ">
               
-                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full justify-center xl:justify-start items-center md:block " >
+                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block " >
                   <img
                     src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
                     alt="house"

@@ -18,7 +18,7 @@ const ProductHighlight = () => {
       <img
         src='https://res.cloudinary.com/dujdz2jbl/image/upload/v1731247273/frontend/nlefqmzwmqbzfi66rjab.png'
         alt="Background"
-        className="absolute top-[-2rem] h-20 object-cover md:h-auto w-full z-10"
+        className="absolute mt-[-2rem] h-20 object-cover md:h-auto w-full z-10"
       />
 
       <img
