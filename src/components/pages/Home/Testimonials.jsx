@@ -21,11 +21,11 @@ const Testimonials = () => {
     return positions[Math.floor(Math.random() * positions.length/2)];
   };
   return (
-    <section className="relative min-h-fit top-[-2rem] md:top-[-3rem] overflow-hidden flex flex-col items-center justify-center bg-transparent ">
+    <section className="relative min-h-screen h-fit  flex flex-col items-center justify-center bg-transparent  bg-color4">
 
-      <div className="relative overflow-hidden flex flex-col items-center justify-center bg-transparent">
+      <div className="relative  flex flex-col items-center justify-center bg-transparent">
         
-          <div className="min-h-screen flex  w-full relative justify-center items-center " >
+          <div className="min-h-screen  top-[-2rem] md:top-[-3rem] flex  w-full relative justify-center items-center " >
             <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731428132/frontend/o0wp7lbmd1isb7otgzpz.png" alt="bakground" className="object-cover md:object-fill md:w-full absolute h-full inset-0" />
             <Container classes="relative flex justify-center items-center box-border ">
               
@@ -43,7 +43,7 @@ const Testimonials = () => {
             </Container>
           </div>
 
-          <div className="relative z-15 py-[4rem] min-h-screen h-fit mt-[-1rem] w-screen bg-bg4" style={{backgroundImage: 'url("https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png")'}}>
+          <div className=" relative z-15 py-[4rem] pb-[10rem] min-h-screen h-fit mt-[-1rem] w-screen bg-bg4" style={{backgroundImage: 'url("https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png")'}}>
              <h1 className="z-15 font-serif font-extrabold text-3xl sm:text-5xl  mb-10 xl:text-[5rem]  text-text1">
                     Testimonials
                 </h1>

@@ -7,6 +7,7 @@ import HeroSection from './HeroSection'
 import IntroSection from "./IntroSection"
 import ProductHighlight from "./ProductHighlight"
 import Testimonials from "./Testimonials"
+import Contact from "./Contact"
 export const Home = () => {
 
     return (
@@ -15,6 +16,7 @@ export const Home = () => {
             <IntroSection/> 
             <ProductHighlight/>
             <Testimonials/>
+            <Contact/>
     
          </main>
     )
