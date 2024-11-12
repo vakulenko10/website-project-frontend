@@ -119,3 +119,42 @@
    border-color: transparent transparent #FF4532 transparent;
    transform: rotate(0deg);
 }
+
+/* .houseImageText{
+   text-align: justify;
+}
+.houseImage{
+   shape-outside: url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png);
+   float: right;
+} */
+
+.article {
+   max-width: 600px;
+   margin: auto;
+   font-family: Arial, sans-serif;
+   line-height: 1.6;
+ }
+ 
+ .profile-image {
+   float: right;            /* Align the image to the right */
+   margin: 0 0 10px 10px;   /* Margin between the image and text */
+   width: 150px;            /* Set desired width for the image */
+   height: auto;
+ }
+ 
+ .article h2 {
+   font-size: 1.5em;
+   margin-top: 0;
+ }
+ 
+ .article p {
+   text-align: justify;      /* Justifies text for a clean look */
+   overflow: hidden;         /* Ensures layout remains intact if content overflows */
+ }
+ 
+ .article::after {
+   content: "";
+   display: table;
+   clear: both;              /* Ensures that the layout clears float after the image */
+ }
+ 

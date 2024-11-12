@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {testimonialsData} from '../../../services/staticVars'
+import Container from "../../Container";
 
 const Testimonials = () => {
 
@@ -20,10 +21,10 @@ const Testimonials = () => {
     return positions[Math.floor(Math.random() * positions.length/2)];
   };
   return (
-    <section className="relative h-[200vh] top-[-2rem] md:top-[-3rem] overflow-hidden flex flex-col items-center justify-center bg-transparent ">
+    <section className="relative min-h-fit top-[-2rem] md:top-[-3rem] overflow-hidden flex flex-col items-center justify-center bg-transparent ">
       {/* Background Pattern */}
       {/* <div className="overflow-hidden h-[40rem] absolute"> */}
-      <div className="backgroundBlocks absolute inset-0 w-full h-full top-[8rem] md:top-[15.5rem] z-0 bg-none ">
+      <div className="backgroundBlocks absolute inset-0 w-full h-full top-[8rem] p-0 md:top-[15.5rem] z-0 bg-none ">
         {/* front block */}
         <div
           className={`absolute inset-0 bg-bg4 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem] rounded-[3rem] left-1/2   -translate-x-1/2 border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-10`}
@@ -75,94 +76,95 @@ const Testimonials = () => {
           className={`absolute bg-text5 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] right-[33%]   translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-8`}
         ></div>
 
-        
         {/* </div> */}
       </div>
       <div
-          className={`absolute h-[140vh] border-b-4 border-black bottom-0 md:h-[90vh] 2xl:h-[100vh] 2xl:top-1/2 bg-bg4 w-screen md:top-3/4 z-100`}
-          style={{
-            backgroundImage:
-              "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
-            backgroundSize: "cover", // Ensure image covers the div
-            backgroundPosition: "center", // Center the image
-          }}
-        ></div>
+        className={`absolute  h-[70vh] border-b-4 border-black  bottom-1/3  md:h-[90vh] 2xl:h-[100vh] 2xl:top-1/2 bg-bg4 w-screen md:top-3/4 z-3`}
+        style={{
+          backgroundImage:
+            "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
+          backgroundSize: "cover", // Ensure image covers the div
+          backgroundPosition: "center", // Center the image
+        }}
+      ></div>
+      {/* <div
+        className={`absolute h-[70vh] border-b-4 border-black  bottom-0 bg-bg4 w-screen z-3`}
+        style={{
+          backgroundImage:
+            "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
+          backgroundSize: "cover", // Ensure image covers the div
+          backgroundPosition: "center", // Center the image
+        }}
+      ></div> */}
       {/* Main Text */}
-      <div className="relative z-10 text-center px-6 md:px-12">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-          adipiscing elit, sed do elit, sed doelit,
-        </h1>
-        <p className="text-lg md:text-xl font-light text-white opacity-70">
-          sed doelit, sed doelit, sed doelit, sed doelit, sed doelit, sed
-          doelit, sed doelit, sed doelit, sed doelit, sed doelit, sed doelit,
-          sed doedoe
-        </p>
-      </div>
 
-      {/* House Image */}
-      <div className="relative z-10 mt-8 mb-12">
-        <img
-          src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
-          alt="House"
-          className="w-32 md:w-40 lg:w-48 mx-auto"
-        />
-      </div>
-
-
-
-      <div className="relative h-[200vh] overflow-hidden flex flex-col items-center justify-center bg-transparent">
-      {/* Main Heading */}
-      <div className="relative z-10 text-center px-6 md:px-12">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-          Our Happy Customers
-        </h1>
-        <p className="text-lg md:text-xl font-light text-white opacity-70">
-          See what people are saying about us
-        </p>
-      </div>
-
-      {/* House Image */}
-      <div className="relative z-10 mt-8 mb-12">
-        <img
-          src="/path/to/house-image.png"
-          alt="House"
-          className="w-32 md:w-40 lg:w-48 mx-auto"
-        />
-      </div>
-
-      {/* Testimonials Grid */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 px-8 md:px-12">
-      {testimonialsData.map((testimonial, index) => {
-          const stickerPosition = getRandomStickerPosition();
-          return (
-            <motion.div
-              key={index}
-              className="p-6 bg-white md:h-[15rem] md:w-[15rem] shadow-lg text-center transform relative"
-              style={{ rotate: `${getRandomRotation()}deg` }}
-            >
-              {/* Sticker with random chaotic positioning */}
-              <div
-                className="absolute"
-                style={{
-                  ...stickerPosition,
-                  transform: "translate(-50%, -50%)",
-                  rotate: `${getRandomRotation()}deg` 
-                }}
-              >
-                <img
-                  src={testimonial.sticker}
-                  alt="sticker"
-                  className="w-8 h-8 md:w-[4rem] md:h-[4rem]"
-                />
+      <div className="relative  overflow-hidden flex flex-col items-center justify-center bg-transparent">
+        <div>
+          <div className="h-screen flex  w-full relative  justify-center items-center">
+            <Container classes="relative h-full box-border">
+              <div className=" flex  h-full w-full relative  justify-center py-[5%] items-center md:items-start verflow-hidden">
+                <div className="w-full mx-auto pt-8 flex flex-col h-full justify-start items-center md:block ">
+                  <img
+                    src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
+                    alt="house"
+                    className="float-right w-[10rem]  h-[10rem] md:w-[18rem] md:h-[18rem] pt-[2%]"
+                  />
+                  <h1 className="text-start font-serif font-extrabold text-3xl sm:text-4xl md:text-6xl leading-normal text-text1 text-wrap break-words">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elite
+                    lite lit elit. Eligendi laborum volup laboriosam quae
+                    tenetur isicing elite lite lit elit. Eligendi laborum volup
+                    laboriosam quae tenetur
+                  </h1>
+                </div>
               </div>
-              <p className="font-bold mt-10">{testimonial.name}</p>
-              <p className="text-sm mt-2">{testimonial.text}</p>
-            </motion.div>
-          );
-        })}
+            </Container>
+          </div>
 
+          <div className="relative z-15 py-[4rem] min-h-screen h-fit mt-10 w-screen">
+            <div
+              className={`absolute h-full bottom-0 bg-bg4 w-screen  z-9`}
+              style={{
+                backgroundImage:
+                  "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
+                backgroundSize: "repeat", // Ensure image covers the div
+                backgroundPosition: "center", // Center the image
+                backgroundRepeat:'repeat'
+              }}
+            ></div>
+            
+            <Container classes="w-screen min-h-screen flex flex-col sm:grid grid-cols-1 justify-center items-center text-center sm:grid-cols-2 md:grid-cols-3 gap-8 py-[10rem] md:px-12">
+            {testimonialsData.map((testimonial, index) => {
+              const stickerPosition = getRandomStickerPosition();
+              return (
+                <motion.div
+                  key={index}
+                  className=" p-3 md:p-6 bg-white h-[10rem] w-[10rem] sm:h-[12rem] sm:w-[12rem]  md:h-[13rem] md:w-[13rem]  xl:h-[15rem] xl:w-[15rem] shadow-lg flex flex-col justify-center items-center text-center transform relative justify-self-center"
+                  style={{ rotate: `${getRandomRotation()}deg` }}
+                >
+                  {/* Sticker with random chaotic positioning */}
+                  <div
+                    className="absolute"
+                    style={{
+                      ...stickerPosition,
+                      transform: "translate(-50%, -50%)",
+                      rotate: `${getRandomRotation()}deg`,
+                    }}
+                  >
+                    <img
+                      src={testimonial.sticker}
+                      alt="sticker"
+                      className="w-8 h-8 md:w-[4rem] md:h-[4rem]"
+                    />
+                  </div>
+                  <p className=" mt-4 md:mt-10 font-display font-normal text-text5">{testimonial.name}</p>
+                  <p className="text-sm mt-2 font-display text-text3">{testimonial.text}</p>
+                </motion.div>
+              );
+            })}
+            </Container>
+          </div>
+        </div>
       </div>
-    </div>
     </section>
   );
 };
