@@ -7,14 +7,16 @@ import HeroSection from './HeroSection'
 import IntroSection from "./IntroSection"
 import ProductHighlight from "./ProductHighlight"
 import Testimonials from "./Testimonials"
+import Contact from "./Contact"
 export const Home = () => {
 
     return (
-        <main>
+        <main className="m-0 p-0">
             <HeroSection/>
             <IntroSection/> 
             <ProductHighlight/>
             <Testimonials/>
+            <Contact/>
     
          </main>
     )
