@@ -1,120 +1,49 @@
-/* Ogólny kontener dla obu sekcji */
-.cart-wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    gap: 20px;
-  }
-  
-  /* Lewa sekcja - szczegóły zamówienia */
-  .cart-left {
-    width: 65%;  /* Szerokość lewej sekcji */
-    padding: 20px;
-    background-color: #f4f4f4; /* Jasnoszare tło po lewej stronie */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Prawa sekcja z koszykiem */
-  .cart-right {
-    width: 30%;  /* Mniejsza szerokość prawej sekcji */
-  }
-  
-  /* Tło koszyka (prostokąt) po prawej stronie */
-  .cart-background {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-  }
-  
-  /* Tytuł koszyka */
-  .cart-background h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  /* Lista przedmiotów w koszyku */
-  .cart-items {
-    list-style: none;
-    padding: 0;
-  }
-  
-  /* Każdy element w koszyku (produkt) */
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    align-items: center; /* Wyrównanie elementów w poziomie */
-  }
-  
-  /* Sekcja z obrazem produktu */
-  .cart-item-image {
-    width: 100px;
-    height: 100px;
-    margin-right: 15px;
-    overflow: hidden;
-  }
-  
-  .cart-item-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-  
-  /* Sekcja z detalami produktu */
-  .cart-item-details {
-    flex: 1;
-  }
-  
-  .cart-item-name {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .cart-item-price, .cart-item-total {
-    font-size: 16px;
-    margin-top: 8px;
-    color: #555;
-  }
-  
-  /* Kontrolki ilości */
-  .quantity-controls {
-    display: flex;
-    align-items: center;
-  }
-  
-  .quantity-controls button {
-    padding: 4px 8px;
-    font-size: 18px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  .quantity-controls button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  /* Pole wprowadzania ilości */
-  .quantity-input {
-    width: 40px;
-    text-align: center;
-    font-size: 16px;
-    margin: 0 10px;
-  }
-  
-  /* Podsumowanie koszyka */
-  .cart-summary {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: right;
-  }
-  
+/* Tailwind Custom Style: Remove Spinner Arrows */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove the arrows for Firefox */
+.quantity-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.cart-container {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Ukrycie koszyka początkowo */
+  width: 400px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: right 0.3s ease-in-out; /* Animacja przesuwania koszyka */
+}
+
+.cart-container.cart-visible {
+  right: 0; /* Koszyk przesuwa się na miejsce */
+}
+
+.cart-content {
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Dodatkowe style dla kontenerów i przycisków */
+.cart-content h2, .cart-content h3 {
+  margin-bottom: 20px;
+}
+
+.cart-content .space-y-4 {
+  margin-top: 20px;
+}

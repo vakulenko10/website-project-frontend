@@ -64,3 +64,39 @@ export const getCart = async (token) => {
   }
   };
   
+  export const deleteProductFromCart = async (token, productId) => {
+    // URL of the cart deletion endpoint
+    const url = 'http://localhost:5000/cart'; // Adjust this URL to match your backend URL
+  
+    // Request body
+    const body = JSON.stringify({
+      product_id: productId, // Product to be removed
+    });
+  
+    // Fetch request with DELETE method
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`, // JWT token for authentication
+          'Content-Type': 'application/json', // Setting the content type to JSON
+        },
+        body: body,
+      });
+  
+      // Handle response
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Product removed successfully', data);
+        return data; // Return the updated cart data
+      } else {
+        const errorData = await response.json();
+        console.error('Error removing product from cart:', errorData);
+        return { error: errorData.error }; // Return error message if product removal fails
+      }
+    } catch (error) {
+      console.error('Error with the fetch operation:', error);
+      return { error: 'An error occurred while trying to remove the product' }; // Handle network errors
+    }
+  };
+  
