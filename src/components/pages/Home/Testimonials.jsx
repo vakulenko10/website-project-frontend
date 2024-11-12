@@ -22,117 +22,33 @@ const Testimonials = () => {
   };
   return (
     <section className="relative min-h-fit top-[-2rem] md:top-[-3rem] overflow-hidden flex flex-col items-center justify-center bg-transparent ">
-      {/* Background Pattern */}
-      {/* <div className="overflow-hidden h-[40rem] absolute"> */}
-      <div className="backgroundBlocks absolute inset-0 w-full h-full top-[8rem] p-0 md:top-[15.5rem] z-0 bg-none ">
-        {/* front block */}
-        <div
-          className={`absolute inset-0 bg-bg4 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem] rounded-[3rem] left-1/2   -translate-x-1/2 border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-10`}
-          style={{
-            backgroundImage:
-              "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
-            backgroundSize: "cover", // Ensure image covers the div
-            backgroundPosition: "center", // Center the image
-          }}
-        ></div>
 
-        {/* left blocks */}
-        <div
-          className={`absolute inset-0 bg-bg4 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem] rounded-[3rem] left-[-7%]  -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-3`}
-        ></div>
-        <div
-          className={`absolute inset-0 bg-bg2 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem] rounded-[3rem] left-[1%]   -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-4`}
-        ></div>
-        <div
-          className={`absolute inset-0 bg-bg1 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] left-[9%]   -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-5`}
-        ></div>
-        <div
-          className={`absolute inset-0 bg-color4 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] left-[17%]   -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-6`}
-        ></div>
-        <div
-          className={`absolute inset-0 bg-bg3 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] left-1/4   -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-7`}
-        ></div>
-        <div
-          className={`absolute inset-0 bg-text5 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] left-[33%]   -translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-8`}
-        ></div>
-
-        {/* right blocks */}
-        <div
-          className={`absolute bg-bg4 md:w-[80rem] w-[40rem] h-[40rem]  md:h-[80rem]  rounded-[3rem] right-[-7%]  translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-3`}
-        ></div>
-        <div
-          className={`absolute bg-bg2 md:w-[80rem] w-[40rem] h-[40rem] md:h-[80rem]  rounded-[3rem] right-[1%]  translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-4`}
-        ></div>
-        <div
-          className={`absolute bg-bg1 md:w-[80rem] w-[40rem] h-[40rem] md:h-[80rem]  rounded-[3rem] right-[9%]  translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-5`}
-        ></div>
-        <div
-          className={`absolute bg-color4 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] right-[17%]  translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-6`}
-        ></div>
-        <div
-          className={`absolute bg-bg3 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem] rounded-[3rem] right-1/4   translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-7`}
-        ></div>
-        <div
-          className={`absolute bg-text5 w-[40rem] h-[40rem] md:w-[80rem] md:h-[80rem]  rounded-[3rem] right-[33%]   translate-x-[40%] border-black border-l-[.2rem] border-t-[.2rem] transform rotate-45 z-8`}
-        ></div>
-
-        {/* </div> */}
-      </div>
-      <div
-        className={`absolute  h-[90vh] sm:h-[70vh] border-b-4 border-black  bottom-1/3  md:h-[90vh] 2xl:h-[100vh] 2xl:top-1/2 bg-bg4 w-screen md:top-3/4 z-3`}
-        style={{
-          backgroundImage:
-            "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
-          backgroundSize: "cover", // Ensure image covers the div
-          backgroundPosition: "center", // Center the image
-        }}
-      ></div>
-      {/* <div
-        className={`absolute h-[70vh] border-b-4 border-black  bottom-0 bg-bg4 w-screen z-3`}
-        style={{
-          backgroundImage:
-            "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
-          backgroundSize: "cover", // Ensure image covers the div
-          backgroundPosition: "center", // Center the image
-        }}
-      ></div> */}
-      {/* Main Text */}
-
-      <div className="relative  overflow-hidden flex flex-col items-center justify-center bg-transparent">
-        <div>
-          <div className="h-screen flex  w-full relative  justify-center items-center">
-            <Container classes="relative h-full box-border">
-              <div className=" flex  h-full w-full relative  justify-center py-[5%] items-center md:items-start verflow-hidden">
-                <div className="w-full mx-auto pt-8 flex flex-col h-full justify-start items-center md:block ">
+      <div className="relative overflow-hidden flex flex-col items-center justify-center bg-transparent">
+        
+          <div className="min-h-screen flex  w-full relative justify-center items-center " >
+            <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731428132/frontend/o0wp7lbmd1isb7otgzpz.png" alt="bakground" className="object-cover md:object-fill md:w-full absolute h-full inset-0" />
+            <Container classes="relative flex justify-center items-center box-border ">
+              
+                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full justify-center xl:justify-start items-center md:block " >
                   <img
                     src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
                     alt="house"
-                    className="float-right w-[10rem]  h-[10rem] md:w-[18rem] md:h-[18rem] pt-[2%]"
+                    className="float-right w-[10rem]  h-[10rem] md:w-[15rem] md:h-[15rem] xl:w-[18rem] xl:h-[18rem]  pt-[2%]"
                   />
-                  <h1 className="text-start font-serif font-extrabold text-3xl sm:text-4xl md:text-6xl leading-normal text-text1 text-wrap break-words">
+                  <h1 className="text-start font-serif font-extrabold text-3xl sm:text-5xl  xl:text-[5rem]  text-text1 text-wrap break-words py-3">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elite
-                    lite lit elit. Eligendi laborum volup laboriosam quae
-                    tenetur isicing elite lite lit elit. Eligendi laborum volup
-                    laboriosam quae tenetur
+                    lite lit elit. Eligendi laborum volup l laborum volup l laborum volup l Eligendi laborum volup l laborum volup l laborum volup l Eligendi laborum volup l laborum volup l laborum volup l
                   </h1>
                 </div>
-              </div>
             </Container>
           </div>
 
-          <div className="relative z-15 py-[4rem] min-h-screen h-fit mt-10 w-screen">
-            <div
-              className={`absolute h-full bottom-0 bg-bg4 w-screen  z-9`}
-              style={{
-                backgroundImage:
-                  "url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png)",
-                backgroundSize: "repeat", // Ensure image covers the div
-                backgroundPosition: "center", // Center the image
-                backgroundRepeat:'repeat'
-              }}
-            ></div>
-            
+          <div className="relative z-15 py-[4rem] min-h-screen h-fit mt-[-1rem] w-screen bg-bg4" style={{backgroundImage: 'url("https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png")'}}>
+             <h1 className="z-15 font-serif font-extrabold text-3xl sm:text-5xl  mb-10 xl:text-[5rem]  text-text1">
+                    Testimonials
+                </h1>
             <Container classes="w-screen min-h-screen flex flex-col sm:grid grid-cols-1 justify-center items-center text-center sm:grid-cols-2 md:grid-cols-3 gap-8 py-[10rem] md:px-12">
+              
             {testimonialsData.map((testimonial, index) => {
               const stickerPosition = getRandomStickerPosition();
               return (
@@ -163,7 +79,7 @@ const Testimonials = () => {
             })}
             </Container>
           </div>
-        </div>
+        
       </div>
     </section>
   );

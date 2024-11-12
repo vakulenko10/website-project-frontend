@@ -10,7 +10,7 @@ import Testimonials from "./Testimonials"
 export const Home = () => {
 
     return (
-        <main>
+        <main className="m-0 p-0">
             <HeroSection/>
             <IntroSection/> 
             <ProductHighlight/>
