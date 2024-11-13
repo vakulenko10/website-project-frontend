@@ -76,7 +76,7 @@ const HeroSection = () => {
                 className="w-auto h-[12rem] lg:h-[13rem]"
                 loading="lazy"  // Lazy load added here
               />
-              <span className="text-text1 font-serif z-10 absolute top-1/2 right-1/2 -translate-y-2/3 lg:top-1/3 lg:-translate-y-[-0%] translate-x-1/2 text-6xl lg:text-[5rem]">
+              <span className="text-text1 font-serif z-10 absolute top-1/2 right-1/2 -translate-y-2/3 lg:top-1/3 lg:-translate-y-1/4 translate-x-1/2 text-6xl lg:text-[5rem]">
                 handmade
               </span>
             </div>
