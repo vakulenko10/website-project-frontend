@@ -110,3 +110,46 @@
 }
 
 
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Hide the scrollbar but keep the functionality */
+.custom-scrollbar {
+  overflow-y: scroll; /* Ensure that scrolling is enabled */
+  scrollbar-width: none; /* For Firefox */
+}
+
+/* For Webkit Browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px; /* No width for the scrollbar */
+  height: 0px; /* Hide horizontal scrollbar if any */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the scrollbar thumb invisible */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Make the track invisible */
+}
