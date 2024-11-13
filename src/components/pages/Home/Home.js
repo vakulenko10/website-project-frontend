@@ -8,10 +8,12 @@ import IntroSection from "./IntroSection"
 import ProductHighlight from "./ProductHighlight"
 import Testimonials from "./Testimonials"
 import Contact from "./Contact"
+import Links from "./Links"
 export const Home = () => {
 
     return (
         <main className="m-0 p-0">
+            <Links />
             <HeroSection/>
             <IntroSection/> 
             <ProductHighlight/>

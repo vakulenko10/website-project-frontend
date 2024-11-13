@@ -1,3 +1,5 @@
+import { FaInstagram, FaEtsy, FaFacebook } from 'react-icons/fa';
+import { GiShoppingCart } from 'react-icons/gi';
 export const highLightProducts = [
     {
       name: "bear",
@@ -102,4 +104,11 @@ export const highLightProducts = [
       text: "Fast shipping and great customer service. A++",
       sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
     },
+  ];
+
+  export const links = [
+    { label: 'inst', href: "https://www.instagram.com/", icon: <FaInstagram fontSize="2rem" /> },
+    { label: 'Etsy', href: "https://www.etsy.com/", icon: <FaEtsy fontSize="2rem" /> },
+    { label: 'fbook', href: "https://www.facebook.com/", icon: <FaFacebook fontSize="2rem" /> },
+    { label: 'Shop', href: "/shop", icon: <GiShoppingCart fontSize="2rem" /> },
   ];
