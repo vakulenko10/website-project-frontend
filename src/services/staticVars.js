@@ -91,7 +91,7 @@ export const highLightProducts = [
         </>
       ),
       imageSilhouette:
-        "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731467937/frontend/mvyxqb0a26xvvaz9pjqd.png",
+        "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165063/frontend/q3ucarl3d7tdeulur45z.png",
     },
     // Add more products as needed
   ];
@@ -132,7 +132,6 @@ export const highLightProducts = [
   export const links = [
     { label: 'inst', href: "https://www.instagram.com/", icon: <FaInstagram fontSize="2rem" /> },
     { label: 'Etsy', href: "https://www.etsy.com/", icon: <FaEtsy fontSize="2rem" /> },
-    { label: 'fbook', href: "https://www.facebook.com/", icon: <FaFacebook fontSize="2rem" /> },
     { label: 'Shop', href: "/shop", icon: <GiShoppingCart fontSize="2rem" /> },
   ];
  export  const getRandomRotation = () => {

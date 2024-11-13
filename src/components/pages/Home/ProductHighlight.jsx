@@ -54,12 +54,13 @@ const ProductHighlight = () => {
       onMouseEnter={() => setShowHint(true)}
       onMouseLeave={() => setShowHint(false)}
       onMouseMove={handleMouseMove}
+      onClick={handleSwap}
       style={{ cursor: "none" }} // Hide the default cursor
     >
       <img
-        src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731247273/frontend/nlefqmzwmqbzfi66rjab.png"
+        src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731468766/frontend/tjjzvhrcgejhthycptv2.png"
         alt="Background"
-        className="absolute mt-[-2rem] h-20 object-cover md:h-auto w-full z-10"
+        className="absolute mt-[-2rem] h-20 object-cover md:h-auto w-full z-10 "
         loading="lazy"
       />
 
@@ -70,7 +71,7 @@ const ProductHighlight = () => {
         loading="lazy"
       />
 
-      <div onClick={handleSwap} className="relative h-full w-full flex flex-col md:flex-row cursor-none">
+      <div  className="relative h-full w-full flex flex-col md:flex-row cursor-pointer md:cursor-none">
         <AnimatePresence mode="wait">
           {isSwapped ? (
             <motion.div
@@ -166,11 +167,11 @@ const ProductHighlight = () => {
         >
           <img
             src={`${currentProduct.imageSilhouette}`}
-            className="brooch-silhouette transform w-[50px]"
+            className="hidden md:block brooch-silhouette transform w-[50px] absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2"
             alt="silhouette"
             loading="lazy"
           />
-          <h1 className="font-display absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2">click </h1>
+          <h1 className="hidden md:block font-display absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2">click </h1>
         </motion.div>
       )}
     </section>
