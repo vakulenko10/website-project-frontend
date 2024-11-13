@@ -35,7 +35,7 @@ const Links = () => {
       initial={{ opacity: 1 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
-      className={`fixed top-0 ${positionStyles} p-4 rounded-lg z-50`}
+      className={`${isVisible?'fixed':'hidden'}  top-0 ${positionStyles} p-4 rounded-lg z-50`}
     >
       <ul className="space-y-4">
         {links.map((link, index) => (

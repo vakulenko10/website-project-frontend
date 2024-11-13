@@ -1,25 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {testimonialsData} from '../../../services/staticVars'
+import {getRandomRotation, getRandomStickerPosition, testimonialsData} from '../../../services/staticVars'
 import Container from "../../Container";
 
 const Testimonials = () => {
 
-  const getRandomRotation = () => {
-    const rotations = [-10, -5, -3, 0, 3, 5, 10];
-    return rotations[Math.floor(Math.random() * rotations.length)];
-  };
-  const getRandomStickerPosition = () => {
-    const positions = [
-      { top: "5%", left: "5%" }, // Top-Left Corner
-      { top: "5%", right: "5%" }, // Top-Right Corner
-      { bottom: "5%", left: "5%" }, // Bottom-Left Corner
-      { bottom: "5%", right: "5%" }, // Bottom-Right Corner
-    ];
-
-    // Randomly select one of the corner positions
-    return positions[Math.floor(Math.random() * positions.length/2)];
-  };
+ 
   return (
     <section className="relative min-h-screen h-fit  flex flex-col items-center justify-center bg-transparent  bg-color4">
 
