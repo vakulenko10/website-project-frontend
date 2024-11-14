@@ -22,9 +22,18 @@ export const Login = () => {
             setErrorMessage("Login failed: " + error.message); // Set error message if login fails
         }
     };
-
+    const redirectToHomepage = () => {
+        navigate("/shop"); // This will redirect to the homepage ("/")
+    };
     return (
         <main className="login__main px-3 bg-color7">
+            <button 
+                        
+                        className=" absolute left-0 top-0 text-text1 p-2 bg-text3 opacity-50 hover:opacity-100 transition" 
+                        onClick={redirectToHomepage}
+                    >
+                        go back
+                    </button>
             <div className="login-wrapper">
                 <div className="login-left">
                     <h1>Welcome back!</h1>

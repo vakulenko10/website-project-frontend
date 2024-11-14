@@ -62,7 +62,7 @@ const Products = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="bg-bg5 min-h-screen py-8">
+    <div className="bg-bg5 min-h-screen py-8 pt-[100px]">
       {user.isAdmin && (
         <button
           onClick={toggleOverlay}

@@ -22,12 +22,21 @@ export const Signup = () => {
             setErrorMessage("Signup failed: " + error.message);
         }
     };
-
+    const redirectToHomepage = () => {
+        navigate("/shop"); // This will redirect to the homepage ("/")
+    };
     return (
         <main className="login__main px-3 bg-color7">
+            <button 
+                        type="button" 
+                        className="absolute left-0 top-0 bg-text3" 
+                        onClick={redirectToHomepage}
+                    >
+                        go back
+                    </button>
             <div className="login-wrapper">
                 <div className="login-left">
-                    <h1>Welcome back!</h1>
+                    <h1>Create new account</h1>
                     <form onSubmit={doSignup}>
                         <div className="input-group">
                             <input
@@ -57,11 +66,12 @@ export const Signup = () => {
                                 required
                             />
                         </div>
-                        <button type="submit" className="login-button">Log in</button>
+                        <button type="submit" className="login-button">Sign up</button>
                         <p className="signup-text">
-                            not a member? <a href="/signup" className="signup-link">Sign up now</a>
+                            not a member? <a href="/login" className="signup-link">Login</a>
                         </p>
                         {errorMessage && <div className="error">{errorMessage}</div>}
+                        
                     </form>
                 </div>
                 <div className="login-right hidden md:flex">
