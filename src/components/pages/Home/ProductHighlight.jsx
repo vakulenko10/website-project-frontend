@@ -171,7 +171,7 @@ const ProductHighlight = () => {
             alt="silhouette"
             loading="lazy"
           />
-          <h1 className="hidden md:block font-display absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2">click </h1>
+          <h1 className="hidden md:block text-text1 font-display absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2">click </h1>
         </motion.div>
       )}
     </section>

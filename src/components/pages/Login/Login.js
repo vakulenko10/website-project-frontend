@@ -24,47 +24,48 @@ export const Login = () => {
     };
 
     return (
-        <main className="login__main">
-            <div className="login-container">
-                <div className="login-box">
-                    <h1>Login</h1>
+        <main className="login__main px-3 bg-color7">
+            <div className="login-wrapper">
+                <div className="login-left">
+                    <h1>Welcome back!</h1>
                     <form onSubmit={doLogin}>
                         <div className="input-group">
-                            <label>User Name</label>
                             <input
                                 value={formData.userName}
                                 onChange={(e) => setFormData({ userName: e.target.value })}
                                 type="text"
-                                required // Make field required
+                                placeholder="username"
+                                required
                             />
                         </div>
                         <div className="input-group">
-                            <label>Email</label>
+                            {/* <label>Email</label> */}
                             <input
                                 value={formData.email}
                                 onChange={(e) => setFormData({ email: e.target.value })}
                                 type="email" // Change type to email for validation
                                 required // Make field required
+                                placeholder="email"
                             />
                         </div>
                         <div className="input-group">
-                            <label>Password</label>
-                            <div className="password-group">
-                                <input
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ password: e.target.value })}
-                                    type="password"
-                                    required // Make field required
-                                />
-                                <a href="#" className="reset-password">Reset Password</a>
-                            </div>
+                            <input
+                                value={formData.password}
+                                onChange={(e) => setFormData({ password: e.target.value })}
+                                type="password"
+                                placeholder="password"
+                                required
+                            />
                         </div>
-                        <button type="submit" className="login-button">Login</button>
+                        <button type="submit" className="login-button">Log in</button>
                         <p className="signup-text">
-                            Don’t have an account? <a href="/signup" className="signup-link">Sign Up</a>
+                            not a member? <a href="/signup" className="signup-link">Sign up now</a>
                         </p>
-                        {errorMessage && <div className="error">{errorMessage}</div>} {/* Show error message if exists */}
+                        {errorMessage && <div className="error">{errorMessage}</div>}
                     </form>
+                </div>
+                <div className="login-right hidden md:flex">
+                    <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731537067/frontend/uso5cjwmao189so9lutr.png" alt="Illustration" className="illustration hidden md:block" />
                 </div>
             </div>
         </main>
