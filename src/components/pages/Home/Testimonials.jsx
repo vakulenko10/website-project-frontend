@@ -1,35 +1,21 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {testimonialsData} from '../../../services/staticVars'
+import {getRandomRotation, getRandomStickerPosition, testimonialsData} from '../../../services/staticVars'
 import Container from "../../Container";
 
 const Testimonials = () => {
 
-  const getRandomRotation = () => {
-    const rotations = [-10, -5, -3, 0, 3, 5, 10];
-    return rotations[Math.floor(Math.random() * rotations.length)];
-  };
-  const getRandomStickerPosition = () => {
-    const positions = [
-      { top: "5%", left: "5%" }, // Top-Left Corner
-      { top: "5%", right: "5%" }, // Top-Right Corner
-      { bottom: "5%", left: "5%" }, // Bottom-Left Corner
-      { bottom: "5%", right: "5%" }, // Bottom-Right Corner
-    ];
-
-    // Randomly select one of the corner positions
-    return positions[Math.floor(Math.random() * positions.length/2)];
-  };
+ 
   return (
     <section className="relative min-h-screen h-fit  flex flex-col items-center justify-center bg-transparent  bg-color4">
 
       <div className="relative  flex flex-col items-center justify-center bg-transparent">
         
-          <div className="min-h-screen  top-[-2rem] md:top-[-3rem] flex  w-full relative justify-center items-center " >
+          <div className="min-h-screen  mt-[-2rem] md:mt-[-3rem] flex  w-full relative justify-center items-center " >
             <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731428132/frontend/o0wp7lbmd1isb7otgzpz.png" alt="bakground" className="object-cover md:object-fill md:w-full absolute h-full inset-0" />
             <Container classes="relative flex justify-center items-center box-border ">
               
-                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full justify-center xl:justify-start items-center md:block " >
+                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block " >
                   <img
                     src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
                     alt="house"
