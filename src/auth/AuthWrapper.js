@@ -1,11 +1,15 @@
 import { createContext, useContext, useState, useEffect} from "react";
-import {addItemToTheCart, getCart, login, signup, updateCartItems} from '../services';
+import {addItemToTheCart, fetchProducts, getCart, getProfile, login, signup, updateCartItems} from '../services';
 import Cookies from "js-cookie";
 const AuthContext = createContext();
 export const AuthData = () => useContext(AuthContext);
 
 export const AuthWrapper = ({ children }) => {
-  const [user, setUser] = useState({ name: "", isAuthenticated: false, isAdmin: false });
+  const [user, setUser] = useState(() => {
+    const cachedUser = localStorage.getItem("user");
+    return cachedUser ? JSON.parse(cachedUser) : { name: "", isAuthenticated: false, isAdmin: false };
+  });
+  
   const [cart, setCart] = useState({ items: [], total: 0.0 });
   const [loading, setLoading] = useState(true);
   const [token, setToken ] = useState(null)
@@ -56,8 +60,8 @@ export const AuthWrapper = ({ children }) => {
       setAccessToken(data.token);
       setToken(data.token)
       setRefreshToken(data.refresh_token);
-      setUser(data.user);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser({...data.user, isAuthenticated: true});
+      localStorage.setItem("user", JSON.stringify({...data.user, isAuthenticated: true}));
       console.log("Login successful");
       console.log(user)
     } else {
@@ -83,7 +87,95 @@ export const AuthWrapper = ({ children }) => {
     setCart({ items: [], total: 0.0 });
     console.log("Logged out, but products are preserved");
   };
-
+    // Fetch and store products in local storage
+    const fetchAndCacheProducts = async () => {
+      try {
+        const productsData = await fetchProducts();
+        if (productsData) {
+          setProducts(productsData);
+          localStorage.setItem("products", JSON.stringify(productsData));
+          console.log("Products fetched and cached");
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+  
+    // Fetch user profile and cart data if needed
+    const fetchDataIfNeeded = async () => {
+      const token = getAccessToken();
+  
+      if (user.isAuthenticated) {
+        if (!user.name) {
+          const profileData = await getProfile(token);
+          if (profileData) {
+            setUser({name: profileData.username, isAdmin: profileData.role == "admin", isAuthenticated:true});
+            localStorage.setItem("user", JSON.stringify({name: profileData.username,  isAuthenticated:true, isAdmin: profileData.role == "admin",}));
+          }
+        }
+  
+        if (cart.length === 0) {
+          const cartData = await getCart(token);
+          if (cartData) {
+            setCart(cartData);
+            localStorage.setItem("cart", JSON.stringify(cartData));
+          }
+        }
+      }
+    };
+  
+    // Initial effects
+    
+  
+    useEffect(() => {
+      fetchDataIfNeeded();
+    }, [user.isAuthenticated]);
+  
+    // Fetch products on initial load (independent of user authentication)
+    useEffect(() => {
+      fetchAndCacheProducts();
+    }, []);
+  
+    useEffect(() => {
+      const interval = setInterval(refreshAccessToken, 5 * 60 * 1000); // Refresh every 5 minutes
+      return () => clearInterval(interval);
+    }, []);
+  
+    // Check authentication on initial load
+    const checkAuthentication = async () => {
+      const token = getAccessToken();
+      if (!token) {
+        logout();
+        return;
+      }
+    
+      try {
+        const response = await fetch("http://127.0.0.1:5000/profile", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+    
+        if (response.ok) {
+          const profileData = await response.json();
+          const authenticatedUser = {
+            name: profileData.username,
+            isAdmin: profileData.role === "admin",
+            isAuthenticated: true,
+          };
+    
+          localStorage.setItem("user", JSON.stringify(authenticatedUser));
+          setUser(authenticatedUser);
+          setToken(token)
+          console.log("User authenticated:", authenticatedUser);
+        } else {
+          console.log("Invalid or expired token");
+          logout();
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        logout();
+      }
+    };
   const fetchCart = async () => {
     setLoading(true);
     const data = await getCart(token)
@@ -95,12 +187,15 @@ export const AuthWrapper = ({ children }) => {
     }
     setLoading(false);
 };
-useEffect(()=>{
-  const cachedUser = localStorage.getItem("user");
-  if(cachedUser){
-    setUser(cachedUser)
-  }
-}, [])
+useEffect(() => {
+  checkAuthentication();
+}, []);
+// useEffect(()=>{
+//   const cachedUser = localStorage.getItem("user");
+//   if(cachedUser){
+//     setUser(cachedUser)
+//   }
+// }, [])
 // Add item to cart function
 const addToCart = async (productId, quantity) => {
   try {

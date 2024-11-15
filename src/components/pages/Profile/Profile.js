@@ -11,12 +11,14 @@ const Profile = () => {
     email: '',
     role: '',
   });
-
+//  const {user} = AuthData()
+//  console.log("user in profile component:", user)
   const [isEditing, setIsEditing] = useState(false); // Edit mode toggle
   const [loading, setLoading] = useState(true); // Loading state
   const { token } = AuthData();
   // Fetch profile data from the API when the component mounts
   useEffect(() => {
+    
     const fetchProfileData = async () => {
       try {
         setLoading(true);
