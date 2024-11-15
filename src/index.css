@@ -235,7 +235,10 @@ code {
 .no-scroll {
   width: 100%;
 }
-
+.cart-no-scroll{
+  position: fixed;
+  overflow: hidden;
+}
 @media (max-width: 767px) {
   .no-scroll {
     

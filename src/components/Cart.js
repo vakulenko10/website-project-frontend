@@ -72,14 +72,26 @@ const Cart = () => {
     const prevIndex = (currentIndex - 1 + tabOrder.length) % tabOrder.length;
     setActiveTab(tabOrder[prevIndex]);
   };
-
+  const handleCartOpen = () => {
+    setShowCart((prevState) => {
+        const isOpen = !prevState;
+        
+        if (isOpen) {
+            document.body.classList.add("cart-no-scroll");
+        } else {
+            document.body.classList.remove("cart-no-scroll");
+        }
+        
+        return isOpen;
+    });
+};
   if (loading) return <p>Loading cart...</p>;
 
   return (
     <div className="relative">
       {/* Cart Icon Button */}
       <button 
-        onClick={() => setShowCart(true)} 
+        onClick={() => handleCartOpen()} 
         className="fixed bottom-4 right-4 bg-[#BAA291] text-[#5B0101] p-4 rounded-full shadow-lg">
         <FaShoppingCart className="text-xl" /> {/* Cart icon in #5B0101 */}
       </button>
@@ -324,7 +336,9 @@ const Cart = () => {
 
           {/* Close Button */}
           <button 
-            onClick={() => setShowCart(false)} 
+            onClick={() => 
+              handleCartOpen()
+            } 
             className="absolute top-4 right-4 text-white font-semibold text-2xl">
             &times;
           </button>
