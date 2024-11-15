@@ -4,6 +4,13 @@ import { AuthData } from '../auth/AuthWrapper';
 import { deleteProductFromCart } from '../services/cartAPI';
 import './Cart.css'; // Make sure you have the CSS styles below
 
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
 const Cart = () => {
   const { cart, loading, updateCart, products, token } = AuthData();
   const [localCart, setLocalCart] = useState([]);
@@ -31,6 +38,20 @@ const Cart = () => {
       setLocalCart(detailedCart);
     }
   }, [cart, products]);
+  const debouncedUpdateCart = debounce(async (updatedItems) => {
+    if (token) {
+      try {
+        const data = await updateCart(updatedItems);
+        if (data) {
+          console.log("Cart updated in backend:", data);
+        } else {
+          console.error("Failed to update cart:", data);
+        }
+      } catch (error) {
+        console.error("Error updating cart:", error);
+      }
+    }
+  }, 1000);
 
   const handleQuantityChange = (index, newQuantity) => {
     if (newQuantity < 1) return;
@@ -45,19 +66,41 @@ const Cart = () => {
       images: item.images,
       name: item.name,
     }));
-    updateCart(updatedItems);
+
+    // Update the localStorage immediately
+    localStorage.setItem('cart', JSON.stringify({ items: updatedItems }));
+    
+    // Call the debounced function to update the backend after a delay
+    debouncedUpdateCart(updatedItems);
   };
 
   const handleDeleteProduct = async (productId) => {
-    const response = await deleteProductFromCart(token, productId);
-    if (!response.error) {
-      const updatedCart = localCart.filter(item => item.product_id !== productId);
-      setLocalCart(updatedCart);
-      updateCart(updatedCart.map(item => ({ product_id: item.product_id, quantity: item.quantity })));
-    } else {
-      console.error('Failed to remove product:', response.error);
+    // Remove the item from the local state
+    const updatedCart = localCart.filter(item => item.product_id !== productId);
+    setLocalCart(updatedCart);
+    
+    // Update localStorage immediately
+    localStorage.setItem('cart', JSON.stringify({ items: updatedCart }));
+  
+    // Call the backend API to delete the product from the cart
+    if (token) {
+      try {
+        const response = await deleteProductFromCart(token, productId);
+        if (response) {
+          console.log(response);
+        } else {
+          console.error("Failed to delete product from backend", response);
+        }
+      } catch (error) {
+        console.error("Error deleting product from backend:", error);
+      }
     }
+  
+    // Call the debounced function to sync the updated cart to the backend
+    // debouncedUpdateCart(updatedCart.map(item => ({ product_id: item.product_id, quantity: item.quantity })));
   };
+  
+
 
   const tabOrder = ['contact', 'delivery', 'payment'];
   
@@ -85,6 +128,9 @@ const Cart = () => {
         return isOpen;
     });
 };
+useEffect(()=>{
+  localStorage.setItem('cart', JSON.stringify(localCart));
+}, [localCart])
   if (loading) return <p>Loading cart...</p>;
 
   return (

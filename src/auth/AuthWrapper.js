@@ -217,7 +217,8 @@ const updateCart = async (updatedItems) => {
       const data = await updateCartItems(updatedItems, token);
       if (data) {
           console.log("Cart updated:", data);
-          await fetchCart(); // Refetch the cart
+          return data;
+          // await fetchCart(); // Refetch the cart
       } else {
           console.log('Error updating the cart:', data);
       }
