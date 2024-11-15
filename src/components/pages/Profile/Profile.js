@@ -6,7 +6,7 @@ import { AuthData } from '../../../auth/AuthWrapper';
 import RefreshToken from '../../RefreshToken';
 import { getProfile } from '../../../services';
 const Profile = () => {
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState(localStorage.getItem("user")?localStorage.getItem("user"):{
     username: '',
     email: '',
     role: '',
