@@ -99,4 +99,30 @@ export const getCart = async (token) => {
       return { error: 'An error occurred while trying to remove the product' }; // Handle network errors
     }
   };
+  export const deleteAllProductsFromCart = async (token) => {
+    const url = 'http://localhost:5000/cart/all'; // Adjust this URL based on your backend endpoint
+    
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('All products removed successfully:', data);
+        return data; // Return the updated cart data
+      } else {
+        const errorData = await response.json();
+        console.error('Error removing all products from cart:', errorData);
+        return { error: errorData.error }; // Return error message if deletion fails
+      }
+    } catch (error) {
+      console.error('Error with the fetch operation:', error);
+      return { error: 'An error occurred while trying to remove all products' }; // Handle network errors
+    }
+  };
   
