@@ -1,10 +1,9 @@
-export const fetchProducts = async (token) =>{
+export const fetchProducts = async () =>{
     try {
       const response = await fetch('http://localhost:5000/products', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Include token for authentication
+          'Content-Type': 'application/json'
         },
       });
   

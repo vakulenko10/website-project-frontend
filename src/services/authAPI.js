@@ -45,7 +45,7 @@ export const login = async (username, password, email) =>{
         const isAdmin = data.role === 'admin'; // Adjust based on your API response structure
   
         //   setUser({ name: data.name || username, isAuthenticated: true, isAdmin: isAdmin});
-        return {user:{name: data.name || username, isAuthenticated: true, isAdmin: isAdmin}, token: data.access_token}
+        return {user:{name: data.name || username, isAuthenticated: true, isAdmin: isAdmin}, token: data.access_token, refresh_token: data.refresh_token}
         } else {
           console.log('Login failed: ' + (data.error || 'Unknown error'));
         }
@@ -74,3 +74,24 @@ export const getProfile = async (token) =>{
         // setLoading(false); // Ensure loading is stopped even if there's an error
       }
 }
+
+// const refreshAccessToken = async () => {
+//   try {
+//     const response = await fetch("http://127.0.0.1:5000/refresh", {
+//       method: "POST",
+//       credentials: "include", // Include cookies
+//       headers: { "Content-Type": "application/json" },
+//     });
+
+//     if (response.ok) {
+//       const { access_token } = await response.json();
+//       setAccessToken(access_token);
+//       console.log("Access token refreshed");
+//     } else {
+//       console.log("Failed to refresh token");
+//       logout();
+//     }
+//   } catch (error) {
+//     console.error("Error refreshing token:", error);
+//   }
+// };
