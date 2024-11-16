@@ -35,25 +35,39 @@ export const AuthWrapper = ({ children }) => {
   const getRefreshToken = () => Cookies.get("refresh_token");
 
   const scheduleTokenRefresh = (token) => {
-    if (refreshTimeout) clearTimeout(refreshTimeout);
-
+    if (refreshTimeout) clearTimeout(refreshTimeout); // Clear any existing timeout
+  
     try {
       const decodedToken = jwtDecode(token);
-      const expiresAt = decodedToken.exp * 1000;
-      const refreshTime = expiresAt - Date.now() - 20 * 1000; // Show prompt 20 seconds before expiry
-
-      if (refreshTime > 0) {
-        const timeout = setTimeout(() => {
-          console.warn("Token is near expiry; showing refresh prompt");
-          setShowRefreshPrompt(true); // Show the refresh prompt
-        }, refreshTime);
-        setRefreshTimeout(timeout);
+      const expiresAt = decodedToken.exp * 1000; // Token expiry time in milliseconds
+      const refreshPromptTime = expiresAt - Date.now() - 20 * 1000; // 20 seconds before expiry
+      const logoutTime = expiresAt - Date.now(); // Time when token expires
+  
+      // Schedule showing the refresh prompt
+      if (refreshPromptTime > 0) {
+        setRefreshTimeout(
+          setTimeout(() => {
+            console.warn("Token is near expiry; showing refresh prompt");
+            setShowRefreshPrompt(true); // Show the refresh prompt
+  
+            // Schedule automatic logout after 20 seconds if no action is taken
+            setTimeout(() => {
+              console.warn("Token expired; logging out automatically");
+              setShowRefreshPrompt(false); // Hide the prompt
+              logout();
+            }, 20 * 1000); // 20 seconds from now
+          }, refreshPromptTime)
+        );
+      } else {
+        console.warn("Token is already near expiry or expired; logging out immediately");
+        logout();
       }
     } catch (error) {
       console.error("Error decoding token for refresh scheduling:", error);
       logout();
     }
   };
+
 
   const handleManualRefresh = async () => {
     try {
