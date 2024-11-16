@@ -1,0 +1,132 @@
+/* Hide scrollbars but allow scrolling */
+.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
+  .common-container {
+    width: 100%;
+  }
+  
+  @media (max-width: 640px) {
+    .common-container {
+      max-width: 400px; /* Zmniejszenie szerokości dla trybu komórkowego */
+    }
+  
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+  
+    .w-full {
+      width: 100%;
+    }
+  
+    .p-2 {
+      padding: 0.25rem;
+    }
+  
+    .text-lg {
+      font-size: 2rem; /* Zmniejszony rozmiar tekstu */
+    }
+  
+    .font-bold {
+      font-weight: 700;
+    }
+  
+    .space-y-2 {
+      gap: 0.25rem;
+    }
+  
+    .w-8 {
+      width: 1.5rem;
+    }
+  
+    .h-8 {
+      height: 1.5rem;
+    }
+  
+    .flex-grow {
+      flex-grow: 1;
+    }
+  
+    .text-sm {
+      font-size: 0.925rem; /* Zmniejszony rozmiar tekstu */
+    }
+  
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+  
+    .ml-1 {
+      margin-left: 0.25rem;
+    }
+  
+    .hide-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari and Opera */
+    }
+  }
+  
+  @media (min-width: 641px) {
+    .common-container {
+      max-width: 400px;
+    }
+  
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+    
+    .w-full {
+      width: 100%;
+    }
+  
+    .p-2 {
+      padding: 0.5rem;
+    }
+  
+    .text-lg {
+      font-size: 1.25rem;
+    }
+  
+    .font-bold {
+      font-weight: 700;
+    }
+  
+    .space-y-2 {
+      gap: 0.5rem;
+    }
+  
+    .w-8 {
+      width: 3rem;
+    }
+  
+    .h-8 {
+      height: 3rem;
+    }
+  
+    .flex-grow {
+      flex-grow: 1;
+    }
+  
+    .text-sm {
+      font-size: 1rem;
+    }
+  
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+  
+    .ml-1 {
+      margin-left: 0.5rem;
+    }
+  }
+  
+  
