@@ -23,7 +23,7 @@ export const fetchProducts = async (token) =>{
   }
   
   
-  export const updateProduct = async (editingProductId, token, formData) =>{
+export const updateProduct = async (editingProductId, token, formData) =>{
     const url = editingProductId
         ? `http://localhost:5000/products/${editingProductId}`
         : 'http://localhost:5000/products';
