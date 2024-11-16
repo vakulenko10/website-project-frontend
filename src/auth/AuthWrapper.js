@@ -3,6 +3,8 @@ import { addItemToTheCart, fetchProducts, getCart, getProfile, login, signup, up
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 import { refreshAccessToken } from "../services/authAPI";
+import { useNavigate } from "react-router-dom";
+
 
 const AuthContext = createContext();
 export const AuthData = () => useContext(AuthContext);
@@ -19,7 +21,7 @@ export const AuthWrapper = ({ children }) => {
   const [products, setProducts] = useState(null);
   const [refreshTimeout, setRefreshTimeout] = useState(null);
   const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
-
+  const navigate = useNavigate();
   const setAccessToken = (newToken) => {
     Cookies.set("access_token", newToken, { secure: true, sameSite: "Strict" });
     setToken(newToken);
@@ -108,11 +110,11 @@ export const AuthWrapper = ({ children }) => {
       console.log("Login failed");
     }
   };
-
+  
   const logout = () => {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
-
+    navigate('/shop')
     // Preserve products in localStorage
     const cachedProducts = localStorage.getItem("products");
 
@@ -126,6 +128,7 @@ export const AuthWrapper = ({ children }) => {
 
     setUser({ name: "", isAuthenticated: false, isAdmin: false });
     setCart({ items: [], total: 0.0 });
+    setToken('')
     console.log("Logged out, but products are preserved");
   };
 
@@ -254,6 +257,56 @@ export const AuthWrapper = ({ children }) => {
       fetchCart();
     }
   }, [token]);
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const token = getAccessToken();
+      if (!token) {
+        logout();
+        return;
+      }
+  
+      try {
+        const response = await fetch("http://127.0.0.1:5000/profile", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        if (response.ok) {
+          const profileData = await response.json();
+          setUser({
+            name: profileData.username,
+            isAdmin: profileData.role === "admin",
+            isAuthenticated: true,
+          });
+        } else {
+          console.log("Invalid or expired token");
+          setShowRefreshPrompt(true); // Show prompt on token expiry
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        logout();
+      }
+    };
+  
+    checkAuthentication();
+    fetchDataIfNeeded(); // This will restore cart and profile data
+  
+  }, []); // Fetch data and check authentication on load
+  
+  // Schedule token refresh when token is set
+  useEffect(() => {
+    const token = getAccessToken()
+    console.log('use effect for scheduling token refresh is been run')
+    if (token) {
+      console.log('scheduling the token refresh')
+      setToken(token)
+      scheduleTokenRefresh(token);
+    }
+    else{
+      logout();
+    }
+  }, [token]);
+  
 
   return (
     <AuthContext.Provider value={{ user, logout, handleLogin, handleSignup, cart, loading, addToCart, fetchCart, updateCart, token, setToken, products, setProducts }}>
