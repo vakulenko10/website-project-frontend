@@ -4,7 +4,7 @@ import { fetchProducts, updateProduct } from '../services/productAPI';
 import './pages/Shop/Shop.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const debounce = (func, delay) => {
   let timeout;
@@ -159,7 +159,7 @@ useEffect(()=>{
             </div>
             {/* Only show the edit button for admin */}
             <div className='flex justify-between'>
-            <button onClick={()=>{navigate(`/product/${product.id}`)}} className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</button>
+            <Link to={`/product/${product.id}`} target="_blank" className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</Link>
             {user.isAdmin && (
               <button
                 onClick={() => handleEditProduct(product)
