@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
 import { fetchProducts, updateProduct } from '../services/productAPI';
 import './pages/Shop/Shop.css';
+import { FaShoppingCart } from 'react-icons/fa';
+import ProductForm from './ProductForm';
 
 const Products = () => {
   const { user, addToCart, token, products, setProducts } = AuthData();
+  console.log("user:", user)
   const [loading, setLoading] = useState(true);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    material: '',
-    color: '',
-    images: []
-  });
+  const [formData, setFormData] = useState(null);
   const [editingProductId, setEditingProductId] = useState(null);
 
   useEffect(() => {
+    // Zablokowanie przewijania tła, gdy overlay jest otwarty
+    if (isOverlayOpen) {
+      document.body.style.overflow = 'hidden'; // Zablokowanie scrolla strony
+    } else {
+      document.body.style.overflow = 'auto'; // Przywrócenie scrolla strony
+    }
+
+    // Pobieranie produktów
     const fetchProductsData = async () => {
       setLoading(true);
       const productsResponse = await fetchProducts(token);
@@ -30,7 +34,12 @@ const Products = () => {
     };
 
     fetchProductsData();
-  }, [token]);
+
+    return () => {
+      // Przywrócenie scrolla po zamknięciu komponentu
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOverlayOpen, token]);
 
   const toggleOverlay = () => {
     setIsOverlayOpen(!isOverlayOpen);
@@ -41,7 +50,15 @@ const Products = () => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
-
+  const handleEditProduct = (product) =>{
+    console.log("product:",product)
+    setEditingProductId(product.id);
+    setFormData(product);
+    toggleOverlay();
+  }
+  useEffect(()=>{
+    !isOverlayOpen && setEditingProductId(null)
+  },[isOverlayOpen])
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -75,76 +92,95 @@ const Products = () => {
       <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
       <div className="products-container">
         {products.map((product) => (
-          <div key={product.id} className="product-card">
-            <div className="flex justify-between items-center mb-0 border-b border-color4 pb-0">
-              <span className="text-text7 font-serif text-lg">{product.name}</span>
-              <div className="border-l border-color4 pl-2">
-                <button onClick={() => addToCart(product.id, 1)} className="px-3 py-1 rounded hover:bg-text2 transition">
-                  Add to Cart
+          <div key={product.id} className="product-card hover:">
+            <div className="flex justify-between items-center mb-0 pb-0">
+              <span className="text-text7 font-serif text-lg">
+                {product.name}
+              </span>
+              <div className="pl-2 hover:text-text2 text-text3">
+                <button
+                  onClick={() => addToCart(product.id, 1)}
+                  className="px-3 py-1 rounded  transition"
+                >
+                  <FaShoppingCart className="text-xl" />
                 </button>
               </div>
             </div>
-            <div className="flex justify-center mb-0 border-b border-color4 pb-0">
+            <div className="flex justify-center mb-0  pb-0">
               {product.images && product.images.length > 0 && (
-                <img src={product.images[0]} alt={product.name} className="product-image" />
+                <img
+                  src={product.images[0]}
+                  alt={product.name}
+                  className="product-image"
+                />
               )}
             </div>
-            <div className="flex justify-between items-center mt-auto border-t border-color4 pt-0">
+            <div className="flex justify-between items-center mt-auto pt-0">
               <span className="text-text5">Material:</span>
               <span className="text-text5">{product.material}</span>
             </div>
-            <div className="flex justify-between items-center mt-auto border-t border-color4 pt-0">
+            <div className="flex justify-between items-center mt-auto pt-0">
               <span className="text-text3 font-bold">${product.price}</span>
             </div>
+            {/* Only show the edit button for admin */}
+            {user.isAdmin && (
+              <button
+                onClick={() => handleEditProduct(product)
+                }
+                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
+              >
+                Edit
+              </button>
+            )}
           </div>
         ))}
       </div>
 
-      {isOverlayOpen && (
+      {/* {isOverlayOpen && (
         <div className="overlay">
           <div className="overlay-content">
             <h2 className="text-text3 font-display text-2xl mb-4">{editingProductId ? 'Edit Product' : 'Create New Product'}</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input 
-                type="text" 
-                name="name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                placeholder="Product Name" 
+            <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto max-h-[70vh]">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Product Name"
                 className="w-full border border-color4 p-2 rounded"
-                required 
+                required
               />
-              <textarea 
-                name="description" 
-                value={formData.description} 
-                onChange={handleChange} 
-                placeholder="Description" 
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
                 className="w-full border border-color4 p-2 rounded"
-                required 
+                required
               />
-              <input 
-                type="number" 
-                name="price" 
-                value={formData.price} 
-                onChange={handleChange} 
-                placeholder="Price" 
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="Price"
                 className="w-full border border-color4 p-2 rounded"
-                required 
+                required
               />
-              <input 
-                type="text" 
-                name="material" 
-                value={formData.material} 
-                onChange={handleChange} 
-                placeholder="Material" 
+              <input
+                type="text"
+                name="material"
+                value={formData.material}
+                onChange={handleChange}
+                placeholder="Material"
                 className="w-full border border-color4 p-2 rounded"
               />
-              <input 
-                type="text" 
-                name="color" 
-                value={formData.color} 
-                onChange={handleChange} 
-                placeholder="Color" 
+              <input
+                type="text"
+                name="color"
+                value={formData.color}
+                onChange={handleChange}
+                placeholder="Color"
                 className="w-full border border-color4 p-2 rounded"
               />
               <input
@@ -155,15 +191,15 @@ const Products = () => {
                 placeholder="Image URL"
                 className="w-full border border-color4 p-2 rounded"
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="bg-color6 text-text1 px-4 py-2 rounded hover:bg-text6 transition"
               >
                 {editingProductId ? 'Update Product' : 'Create Product'}
               </button>
-              <button 
-                type="button" 
-                onClick={toggleOverlay} 
+              <button
+                type="button"
+                onClick={toggleOverlay}
                 className="bg-color8 text-text1 px-4 py-2 rounded hover:bg-color10 transition"
               >
                 Cancel
@@ -171,7 +207,15 @@ const Products = () => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
+      <ProductForm
+  isOverlayOpen={isOverlayOpen}
+  editingProductId={editingProductId}
+  formData={formData}
+  setFormData={setFormData}
+  handleSubmit={handleSubmit}
+  toggleOverlay={toggleOverlay}
+/>
     </div>
   );
 };

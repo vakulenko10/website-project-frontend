@@ -43,7 +43,7 @@ const Cart = () => {
       {/* Cart Icon Button */}
       <button
         onClick={() => handleCartOpen()}
-        className="fixed bottom-4 right-4 bg-[#BAA291] text-[#5B0101] p-4 rounded-full shadow-lg"
+        className="fixed bottom-4 right-4 bg-[#BAA291] text-[#5B0101] p-4 rounded-full shadow-lg z-[10]"
       >
         <FaShoppingCart className="text-xl" /> {/* Cart icon in #5B0101 */}
       </button>
