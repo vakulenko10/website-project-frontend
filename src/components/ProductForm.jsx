@@ -1,32 +1,22 @@
-import React, { useState } from 'react';
+// ProductForm.js
+import React from 'react';
 
 const ProductForm = ({
   isOverlayOpen,
   editingProductId,
-  initialFormData,
+  formData = null,
+  setFormData,
   handleSubmit,
-  toggleOverlay,
+  toggleOverlay
 }) => {
-  const [formData, setFormData] = useState(
-    initialFormData || {
-      name: '',
-      description: '',
-      price: '',
-      material: '',
-      color: '',
-      images: [''],
-    }
-  );
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'images') {
-      setFormData({ ...formData, images: [value] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
-
+  console.log("formData in product form:",formData)
   if (!isOverlayOpen) return null;
 
   return (
@@ -35,12 +25,12 @@ const ProductForm = ({
         <h2 className="text-text3 font-display text-2xl mb-4">
           {editingProductId ? 'Edit Product' : 'Create New Product'}
         </h2>
-        <form onSubmit={(e) => handleSubmit(e, formData)} className="space-y-4 overflow-y-auto max-h-[70vh]">
+        <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto max-h-[70vh]">
           <input
             type="text"
             name="name"
             value={formData.name}
-            onChange={handleChange}
+            onChange={handleInputChange}
             placeholder="Product Name"
             className="w-full border border-color4 p-2 rounded"
             required
@@ -48,7 +38,7 @@ const ProductForm = ({
           <textarea
             name="description"
             value={formData.description}
-            onChange={handleChange}
+            onChange={handleInputChange}
             placeholder="Description"
             className="w-full border border-color4 p-2 rounded"
             required
@@ -57,7 +47,7 @@ const ProductForm = ({
             type="number"
             name="price"
             value={formData.price}
-            onChange={handleChange}
+            onChange={handleInputChange}
             placeholder="Price"
             className="w-full border border-color4 p-2 rounded"
             required
@@ -66,7 +56,7 @@ const ProductForm = ({
             type="text"
             name="material"
             value={formData.material}
-            onChange={handleChange}
+            onChange={handleInputChange}
             placeholder="Material"
             className="w-full border border-color4 p-2 rounded"
           />
@@ -74,7 +64,7 @@ const ProductForm = ({
             type="text"
             name="color"
             value={formData.color}
-            onChange={handleChange}
+            onChange={handleInputChange}
             placeholder="Color"
             className="w-full border border-color4 p-2 rounded"
           />
@@ -82,7 +72,7 @@ const ProductForm = ({
             type="text"
             name="images"
             value={formData.images[0] || ''}
-            onChange={(e) => handleChange({ target: { name: 'images', value: e.target.value } })}
+            onChange={(e) => setFormData({ ...formData, images: [e.target.value] })}
             placeholder="Image URL"
             className="w-full border border-color4 p-2 rounded"
           />
@@ -94,7 +84,7 @@ const ProductForm = ({
           </button>
           <button
             type="button"
-            onClick={toggleOverlay}
+            onClick={()=>{toggleOverlay(); setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] })}}
             className="bg-color8 text-text1 px-4 py-2 rounded hover:bg-color10 transition"
           >
             Cancel

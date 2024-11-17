@@ -4,7 +4,13 @@ import { fetchProducts, updateProduct } from '../services/productAPI';
 import './pages/Shop/Shop.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
-
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
 const Products = () => {
   const { user, addToCart, token, products, setProducts } = AuthData();
   console.log("user:", user)
@@ -12,7 +18,20 @@ const Products = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
   const [formData, setFormData] = useState(null);
   const [editingProductId, setEditingProductId] = useState(null);
-
+  // const debouncedUpdateProducts = debounce(async (updatedProducts) => {
+  //   if (token) {
+  //     try {
+  //       const data = await updateCart(updatedProducts);
+  //       if (data) {
+  //         console.log("Products updated in backend:", data);
+  //       } else {
+  //         console.error("Failed to update products:", data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error updating products:", error);
+  //     }
+  //   }
+  // }, 1000);
   useEffect(() => {
     // Zablokowanie przewijania tła, gdy overlay jest otwarty
     if (isOverlayOpen) {
@@ -22,34 +41,47 @@ const Products = () => {
     }
 
     // Pobieranie produktów
-    const fetchProductsData = async () => {
-      setLoading(true);
-      const productsResponse = await fetchProducts(token);
-      if (productsResponse) {
-        setProducts(productsResponse);
-      } else {
-        console.error('Failed to fetch products');
-      }
-      setLoading(false);
-    };
+    // const fetchProductsData = async () => {
+    //   setLoading(true);
+    //   const productsResponse = await fetchProducts(token);
+    //   if (productsResponse) {
+    //     setProducts(productsResponse);
+    //   } else {
+    //     console.error('Failed to fetch products');
+    //   }
+    //   setLoading(false);
+    // };
 
-    fetchProductsData();
+    // fetchProductsData();
 
     return () => {
       // Przywrócenie scrolla po zamknięciu komponentu
       document.body.style.overflow = 'auto';
     };
   }, [isOverlayOpen, token]);
+useEffect(()=>{
+  const fetchProductsData = async () => {
+    setLoading(true);
+    const productsResponse = await fetchProducts(token);
+    if (productsResponse) {
+      setProducts(productsResponse);
+    } else {
+      console.error('Failed to fetch products');
+    }
+    setLoading(false);
+  };
 
+  fetchProductsData();
+}, [])
   const toggleOverlay = () => {
     setIsOverlayOpen(!isOverlayOpen);
-    setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] }); // reset formularza
+    // setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] }); // reset formularza
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData(prevState => ({ ...prevState, [name]: value }));
+  // };
   const handleEditProduct = (product) =>{
     console.log("product:",product)
     setEditingProductId(product.id);
