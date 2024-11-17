@@ -1,10 +1,9 @@
-export const fetchProducts = async (token) =>{
+export const fetchProducts = async () =>{
     try {
       const response = await fetch('http://localhost:5000/products', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Include token for authentication
         },
       });
   
@@ -21,7 +20,7 @@ export const fetchProducts = async (token) =>{
       // setLoading(false);
     }
   }
-  
+
   
 export const updateProduct = async (editingProductId, token, formData) =>{
     const url = editingProductId
@@ -48,3 +47,24 @@ export const updateProduct = async (editingProductId, token, formData) =>{
         console.error('Error saving product:', error);
       }
   }
+
+  export const fetchProductById = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/products?id=${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch product');
+      }
+  
+      const data = await response.json();
+      console.log(data);  // Log the response to verify its structure
+      return data;
+    } catch (error) {
+      console.error('Error fetching product by ID:', error);
+    }
+  };

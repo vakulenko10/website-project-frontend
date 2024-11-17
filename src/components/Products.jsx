@@ -62,7 +62,7 @@ const Products = () => {
 useEffect(()=>{
   const fetchProductsData = async () => {
     setLoading(true);
-    const productsResponse = await fetchProducts(token);
+    const productsResponse = await fetchProducts();
     if (productsResponse) {
       setProducts(productsResponse);
     } else {
@@ -97,7 +97,7 @@ useEffect(()=>{
       const data = await updateProduct(editingProductId, token, formData);
       if (data) {
         alert(data.message || 'Product saved successfully');
-        const updatedProducts = await fetchProducts(token);
+        const updatedProducts = await fetchProducts();
         if (updatedProducts) setProducts(updatedProducts);
         toggleOverlay(); // zamknij nakładkę po zapisaniu
       } else {
