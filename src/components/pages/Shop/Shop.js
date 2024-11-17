@@ -7,7 +7,7 @@ const Shop = () => {
   return (
     <main>
         <Products />
-        <Cart />
+        {/* <Cart /> */}
     </main>
   )
 }

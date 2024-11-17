@@ -9,7 +9,7 @@ const debounce = (func, delay) => {
     };
   };
 const ShoppingCart = () => {
-    const { cart, updateCart, products, token } = AuthData();
+    const { cart, updateCart,deleteAllFromCart,deleteFromCart,products, token } = AuthData();
   const [localCart, setLocalCart] = useState([]);
   const getProductDetailsForCart = (cartItems, allProducts) => {
     return cartItems.map(cartItem => {
@@ -23,6 +23,7 @@ const ShoppingCart = () => {
   };
 
   useEffect(() => {
+    console.log('useEffect nr 1', 'cart:', cart, 'localCart:' ,localCart)
     if (cart && cart.items && products) {
       const cartWithDetails = getProductDetailsForCart(cart.items, products);
       const detailedCart = cartWithDetails.map(item => ({
@@ -54,12 +55,7 @@ const ShoppingCart = () => {
     // Call backend to clear the cart
     if (token) {
       try {
-        const response = await deleteAllProductsFromCart(token);
-        if (response) {
-          console.log('Cart cleared:', response);
-        } else {
-          console.error('Failed to clear the cart in backend:', response);
-        }
+        deleteAllFromCart()
       } catch (error) {
         console.error('Error clearing the cart:', error);
       }
@@ -89,6 +85,7 @@ const ShoppingCart = () => {
   const handleDeleteProduct = async (productId) => {
     // Remove the item from the local state
     const updatedCart = localCart.filter(item => item.product_id !== productId);
+    // console.log("updatedCart:", updatedCart)
     setLocalCart(updatedCart);
     
     // Update localStorage immediately
@@ -97,12 +94,7 @@ const ShoppingCart = () => {
     // Call the backend API to delete the product from the cart
     if (token) {
       try {
-        const response = await deleteProductFromCart(token, productId);
-        if (response) {
-          console.log(response);
-        } else {
-          console.error("Failed to delete product from backend", response);
-        }
+        deleteFromCart(productId)
       } catch (error) {
         console.error("Error deleting product from backend:", error);
       }
@@ -112,13 +104,16 @@ const ShoppingCart = () => {
     // debouncedUpdateCart(updatedCart.map(item => ({ product_id: item.product_id, quantity: item.quantity })));
   };
   useEffect(()=>{
+    console.log('useEffect nr 2', 'cart:', cart, 'localCart:' ,localCart)
     localStorage.setItem('cart', JSON.stringify(localCart));
+    console.log('localCart:', localCart)
+    console.log("cart:", cart)
   }, [localCart])
   
   return (
     <div className="w-96 bg-white p-4 rounded-lg shadow-lg h-96 relative">
               <h2 className="text-xl font-bold mb-4">Shopping Cart</h2>
-              {!cart || cart.items.length === 0 ? (
+              {!localCart || localCart.length === 0 ? (
                 <p>Your cart is empty.</p>
               ) : (
                 <div className="space-y-4">

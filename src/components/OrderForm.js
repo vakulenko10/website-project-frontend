@@ -2,7 +2,7 @@ import React from 'react'
 
 const OrderForm = ({prevTab, nextTab, setActiveTab, activeTab}) => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs w-full overflow-hidden relative">
+    <div className="orderForm bg-white p-8 rounded-lg shadow-lg max-w-1/2  overflow-scroll custom-scrollbar relative">
               {/* Strzałki nawigacyjne */}
               <button
                 onClick={prevTab}
@@ -43,7 +43,7 @@ const OrderForm = ({prevTab, nextTab, setActiveTab, activeTab}) => {
               </div>
 
               {/* Tab Content */}
-              <div className="max-h-80 overflow-y-auto">
+              <div className="max-h-full overflow-y-auto">
                 {activeTab === "contact" && (
                   <div>
                     <h3 className="text-xl font-semibold">

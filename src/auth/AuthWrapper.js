@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 import { refreshAccessToken } from "../services/authAPI";
 import { useNavigate } from "react-router-dom";
+import { deleteAllProductsFromCart, deleteProductFromCart } from "../services/cartAPI";
 
 
 const AuthContext = createContext();
@@ -239,10 +240,12 @@ export const AuthWrapper = ({ children }) => {
   };
 
   const updateCart = async (updatedItems) => {
+    // setCart({items:updatedItems})
     try {
       const data = await updateCartItems(updatedItems, token);
       if (data) {
         console.log("Cart updated:", data);
+        setCart(data)
         return data;
       } else {
         console.log('Error updating the cart:', data);
@@ -251,7 +254,37 @@ export const AuthWrapper = ({ children }) => {
       console.error('Error updating cart:', error);
     }
   };
-
+  const deleteAllFromCart = async () =>{
+   
+    try {
+      const response = await deleteAllProductsFromCart(token);
+      if (response) {
+        setCart({ items: [], total: 0.0 })
+        console.log('Cart cleared:', response);
+      } else {
+        console.error('Failed to clear the cart in backend:', response);
+      }
+    } catch (error) {
+      console.error('Error clearing the cart:', error);
+    }
+    
+  }
+  const deleteFromCart = async (productId) =>{
+    try {
+      const response = await deleteProductFromCart(token, productId);
+      if (response) {
+        // const updatedCart = cart.items.filter(item => item.product_id !== productId);
+        // console.log('udatedCart in authWrapper:', updatedCart)
+        setCart(response)
+        console.log(response);
+      } else {
+        console.error("Failed to delete product from backend", response);
+      }
+    } catch (error) {
+      console.error("Error deleting product from backend:", error);
+    }
+    
+  }
   useEffect(() => {
     if (token) {
       fetchCart();
@@ -309,7 +342,7 @@ export const AuthWrapper = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, logout, handleLogin, handleSignup, cart, loading, addToCart, fetchCart, updateCart, token, setToken, products, setProducts }}>
+    <AuthContext.Provider value={{ user, logout, handleLogin, handleSignup, cart, loading, addToCart, fetchCart, updateCart, deleteAllFromCart,deleteFromCart, token, setToken, products, setProducts }}>
       {showRefreshPrompt && (
         <div style={{ padding: '20px', backgroundColor: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' }} className="h-screen flex-col flex items-center justify-center absolute bottom-0 z-1000">
           <p>Your session is about to expire. Please refresh your token.</p>
