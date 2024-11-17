@@ -4,6 +4,8 @@ import { fetchProducts, updateProduct } from '../services/productAPI';
 import './pages/Shop/Shop.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
+import { useNavigate } from 'react-router-dom';
+
 const debounce = (func, delay) => {
   let timeout;
   return (...args) => {
@@ -18,6 +20,7 @@ const Products = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
   const [formData, setFormData] = useState(null);
   const [editingProductId, setEditingProductId] = useState(null);
+  const navigate = useNavigate();
   // const debouncedUpdateProducts = debounce(async (updatedProducts) => {
   //   if (token) {
   //     try {
@@ -124,7 +127,7 @@ useEffect(()=>{
       <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
       <div className="products-container">
         {products.map((product) => (
-          <div key={product.id} className="product-card hover:">
+          <div key={product.id} className="product-card bg-text1 hover:">
             <div className="flex justify-between items-center mb-0 pb-0">
               <span className="text-text7 font-serif text-lg">
                 {product.name}
@@ -155,6 +158,8 @@ useEffect(()=>{
               <span className="text-text3 font-bold">${product.price}</span>
             </div>
             {/* Only show the edit button for admin */}
+            <div className='flex justify-between'>
+            <button onClick={()=>{navigate(`/product/${product.id}`)}} className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</button>
             {user.isAdmin && (
               <button
                 onClick={() => handleEditProduct(product)
@@ -164,6 +169,7 @@ useEffect(()=>{
                 Edit
               </button>
             )}
+            </div>
           </div>
         ))}
       </div>

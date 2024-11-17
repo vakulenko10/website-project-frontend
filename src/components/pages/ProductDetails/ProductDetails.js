@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchProductById } from '../../../services/productAPI'; // Assume this API call exists
+import Container from '../../Container';
 
 const ProductDetails = () => {
   const { id } = useParams(); // Get the product ID from the route
   const [product, setProduct] = useState(null);
-  
+
   useEffect(() => {
     const fetchProduct = async () => {
       const productData = await fetchProductById(id); // Fetch product details by ID
@@ -18,7 +19,8 @@ const ProductDetails = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <div className="product-detail bg-bg5 min-h-screen py-8">
+    <div className="product-detail bg-bg5 min-h-screen py-8 pt-[100px]">
+      <Container>
       <h1 className="text-3xl font-display">{product.name}</h1>
       <img
         src={product.images[0]}
@@ -29,6 +31,7 @@ const ProductDetails = () => {
       <p>Price: ${product.price}</p>
       <p>Material: {product.material}</p>
       <p>Color: {product.color}</p>
+      </Container>
     </div>
   );
 };
