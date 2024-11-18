@@ -142,12 +142,12 @@ useEffect(()=>{
                 {product.name}
               </span>
               <div className="pl-2 hover:text-text2 text-text3">
-                <button
+                {user.isAuthenticated&&<button
                   onClick={() => addToCart(product.id, 1)}
                   className="px-3 py-1 rounded  transition"
                 >
                   <FaShoppingCart className="text-xl" />
-                </button>
+                </button>}
               </div>
             </div>
             <div className="flex justify-center mb-0  pb-0">

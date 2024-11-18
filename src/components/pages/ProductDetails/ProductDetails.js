@@ -97,12 +97,12 @@ const ProductDetails = () => {
                 Edit
               </button>
             )}
-            <button
+            {user.isAuthenticated&&<button
                   onClick={() => addToCart(product.id, 1)}
                   className=" transition w-10 flex justify-center rounded-full items-center"
                 >
                   <FaShoppingCart className="text-6xl fill-text3 hover:fill-text6 transition" />
-                </button>
+                </button>}
                 
           </div>
         </div>

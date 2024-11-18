@@ -115,7 +115,7 @@ export const AuthWrapper = ({ children }) => {
   const logout = () => {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
-    navigate('/shop')
+    // navigate('/shop')
     // Preserve products in localStorage
     const cachedProducts = localStorage.getItem("products");
 
