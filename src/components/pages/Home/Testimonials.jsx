@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import {getRandomRotation, getRandomStickerPosition, testimonialsData} from '../../../services/staticVars'
 import Container from "../../Container";
+import { Link } from "react-router-dom";
 
 const Testimonials = () => {
 
@@ -34,13 +35,20 @@ const Testimonials = () => {
                     Testimonials
                 </h1>
             <Container classes="w-screen min-h-screen flex flex-col sm:grid grid-cols-1 justify-center items-center text-center sm:grid-cols-2 md:grid-cols-3 gap-8 py-[10rem] md:px-12">
-              
+            <Link to="https://www.etsy.com/shop/anfihandmade/?etsrc=sdt#reviews" target="_blank"><motion.div
+                  key='sadgs'
+                  className=" testimonial p-3 md:p-6 bg-white h-[10rem] w-[10rem] sm:h-[12rem] sm:w-[12rem]  md:h-[13rem] md:w-[13rem]  xl:h-[15rem] xl:w-[15rem] shadow-lg flex flex-col justify-center items-center text-center transform relative justify-self-center"
+                  style={{ rotate: `${getRandomRotation()}deg` }}
+                >
+                  <p className=" mt-4 md:mt-10 font-display font-normal text-text5">Click to see more </p>
+                  <p className="text-sm mt-2 font-display text-text3">by clicking on that sticker, you will be redirected to the etsy testimonials page</p>
+                </motion.div></Link>
             {testimonialsData.map((testimonial, index) => {
               const stickerPosition = getRandomStickerPosition();
               return (
                 <motion.div
                   key={index}
-                  className=" p-3 md:p-6 bg-white h-[10rem] w-[10rem] sm:h-[12rem] sm:w-[12rem]  md:h-[13rem] md:w-[13rem]  xl:h-[15rem] xl:w-[15rem] shadow-lg flex flex-col justify-center items-center text-center transform relative justify-self-center"
+                  className=" testimonial p-3 md:p-6 bg-white h-[10rem] w-[10rem] sm:h-[12rem] sm:w-[12rem]  md:h-[13rem] md:w-[13rem]  xl:h-[15rem] xl:w-[15rem] shadow-lg flex flex-col justify-center items-center text-center transform relative justify-self-center"
                   style={{ rotate: `${getRandomRotation()}deg` }}
                 >
                   {/* Sticker with random chaotic positioning */}

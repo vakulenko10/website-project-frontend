@@ -122,11 +122,6 @@ export const highLightProducts = [
       text: "Fast shipping and great customer service. A++",
       sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
     },
-    {
-      name: "Michael",
-      text: "Fast shipping and great customer service. A++",
-      sticker: "https://res.cloudinary.com/dujdz2jbl/image/upload/v1731341591/frontend/ez5ghyebe641wy2oqnyd.png",
-    },
   ];
 
   export const links = [

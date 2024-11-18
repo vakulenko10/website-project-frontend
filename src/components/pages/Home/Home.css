@@ -157,5 +157,16 @@
    display: table;
    clear: both;              /* Ensures that the layout clears float after the image */
  }
- 
 
+ .painting, .testimonial{
+  transition: all .3s ease-in-out;
+ }
+ .testimonial:hover{
+  -webkit-filter: drop-shadow(0 0 10px #00000077);
+  filter: drop-shadow(0 0 10px #00000092);
+ }
+.painting:hover{ 
+  transform: scale(1.02);
+  -webkit-filter: drop-shadow(0 0 20px #ffffff77);
+  filter: drop-shadow(0 0 20px #ffffff92);
+}

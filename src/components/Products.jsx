@@ -21,6 +21,7 @@ const Products = () => {
   const [formData, setFormData] = useState({ color:'', description: '', id: '', images: [], material: ''
   });
   const [editingProductId, setEditingProductId] = useState(null);
+  const [localProducts, setLocalProducts] = useState(null);
   const navigate = useNavigate();
   // const debouncedUpdateProducts = debounce(async (updatedProducts) => {
   //   if (token) {
@@ -69,6 +70,7 @@ useEffect(()=>{
     const productsResponse = await fetchProducts();
     if (productsResponse) {
       setProducts(productsResponse);
+      localStorage.setItem("products", JSON.stringify(productsResponse))
     } else {
       console.error('Failed to fetch products');
     }
@@ -111,7 +113,13 @@ useEffect(()=>{
       console.error('Error saving product:', error);
     }
   };
-
+  useEffect(() => {
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+      setLocalProducts(JSON.parse(savedProducts));
+    }
+    setLoading(false);
+  }, []);
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -127,7 +135,7 @@ useEffect(()=>{
 
       <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
       <div className="products-container">
-        {products.map((product) => (
+        {localProducts.map((product) => (
           <div key={product.id} className="product-card bg-text1 hover:">
             <div className="flex justify-between items-center mb-0 pb-0">
               <span className="text-text7 font-serif text-lg">
