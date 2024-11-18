@@ -9,7 +9,7 @@ const debounce = (func, delay) => {
     };
   };
 const ShoppingCart = () => {
-    const { cart, updateCart,deleteAllFromCart,deleteFromCart,products, token } = AuthData();
+    const { cart, updateCart,deleteAllFromCart,deleteFromCart,products, token} = AuthData();
   const [localCart, setLocalCart] = useState([]);
   const getProductDetailsForCart = (cartItems, allProducts) => {
     return cartItems.map(cartItem => {
@@ -111,18 +111,18 @@ const ShoppingCart = () => {
   }, [localCart])
   
   return (
-    <div className="w-96 bg-white p-4 rounded-lg shadow-lg h-96 relative">
-              <h2 className="text-xl font-bold mb-4">Shopping Cart</h2>
+    <div className="w-full md:max-w-1/2 mt-0 !space-x-0 !ml-0  h-full overflow-scroll custom-scrollbar bg-white px-4  rounded-lg shadow-lg relative py-0">
+              <h2 className="sticky w-full bg-text1 top-0 inset-0 z-10 py-4 text-xl font-bold">Shopping Cart</h2>
               {!localCart || localCart.length === 0 ? (
                 <p>Your cart is empty.</p>
               ) : (
-                <div className="space-y-4">
-                  <div className="custom-scrollbar max-h-64 overflow-y-auto">
-                    <ul className="space-y-4">
+                <div className="">
+                  <div className="custom-scrollbar h-full overflow-y-auto">
+                    <ul className="flex flex-col gap-2 overflow-x-hidden box-border">
                       {localCart.map((item, index) => (
                         <li
                           key={item.product_id}
-                          className="flex items-center bg-gray-100 p-4 rounded-lg"
+                          className="flex items-center w-full max-w-full box-border bg-gray-100 p-2 md:p-4 rounded-lg"
                         >
                           <div className="w-16 h-16 flex-shrink-0 mr-4">
                             <img
@@ -139,7 +139,7 @@ const ShoppingCart = () => {
                             <p className="text-[#5B0101] font-bold mt-1">
                               Price: ${item.price}
                             </p>
-                            <div className="flex items-center border border-black rounded-sm w-20 h-5 px-3 py-3 space-x-1">
+                            <div className="flex items-center border border-black rounded-sm w-20 h-5 px-3 py-3 ">
                               <button
                                 onClick={() =>
                                   handleQuantityChange(index, item.quantity - 1)
@@ -192,7 +192,10 @@ const ShoppingCart = () => {
                       ))}
                     </ul>
                   </div>
-                  <div className="border-t pt-4 flex justify-between items-center justify-self-end">
+                  
+                </div>
+              )}
+              <div className="sticky w-full bg-text1 bottom-0 z-10 border-t p-4 flex justify-between items-center justify-self-end">
                     <h3 className="text-lg font-semibold text-green-600">
                       Total: $
                       {localCart
@@ -206,8 +209,6 @@ const ShoppingCart = () => {
                       Delete All
                     </button>
                   </div>
-                </div>
-              )}
             </div>
   )
 }

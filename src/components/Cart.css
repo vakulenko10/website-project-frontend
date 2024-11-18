@@ -1,3 +1,4 @@
+
 /* Tailwind Custom Style: Remove Spinner Arrows */
 .quantity-input::-webkit-outer-spin-button,
 .quantity-input::-webkit-inner-spin-button {
@@ -8,6 +9,7 @@
 /* Remove the arrows for Firefox */
 .quantity-input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input[type=number]::-webkit-inner-spin-button,

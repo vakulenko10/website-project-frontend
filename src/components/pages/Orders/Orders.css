@@ -43,33 +43,6 @@ h2, h3, h4 {
     width: 100px;
 }
 
-.order-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.order-form input,
-.order-form textarea {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.order-form button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.order-form button:hover {
-    background-color: #218838;
-}
 
 button[type="button"] {
     background-color: #007bff;

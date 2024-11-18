@@ -23,6 +23,20 @@ const Products = () => {
   const [editingProductId, setEditingProductId] = useState(null);
   const [localProducts, setLocalProducts] = useState(null);
   const navigate = useNavigate();
+  const [hoveredImageIndex, setHoveredImageIndex] = useState({});
+  const handleMouseEnter = (productId) => {
+    setHoveredImageIndex((prev) => ({
+      ...prev,
+      [productId]: (prev[productId] + 1) % products.find(p => p.id === productId).images.length,
+    }));
+  };
+
+  const handleMouseLeave = (productId) => {
+    setHoveredImageIndex((prev) => ({
+      ...prev,
+      [productId]: 0, // Reset to the first image when mouse leaves
+    }));
+  };
   // const debouncedUpdateProducts = debounce(async (updatedProducts) => {
   //   if (token) {
   //     try {
@@ -136,7 +150,8 @@ useEffect(()=>{
       <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
       <div className="products-container">
         {localProducts.map((product) => (
-          <div key={product.id} className="product-card bg-text1 hover:">
+          <div key={product.id}  onMouseEnter={() => handleMouseEnter(product.id)}
+          onMouseLeave={() => handleMouseLeave(product.id)} className="product-card bg-text1 hover:">
             <div className="flex justify-between items-center mb-0 pb-0">
               <span className="text-text7 font-serif text-lg">
                 {product.name}
@@ -153,9 +168,10 @@ useEffect(()=>{
             <div className="flex justify-center mb-0  pb-0">
               {product.images && product.images.length > 0 && (
                 <img
-                  src={product.images[0]}
+                src={product.images[hoveredImageIndex[product.id] || 0]}
                   alt={product.name}
                   className="product-image"
+                 
                 />
               )}
             </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const OrderForm = ({prevTab, nextTab, setActiveTab, activeTab}) => {
   return (
-    <div className="orderForm bg-white p-8 rounded-lg shadow-lg max-w-1/2  overflow-scroll custom-scrollbar relative">
+    <div className="order-form bg-white !ml-0 mt-0  p-8 rounded-lg shadow-lg w-full md:max-w-1/2  h-full  overflow-scroll custom-scrollbar relative">
               {/* Strzałki nawigacyjne */}
               <button
                 onClick={prevTab}

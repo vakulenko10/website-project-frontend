@@ -76,7 +76,7 @@ export const Orders = () => {
     if (loading) return <div>Loading orders...</div>;
 
     return (
-        <main>
+        <main className='pt-[50px]'>
             <div className="page orders">
             {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <h2>Orders Page</h2>

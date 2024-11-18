@@ -77,7 +77,7 @@ const ProductDetails = () => {
             <h1 className="text-text3 font-serif font-extrabold text-6xl pb-4">
               ${product.price}{" "}
               <span className="line-through text-text6 decoration-4 decoration-text3">
-                {(product.price * 1.4).toFixed(2)}
+                ${(product.price * 1.4).toFixed(2)}
               </span>
             </h1>
             <p className="text-color4 font-display  text-2xl">
