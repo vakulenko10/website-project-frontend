@@ -114,12 +114,13 @@ export const Orders = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <Checkout order={order} onPaymentSuccess={handlePaymentSuccess} />
+                            {order.status !== 'Paid' && order.status !== 'payment_successful'&& order.status !== 'done' && !user.isAdmin && (<Checkout order={order} onPaymentSuccess={handlePaymentSuccess} />)}
+                            {order.user_id === user.id?<h1 className='text-text3'>that is your order</h1>:<></>}
                             {user.isAdmin && (
                                 <button onClick={() => handleEditClick(order)}>Edit Order</button>
                             )}
                         </div>
-                    ))}
+                    ))} 
                 </div>
             </div>
         </main>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { AuthData } from '../auth/AuthWrapper';
 
-const PaymentForm = ({ order, onPaymentSuccess }) => {
+const PaymentForm = ({ order, onPaymentSuccess, user }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -38,7 +38,7 @@ const PaymentForm = ({ order, onPaymentSuccess }) => {
       const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
-          billing_details: { name: 'Valerii Brazuka' },
+          billing_details: { name: user.name, email: user.email},
         },
       });
 

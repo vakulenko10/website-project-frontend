@@ -5,10 +5,10 @@ import PaymentForm from './PaymentForm';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
-const Checkout = ({ order, onPaymentSuccess}) => {
+const Checkout = ({ order, onPaymentSuccess, user}) => {
   return (
     <Elements stripe={stripePromise}>
-      <PaymentForm order={order} onPaymentSuccess={onPaymentSuccess}/> {/* Pass order to PaymentForm */}
+      <PaymentForm order={order} onPaymentSuccess={onPaymentSuccess} user={user}/> {/* Pass order to PaymentForm */}
     </Elements>
   );
 };

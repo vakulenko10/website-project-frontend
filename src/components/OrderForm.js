@@ -4,7 +4,7 @@ import { createOrder, getOrderById } from "../services/orderAPI";
 import Checkout from "./Checkout";
 
 const OrderForm = ({ prevTab, nextTab, setActiveTab, activeTab }) => {
-  const { token, cart } = AuthData();
+  const { token, cart, deleteAllFromCart } = AuthData();
 
   // State management for form fields
   const [contactInfo, setContactInfo] = useState({
@@ -42,6 +42,7 @@ const OrderForm = ({ prevTab, nextTab, setActiveTab, activeTab }) => {
 
       if (orderResponse) {
         setOrderId(orderResponse.order_id);
+        deleteAllFromCart();
         try{
           const detailedOrder = await getOrderById(orderResponse.order_id, token)
           if (detailedOrder){
@@ -54,6 +55,7 @@ const OrderForm = ({ prevTab, nextTab, setActiveTab, activeTab }) => {
           setMessage(error.message || "Failed to receive order");
         }
         console.log("Order created:", orderResponse);
+        localStorage.setItem('cart', JSON.stringify([]))
         setMessage("Order created successfully!");
         setActiveTab("payment");
       } else {
@@ -204,7 +206,7 @@ useEffect(()=>{
           />
           </div>
         )}
-        {activeTab === "payment" && (
+        {order?.id && activeTab === "payment" && (
           <div>
             <h3 className="text-xl font-semibold">Payment Information</h3>
             {/* <input
@@ -215,7 +217,7 @@ useEffect(()=>{
               className="w-full border-b-2 border-gray-300 p-2"
             /> */}
             {/* <CardElement className="p-4 border rounded" /> */}
-            <Checkout order={order} onPaymentSuccess={handlePaymentSuccess} />
+            <Checkout order={order} onPaymentSuccess={handlePaymentSuccess} user={contactInfo}/>
             {/* <button onClick={handlePaymentSubmit} disabled={loading}>
               {loading ? 'Processing Payment...' : 'Pay Now'}
             </button> */}
@@ -223,7 +225,7 @@ useEffect(()=>{
         )}
         {JSON.stringify(order)}
         <button onClick={handleOrderSubmit} disabled={loading}>
-              {loading ? "Creating Order..." : "Next"}
+              {loading ? "Creating Order..." : "Create"}
             </button>
       </div>
 
