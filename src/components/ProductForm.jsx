@@ -1,5 +1,6 @@
 // ProductForm.js
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AuthData } from '../auth/AuthWrapper';
 
 const ProductForm = ({
   isOverlayOpen,
@@ -9,6 +10,7 @@ const ProductForm = ({
   handleSubmit,
   toggleOverlay
 }) => {
+  const {token} = AuthData();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -39,11 +41,22 @@ const ProductForm = ({
       images: newImages
     }));
   };
+  useEffect(() => {
+    // Zablokowanie przewijania tła, gdy overlay jest otwarty
+    if (isOverlayOpen) {
+      document.body.style.overflow = 'hidden'; // Zablokowanie scrolla strony
+    } else {
+      document.body.style.overflow = 'auto'; // Przywrócenie scrolla strony
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOverlayOpen, token]);
   console.log("formData in product form:",formData)
   if (!isOverlayOpen) return null;
 
   return (
-    <div className="overlay">
+    <div className="overlay max-w-screen">
       <div className="overlay-content">
         <h2 className="text-text3 font-display text-2xl mb-4">
           {editingProductId ? 'Edit Product' : 'Create New Product'}

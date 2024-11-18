@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Carousel = ({ slides }) => {
+const Carousel = ({ slides, classes }) => {
   let [current, setCurrent] = useState(0);
 
   const previousSlide = () => {
@@ -14,7 +14,7 @@ const Carousel = ({ slides }) => {
   };
 
   return (
-    <div className="relative w-full h-[400px] overflow-hidden">
+    <div className={`relative w-full h-[400px] overflow-hidden ${classes}`}>
       {/* Image container */}
       <div
         className="flex h-full w-full  transition-transform duration-500 ease-in-out"
@@ -23,7 +23,7 @@ const Carousel = ({ slides }) => {
         }}
       >
         {slides.map((s, index) => (
-          <div key={index} className="relative h-full w-full flex items-center justify-center flex-shrink-0">
+          <div key={index} className="relative h-full w-full flex items-center justify-center flex-shrink-0 p-3">
             <img
               src={s}
               alt={`Slide ${index + 1}`}
@@ -34,16 +34,16 @@ const Carousel = ({ slides }) => {
       </div>
 
       {/* Navigation buttons */}
-      <div className=" absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center px-4">
+      <div className=" absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center ">
         <button
           onClick={previousSlide}
-          className="text-white text-4xl bg-gray-800 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75"
+          className="text-white text-xl bg-text2 bg-opacity-50 px-4 rounded-full hover:bg-opacity-75"
         >
           &#10094;
         </button>
         <button
           onClick={nextSlide}
-          className="text-white text-4xl bg-gray-800 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75"
+          className="text-white text-xl bg-text2 bg-opacity-50 px-4 rounded-full hover:bg-opacity-75"
         >
           &#10095;
         </button>
