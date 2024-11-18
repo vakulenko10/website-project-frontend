@@ -1,0 +1,49 @@
+/* Tailwind Custom Style: Remove Spinner Arrows */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove the arrows for Firefox */
+.quantity-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.cart-container {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Ukrycie koszyka początkowo */
+  width: 400px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: right 0.3s ease-in-out; /* Animacja przesuwania koszyka */
+}
+
+.cart-container.cart-visible {
+  right: 0; /* Koszyk przesuwa się na miejsce */
+}
+
+.cart-content {
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Dodatkowe style dla kontenerów i przycisków */
+.cart-content h2, .cart-content h3 {
+  margin-bottom: 20px;
+}
+
+.cart-content .space-y-4 {
+  margin-top: 20px;
+}

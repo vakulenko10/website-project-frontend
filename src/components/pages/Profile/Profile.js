@@ -6,17 +6,19 @@ import { AuthData } from '../../../auth/AuthWrapper';
 import RefreshToken from '../../RefreshToken';
 import { getProfile } from '../../../services';
 const Profile = () => {
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState(localStorage.getItem("user")?localStorage.getItem("user"):{
     username: '',
     email: '',
     role: '',
   });
-
+//  const {user} = AuthData()
+//  console.log("user in profile component:", user)
   const [isEditing, setIsEditing] = useState(false); // Edit mode toggle
   const [loading, setLoading] = useState(true); // Loading state
   const { token } = AuthData();
   // Fetch profile data from the API when the component mounts
   useEffect(() => {
+    
     const fetchProfileData = async () => {
       try {
         setLoading(true);

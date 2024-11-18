@@ -21,25 +21,27 @@ const IntroSection = () => {
 
       <Container>
         
-        <div class="angry-grid z-10 w-full p-10">
-          <img
-            id="item-3"
-            src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731174349/frontend/h8aaqo6mbzzwo0rnpqez.png"
-            alt="Left Visual"
-            className="left-visual rounded-[60px] border-8 border-text3 "
-            draggable="false"
-          />
+        <div className="relative w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block">
+          
+          <h1 id="item-0" className="text-start font-serif font-extrabold text-3xl sm:text-5xl  xl:text-[5rem]  text-text1 text-wrap break-words py-3">adipiscing elit, 
           <img
           id="item-1"
             src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165684/frontend/ppdely8eybqia7ho5ubf.png"
             alt="Right Visual"
-            className="right-visual rounded-[60px] border-8   border-text3"
+            className="float-right w-1/2 h-[20rem] object-cover object-bottom overflow-hidden  m-2 border-text3 border-[1rem] rounded-[5rem]"
             draggable="false"
           />
-          <h1 id="item-0" className="intro-text text-text1 text-2xl lg:text-6xl font-serif font-extrabold text-left flex text-wrap items-end tracking-loose leading-relaxed ">adipiscing elit, sed do adipiscing elit,   </h1>
-          <h1 id="item-2" className="intro-text text-text1 text-2xl lg:text-6xl font-serif font-extrabold text-left">lorem ipsum dolor sit sdsa  </h1>
-          <h1 id="item-4" className="intro-text text-text1 text-2xl lg:text-6xl font-serif font-extrabold text-left">adipiscing elit,sdd sdasfdgsedssdfssdfsds  </h1>
-          <h1 id="item-5" className="intro-text text-text1 text-2xl lg:text-6xl font-serif font-extrabold text-left">lorem ipsum dolor sit sdsa  </h1>
+          sed do adipiscing elit,  lorem ipsum dolor sit sdsa  adipiscing elit,sdd sdasfdgsedssdfssdfsds lorem ipsum dolor sit sdsa 
+            <img
+            id="item-3"
+            src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731174349/frontend/h8aaqo6mbzzwo0rnpqez.png"
+            alt="Left Visual"
+            className="float-left w-1/2 h-[15rem] object-cover object-bottom overflow-hidden  border-text3 border-[1rem] rounded-[5rem] m-2 "
+            draggable="false"
+          />adipiscing elit, sed do  asdfasfasdg  </h1>
+          
+          
+          
           
         </div>
       </Container>

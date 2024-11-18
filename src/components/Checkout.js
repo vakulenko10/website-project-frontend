@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 
-const stripePromise = loadStripe('pk_test_51PErshJiYElw1VN6T9wRwkl4OAkGQloWVC2zPVoE19kGERb8ccj3znnTo3Lu6GQNxRcFz3gERmxe71FtlYspvPaG00wIXTHfxw');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = ({ order, onPaymentSuccess}) => {
   return (
