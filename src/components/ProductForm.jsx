@@ -4,7 +4,7 @@ import React from 'react';
 const ProductForm = ({
   isOverlayOpen,
   editingProductId,
-  formData = null,
+  formData,
   setFormData,
   handleSubmit,
   toggleOverlay
@@ -14,6 +14,29 @@ const ProductForm = ({
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+  const handleImageChange = (e, index) => {
+    const newImages = [...formData.images, e.target.value];
+    setFormData(prevState => ({
+      ...prevState,
+      images: newImages
+    }));
+  };
+
+  const addImageField = () => {
+    setFormData(prevState => ({
+      ...prevState,
+      images: [...prevState.images, '']
+    }));
+  };
+
+  const removeImageField = (index) => {
+    const newImages = [...formData.images];
+    newImages.splice(index, 1);
+    setFormData(prevState => ({
+      ...prevState,
+      images: newImages
     }));
   };
   console.log("formData in product form:",formData)
@@ -68,14 +91,38 @@ const ProductForm = ({
             placeholder="Color"
             className="w-full border border-color4 p-2 rounded"
           />
-          <input
-            type="text"
-            name="images"
-            value={formData.images[0] || ''}
-            onChange={(e) => setFormData({ ...formData, images: [e.target.value] })}
-            placeholder="Image URL"
-            className="w-full border border-color4 p-2 rounded"
-          />
+          {/* Image input fields */}
+          {formData.images.map((image, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <input
+                type="text"
+                name={`image-${index}`}
+                value={image}
+                onChange={(e) => handleImageChange(e, index)}
+                placeholder={`Image URL ${index + 1}`}
+                className="w-full border border-color4 p-2 rounded"
+              />
+              {/* Button to remove image field */}
+              {formData.images.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeImageField(index)}
+                  className="bg-red-500 text-white p-2 rounded"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+
+          {/* Button to add more image fields */}
+          <button
+            type="button"
+            onClick={addImageField}
+            className="text-blue-500 underline mt-2"
+          >
+            Add Another Image
+          </button>
           <button
             type="submit"
             className="bg-color6 text-text1 px-4 py-2 rounded hover:bg-text6 transition"

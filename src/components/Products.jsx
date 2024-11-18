@@ -18,7 +18,8 @@ const Products = () => {
   console.log("user:", user)
   const [loading, setLoading] = useState(true);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState({ color:'', description: '', id: '', images: [], material: ''
+  });
   const [editingProductId, setEditingProductId] = useState(null);
   const navigate = useNavigate();
   // const debouncedUpdateProducts = debounce(async (updatedProducts) => {
