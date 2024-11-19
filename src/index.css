@@ -186,12 +186,12 @@ code {
 }
 .cart-no-scroll{
   position: fixed;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 @media (max-width: 767px) {
   .no-scroll {
     
     position: fixed;
-      overflow: hidden;
+    overflow-y: hidden;
   }
 }

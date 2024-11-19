@@ -5,6 +5,7 @@ import './pages/Shop/Shop.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
 import { Link, useNavigate } from 'react-router-dom';
+import Filter from './Filter';
 
 const debounce = (func, delay) => {
   let timeout;
@@ -22,6 +23,7 @@ const Products = () => {
   });
   const [editingProductId, setEditingProductId] = useState(null);
   const [localProducts, setLocalProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null)
   const navigate = useNavigate();
   const [hoveredImageIndex, setHoveredImageIndex] = useState({});
   const handleMouseEnter = (productId) => {
@@ -118,6 +120,8 @@ useEffect(()=>{
       if (data) {
         alert(data.message || 'Product saved successfully');
         const updatedProducts = await fetchProducts();
+        localStorage.setItem('products', JSON.stringify(updatedProducts))
+        setLocalProducts(updatedProducts)
         if (updatedProducts) setProducts(updatedProducts);
         toggleOverlay(); // zamknij nakładkę po zapisaniu
       } else {
@@ -148,8 +152,62 @@ useEffect(()=>{
       )}
 
       <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
+      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'}/>
       <div className="products-container">
-        {localProducts.map((product) => (
+        {filteredProducts&&filteredProducts.map((product) => (
+            <div key={product.id}  className="product-card bg-text1 hover:">
+            <div className="flex justify-between items-center mb-0 pb-0">
+              <span className="text-text7 font-serif text-lg">
+                {product.name}
+              </span>
+              <div className="pl-2 hover:text-text2 text-text3">
+                {user.isAuthenticated&&<button
+                  onClick={() => addToCart(product.id, 1)}
+                  className="px-3 py-1 rounded  transition"
+                >
+                  <FaShoppingCart className="text-xl" />
+                </button>}
+              </div>
+            </div>
+            <div className="flex justify-center mb-0  pb-0">
+              {/* {product.images && product.images.length > 0 && (
+                <img
+                src={product.images[hoveredImageIndex[product.id] || 0]}
+                  alt={product.name}
+                  className="product-image"
+                 
+                />
+              )} */}
+              <img
+                src={product.images[0]}
+                  alt={product.name}
+                  className="product-image"
+                 
+                />
+            </div>
+            <div className="flex justify-between items-center mt-auto pt-0">
+              <span className="text-text5">Material:</span>
+              <span className="text-text5">{product.material}</span>
+            </div>
+            <div className="flex justify-between items-center mt-auto pt-0">
+              <span className="text-text3 font-bold">${product.price}</span>
+            </div>
+            {/* Only show the edit button for admin */}
+            <div className='flex justify-between'>
+            <Link to={`/product/${product.id}`} target="_blank" className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</Link>
+            {user.isAdmin && (
+              <button
+                onClick={() => handleEditProduct(product)
+                }
+                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
+              >
+                Edit
+              </button>
+            )}
+            </div>
+          </div>
+        ))}
+        {!filteredProducts&&localProducts.map((product) => (
             <div key={product.id}  className="product-card bg-text1 hover:">
             <div className="flex justify-between items-center mb-0 pb-0">
               <span className="text-text7 font-serif text-lg">

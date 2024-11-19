@@ -3,13 +3,14 @@ import './Orders.css';
 import { AuthData } from '../../../auth/AuthWrapper';
 import Checkout from '../../Checkout';
 import { editTheOrder, getOrders } from '../../../services';
+import Filter from '../../Filter';
 
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [editOrder, setEditOrder] = useState(null);
     const [loading, setLoading] = useState(true);
     const { user, token } = AuthData();
-
+    const [filteredOrders, setFilteredOrders] = useState(null);
     const fetchOrders = async () => {
         setLoading(true);
         try {
@@ -81,6 +82,7 @@ export const Orders = () => {
             {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <h2>Orders Page</h2>
                 <h3>Your Orders</h3>
+                <Filter items={orders} setFilteredItems={setFilteredOrders} itemsName={'orders'}/>
                 {user.isAdmin && editOrder && (
                     <div className="edit-order">
                         <h3>Edit Order #{editOrder.id}</h3>
@@ -100,7 +102,28 @@ export const Orders = () => {
                     </div>
                 )}
                 <div className="orders-list">
-                    {orders && orders.map((order) => (
+                    {!filteredOrders && orders && orders.map((order) => (
+                        <div key={order.id} className="order-card">
+                            <h1>Order number: {order.id}</h1>
+                            <p>Status: {order.status}</p>
+                            <p>Total: ${order.total.toFixed(2)}</p>
+                            <p>Address: {order.address}</p>
+                            <h4>Products:</h4>
+                            <ul>
+                                {order.products.map((product, index) => (
+                                    <li key={index}>
+                                        Product ID: {product.product_id}, Quantity: {product.quantity}, Total: ${product.total.toFixed(2)}
+                                    </li>
+                                ))}
+                            </ul>
+                            {order.status !== 'Paid' && order.status !== 'payment_successful'&& order.status !== 'done' && !user.isAdmin && (<Checkout order={order} onPaymentSuccess={handlePaymentSuccess} />)}
+                            {order.user_id === user.id?<h1 className='text-text3'>that is your order</h1>:<></>}
+                            {user.isAdmin && (
+                                <button onClick={() => handleEditClick(order)}>Edit Order</button>
+                            )}
+                        </div>
+                    ))} 
+                    {filteredOrders && filteredOrders.map((order) => (
                         <div key={order.id} className="order-card">
                             <h1>Order number: {order.id}</h1>
                             <p>Status: {order.status}</p>
