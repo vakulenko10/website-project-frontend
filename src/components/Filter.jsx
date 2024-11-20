@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Container from './Container';
 
-const Filter = ({ items, setFilteredItems, itemsName }) => {
+const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
   // Extract attributes from the first item dynamically, excluding `id`
   const attributes = items && items.length > 0 ? Object.keys(items[0]) : [];
   const [filters, setFilters] = useState(
@@ -67,7 +67,7 @@ const Filter = ({ items, setFilteredItems, itemsName }) => {
   };
   
   return (
-    <div className="relative">
+    <div className={`FilterComponent relative ${classes}`}>
       {/* Toggle Button */}
       <button
         onClick={handleFilterOpen}
@@ -83,7 +83,7 @@ const Filter = ({ items, setFilteredItems, itemsName }) => {
         Clear All Filters
       </button>
       {/* Display Applied Filters */}
-      <Container classes={'max-w-[500px]'}>
+      <Container classes={'max-w-[500px] md:mt-3 rounded-lg p-1 bg-text2 '}>
       <div className="mt-4">
         <h4 className="text-text3 font-serif font-medium mb-2">
           Applied Filters:
@@ -100,8 +100,8 @@ const Filter = ({ items, setFilteredItems, itemsName }) => {
                 className="bg-text1 text-text3 px-3 py-1 rounded-full text-sm shadow-sm"
               >
                 {filter.attribute}:{' '}
-                {filter.min && `Min ${filter.min} `}
-                {filter.max && `Max ${filter.max} `}
+                {filter.min && `Min ${filter.min}$ `}
+                {filter.max && `Max ${filter.max}$ `}
                 {filter.value && `Value "${filter.value}"`}
               </div>
             ))}

@@ -6,6 +6,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
 import { Link } from 'react-router-dom';
 import Filter from './Filter';
+import ProductCard from './ProductCard';
 
 const Products = () => {
   const { user, addToCart, token, setProducts } = AuthData();
@@ -99,7 +100,7 @@ useEffect(()=>{
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="bg-bg5 min-h-screen py-8 pt-[100px]">
+    <div className="bg-bg5 min-h-screen w-full relative py-8 pt-[100px]">
       {user.isAdmin && (
         <button
           onClick={toggleOverlay}
@@ -109,126 +110,18 @@ useEffect(()=>{
         </button>
       )}
 
-      <h2 className="text-text3 font-display text-2xl mb-6">Products</h2>
-      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'}/>
-      <div className="products-container">
+      {/* <h2 className="text-text3 font-display text-2xl mb-6">Products</h2> */}
+      <div className='w-full block md:flex '>
+      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='md:w-[300px] py-10 md:text-start px-3'/>
+      <div className="products-container relative">
         {filteredProducts&&filteredProducts.map((product) => (
-            <div key={product.id}  className="product-card bg-text1 hover:">
-            <div className="flex justify-between items-center mb-0 pb-0">
-              <span className="text-text7 font-serif text-lg">
-                {product.name}
-              </span>
-              <div className="pl-2 hover:text-text2 text-text3">
-                {user.isAuthenticated&&<button
-                  onClick={() => addToCart(product.id, 1)}
-                  className="px-3 py-1 rounded  transition"
-                >
-                  <FaShoppingCart className="text-xl" />
-                </button>}
-              </div>
-            </div>
-            <div className="flex justify-center mb-0  pb-0">
-              {/* {product.images && product.images.length > 0 && (
-                <img
-                src={product.images[hoveredImageIndex[product.id] || 0]}
-                  alt={product.name}
-                  className="product-image"
-                 
-                />
-              )} */}
-              <img
-                src={product.images[0]}
-                  alt={product.name}
-                  className="product-image"
-                 
-                />
-            </div>
-            <div className="flex justify-between items-center mt-auto pt-0">
-              <span className="text-text5">Material:</span>
-              <span className="text-text5">{product.material}</span>
-            </div>
-            <div className="flex justify-between items-center mt-auto pt-0">
-              <span className="text-text3 font-bold">${product.price}</span>
-            </div>
-            {/* Only show the edit button for admin */}
-            <div className='flex justify-center'>
-            <Link to={`/product/${product.id}`} target="_blank" className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</Link>
-            {user.isAdmin && (
-              <button
-                onClick={() => handleDeleteProduct(product.id)
-                }
-                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
-              >
-                Delete product
-              </button>
-            )}
-            {user.isAdmin && (
-              <button
-                onClick={() => handleEditProduct(product)
-                }
-                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
-              >
-                Edit
-              </button>
-            )}
-            </div>
-          </div>
+           <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
         ))}
         {!filteredProducts&&localProducts.map((product) => (
-            <div key={product.id}  className="product-card bg-text1 hover:">
-            <div className="flex justify-between items-center mb-0 pb-0">
-              <span className="text-text7 font-serif text-lg">
-                {product.name}
-              </span>
-              <div className="pl-2 hover:text-text2 text-text3">
-                {user.isAuthenticated&&<button
-                  onClick={() => addToCart(product.id, 1)}
-                  className="px-3 py-1 rounded  transition"
-                >
-                  <FaShoppingCart className="text-xl" />
-                </button>}
-              </div>
-            </div>
-            <div className="flex justify-center mb-0  pb-0">
-              {/* {product.images && product.images.length > 0 && (
-                <img
-                src={product.images[hoveredImageIndex[product.id] || 0]}
-                  alt={product.name}
-                  className="product-image"
-                 
-                />
-              )} */}
-              <img
-                src={product.images[0]}
-                  alt={product.name}
-                  className="product-image"
-                 
-                />
-            </div>
-            <div className="flex justify-between items-center mt-auto pt-0">
-              <span className="text-text5">Material:</span>
-              <span className="text-text5">{product.material}</span>
-            </div>
-            <div className="flex justify-between items-center mt-auto pt-0">
-              <span className="text-text3 font-bold">${product.price}</span>
-            </div>
-            {/* Only show the edit button for admin */}
-            <div className='flex justify-between'>
-            <Link to={`/product/${product.id}`} target="_blank" className='bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition'>open</Link>
-            {user.isAdmin && (
-              <button
-                onClick={() => handleEditProduct(product)
-                }
-                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
-              >
-                Edit
-              </button>
-            )}
-            </div>
-          </div>
+            <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
         ))}
       </div>
-
+      </div>
      
       <ProductForm
   isOverlayOpen={isOverlayOpen}
