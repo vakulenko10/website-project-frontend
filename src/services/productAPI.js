@@ -68,3 +68,25 @@ export const updateProduct = async (editingProductId, token, formData) =>{
       console.error('Error fetching product by ID:', error);
     }
   };
+
+export const deleteProductById = async (id, token) =>{
+  try {
+    const response = await fetch(`http://localhost:5000/products/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: `Bearer ${token}`
+      },  
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete product');
+    }
+
+    const data = await response.json();
+    console.log(data);  // Log the response to verify its structure
+    return data;
+  } catch (error) {
+    console.error('Error deleting product by ID:', error);
+  }
+} 
