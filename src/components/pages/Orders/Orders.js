@@ -174,47 +174,65 @@ export const Orders = () => {
         </div>
         {/* Overlay */}
         {isOrderOpen && selectedOrder && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center overflow-scroll items-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full h-full ">
-              <button
-                onClick={handleOverlayClose}
-                className="absolute top-4 right-4 z-100 text-text1 text-6xl hover:text-text2"
-              >
-                &times;
-              </button>
-              <h2 className="text-2xl font-bold mb-4">Order Details #{selectedOrder.id}</h2>
-              <p>Status: {selectedOrder.status}</p>
-              <p>Total: ${selectedOrder.total.toFixed(2)}</p>
-              <p>Address: {selectedOrder.address}</p>
-              <h3 className="text-lg font-semibold mt-4">Products</h3>
-              <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  overflow-y-scroll">
-                {selectedOrder.products.map((product) => {
-                  const productDetails = getProductDetails(product.product_id);
-                  return (
-                    <li key={product.product_id} className="border p-4 rounded-lg shadow-sm">
-                      {productDetails?.images ? (
-                        <img
-                          src={productDetails.images[0]}
-                          alt={productDetails.name}
-                          className="w-full h-32 object-cover rounded-md mb-2"
-                        />
-                      ) : (
-                        <div className="w-full h-32 bg-gray-200 rounded-md mb-2 flex items-center justify-center">
-                          No Image
-                        </div>
-                      )}
-                      <h4 className="font-semibold">{productDetails?.name || 'Unknown Product'}</h4>
-                      <p>Quantity: {product.quantity}</p>
-                      <p>Price: ${productDetails?.price || 'N/A'}</p>
-                      <p>Total: ${product.total.toFixed(2)}</p>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p>order total:{selectedOrder.total}</p>
-            </div>
-          </div>
-        )}
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full h-full p-6 overflow-y-auto relative">
+      {/* Close Button */}
+      <button
+        onClick={handleOverlayClose}
+        className="absolute top-4 right-4 text-4xl font-bold text-gray-700 hover:text-gray-900"
+      >
+        &times;
+      </button>
+
+      {/* Order Header */}
+      <h2 className="text-3xl font-bold mb-4">Order Details #{selectedOrder.id}</h2>
+      <div className="mb-6">
+        <p className="text-lg font-medium">Status: <span className="font-normal">{selectedOrder.status}</span></p>
+        <p className="text-lg font-medium">Total: <span className="font-normal">${selectedOrder.total.toFixed(2)}</span></p>
+        <p className="text-lg font-medium">Address: <span className="font-normal">{selectedOrder.address}</span></p>
+      </div>
+
+      {/* Product List */}
+      <h3 className="text-2xl font-semibold mb-4">Products</h3>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {selectedOrder.products.map((product) => {
+          const productDetails = getProductDetails(product.product_id);
+          return (
+            <li key={product.product_id} className="border p-4 rounded-lg shadow-sm">
+              {/* Product Image */}
+              {productDetails?.images?.[0] ? (
+                <img
+                  src={productDetails.images[0]}
+                  alt={productDetails.name}
+                  className="w-full h-32 object-cover rounded-md mb-4"
+                />
+              ) : (
+                <div className="w-full h-32 bg-gray-200 rounded-md mb-4 flex items-center justify-center text-gray-500">
+                  No Image
+                </div>
+              )}
+
+              {/* Product Details */}
+              <h4 className="font-semibold text-lg">{productDetails?.name || 'Unknown Product'}</h4>
+              <p className="text-sm text-gray-700">Product ID: {product.product_id}</p>
+              <p className="text-sm text-gray-700">Price: ${productDetails?.price?.toFixed(2) || 'N/A'}</p>
+              <p className="text-sm text-gray-700">Quantity: {product.quantity}</p>
+              <p className="text-sm font-semibold text-gray-900">
+                Total: ${product.total.toFixed(2)}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* Order Total */}
+      <div className="mt-6 text-lg font-semibold">
+        <p>Order Total: ${selectedOrder.total.toFixed(2)}</p>
+      </div>
+    </div>
+  </div>
+)}
+
       </div>
     </main>
   );

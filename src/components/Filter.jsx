@@ -1,42 +1,84 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from './Container';
 
-const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
-  // Extract attributes from the first item dynamically, excluding `id`
-  const attributes = items && items.length > 0 ? Object.keys(items[0]) : [];
+const Filter = ({ items, setFilteredItems, itemsName, classes = '' }) => {
+  // Define attributes with hardcoded options
+  const valuesWithOptions = {
+    color: [],
+    material: [],
+    status: [],
+    products: [],
+    user_id: []
+
+  };
+
+  // Attributes to exclude from filtering
+  const excludedAttributes = ['id', 'description', 'images', "name", "products", "user_id", "created_at", "address"];
+
+  // Extract attributes and generate dynamic options
+  const attributes =
+    items && items.length > 0
+      ? Object.keys(items[0]).filter((attr) => !excludedAttributes.includes(attr))
+      : [];
+  attributes.forEach((attr) => {
+    if (valuesWithOptions[attr] !== undefined) {
+      const uniqueValues = Array.from(
+        new Set(
+          items
+            .flatMap((item) => item[attr]?.split(/[\s,]+/) || []) // Split by space or comma
+            .map((value) => value.trim())
+        )
+      );
+      valuesWithOptions[attr] = uniqueValues;
+    }
+  });
+
   const [filters, setFilters] = useState(
-    attributes.map((attr) => ({ attribute: attr, min: '', max: '', value: '' }))
+    attributes.map((attr) => ({
+      attribute: attr,
+      min: '',
+      max: '',
+      values: [], // To support multiple selected options
+    }))
   );
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // Toggle filter form
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleFilter = () => {
-    const filtered = items.filter((item) => {
-      return filters.every(({ attribute, min, max, value }) => {
+    const filtered = items.filter((item) =>
+      filters.every(({ attribute, min, max, values }) => {
         const itemValue = item[attribute];
 
-        // Apply numeric filters
         if (typeof itemValue === 'number') {
           const isAboveMin = min ? itemValue >= Number(min) : true;
           const isBelowMax = max ? itemValue <= Number(max) : true;
           return isAboveMin && isBelowMax;
         }
 
-        // Apply text/other filters
-        if (typeof itemValue === 'string' || typeof itemValue === 'boolean') {
-          return value ? String(itemValue).includes(value) : true;
+        if (values.length > 0) {
+          const itemValues = itemValue?.split(/[\s,]+/) || [];
+          return values.some((value) => itemValues.includes(value));
         }
 
-        return true; // Skip unsupported types
-      });
-    });
+        return true;
+      })
+    );
 
     setFilteredItems(filtered);
-    handleFilterOpen(); // Close the filter form after applying
+    handleFilterOpen(); // Close the filter form
   };
 
   const updateFilter = (index, key, value) => {
     const updatedFilters = [...filters];
-    updatedFilters[index][key] = value;
+    if (key === 'values') {
+      const values = updatedFilters[index][key];
+      if (values.includes(value)) {
+        updatedFilters[index][key] = values.filter((v) => v !== value); // Remove value if already selected
+      } else {
+        updatedFilters[index][key] = [...values, value]; // Add value if not selected
+      }
+    } else {
+      updatedFilters[index][key] = value;
+    }
     setFilters(updatedFilters);
   };
 
@@ -60,12 +102,14 @@ const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
         attribute: attr,
         min: '',
         max: '',
-        value: '',
+        values: [],
       }))
     );
-    setFilteredItems(items); // Reset filtered items to all items
+    setFilteredItems(items);
   };
-  
+  useEffect(()=>{
+    console.log(items)
+  }, [])
   return (
     <div className={`FilterComponent relative ${classes}`}>
       {/* Toggle Button */}
@@ -75,48 +119,50 @@ const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
       >
         {isFilterOpen ? 'Close Filters' : 'Open Filters'}
       </button>
-        {/* Clear All Filters Button */}
+      {/* Clear All Filters Button */}
       <button
         onClick={clearFilters}
         className="mt-4 bg-gray-300 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-400 transition"
       >
         Clear All Filters
       </button>
+
       {/* Display Applied Filters */}
       <Container classes={'max-w-[500px] md:mt-3 rounded-lg p-1 bg-text2 '}>
-      <div className="mt-4">
-        <h4 className="text-text3 font-serif font-medium mb-2">
-          Applied Filters:
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          {filters
-            .filter(
+        <div className="mt-4">
+          <h4 className="text-text3 font-serif font-medium mb-2">
+            Applied Filters:
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {filters
+              .filter(
+                (filter) =>
+                  (filter.min || filter.max || filter.values.length > 0) &&
+                  filter.attribute
+              )
+              .map((filter) => (
+                <div
+                  key={filter.attribute}
+                  className="bg-text1 text-text3 px-3 py-1 rounded-full text-sm shadow-sm"
+                >
+                  {filter.attribute}:{' '}
+                  {filter.min && `Min ${filter.min}$ `}
+                  {filter.max && `Max ${filter.max}$ `}
+                  {filter.values.length > 0 &&
+                    `Values "${filter.values.join(', ')}"`}
+                </div>
+              ))}
+            {!filters.some(
               (filter) =>
-                (filter.min || filter.max || filter.value) && filter.attribute
-            )
-            .map((filter) => (
-              <div
-                key={filter.attribute}
-                className="bg-text1 text-text3 px-3 py-1 rounded-full text-sm shadow-sm"
-              >
-                {filter.attribute}:{' '}
-                {filter.min && `Min ${filter.min}$ `}
-                {filter.max && `Max ${filter.max}$ `}
-                {filter.value && `Value "${filter.value}"`}
-              </div>
-            ))}
-          {!filters.some(
-            (filter) =>
-              filter.min || filter.max || filter.value || filter.attribute
-          ) && (
-            <span className="text-gray-500 text-sm italic">
-              No filters applied.
-            </span>
-          )}
+                filter.min || filter.max || filter.values.length > 0
+            ) && (
+              <span className="text-gray-500 text-sm italic">
+                No filters applied.
+              </span>
+            )}
+          </div>
         </div>
-      </div>
-    </Container>
-      
+      </Container>
 
       {/* Filter Form */}
       {isFilterOpen && (
@@ -126,9 +172,13 @@ const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
               Filter {itemsName}
             </h3>
 
-            <div className="relative">
+            <div
+              className="relative overflow-y-auto custom-scrollbar max-h-[70vh] pr-4"
+              style={{ paddingBottom: '60px' }} // Account for button height
+            >
               {filters.map((filter, index) => {
                 const isNumeric = typeof items[0][filter.attribute] === 'number';
+                const isWithOptions = valuesWithOptions[filter.attribute];
                 return (
                   <div
                     key={filter.attribute}
@@ -157,6 +207,24 @@ const Filter = ({ items, setFilteredItems, itemsName, classes=''}) => {
                           }
                           className="border border-text3 p-2 rounded-lg max-w-[50px]"
                         />
+                      </div>
+                    ) : isWithOptions ? (
+                      <div className="flex flex-wrap gap-2">
+                        {valuesWithOptions[filter.attribute].map((option) => (
+                          <button
+                            key={option}
+                            onClick={() =>
+                              updateFilter(index, 'values', option)
+                            }
+                            className={`py-1 px-2 rounded ${
+                              filter.values.includes(option)
+                                ? 'bg-text5 text-white'
+                                : 'bg-gray-200 text-gray-800'
+                            } hover:bg-text6 transition`}
+                          >
+                            {option}
+                          </button>
+                        ))}
                       </div>
                     ) : (
                       <input
