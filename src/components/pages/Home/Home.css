@@ -170,3 +170,14 @@
   -webkit-filter: drop-shadow(0 0 20px #ffffff77);
   filter: drop-shadow(0 0 20px #ffffff92);
 }
+
+.custom-pointer {
+  cursor: none;
+  pointer-events: none;
+  transition: transform 0.1s ease;
+}
+.intro_section__wrapper {
+  -webkit-user-select: none; /* Для Safari/Chrome */
+  -ms-user-select: none;    /* Для IE/Edge */
+  user-select: none;        /* Для современных браузеров */
+}

@@ -1,50 +1,188 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { AuthData } from "../../../auth/AuthWrapper";
 import Container from "../../Container";
 
 const IntroSection = () => {
-  return (
-    <div className="intro_section__wrapper bg-bg1 min-h-screen flex items-center justify-center relative w-full">
-      <svg
-        className="absolute inset-0 w-full h-full object-cover animate-draw-line z-0"
-        viewBox="0 0 1288 683"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4 576.53C36.7996 606.945 73.1052 636.134 110.217 662.874C119.161 669.319 134.797 684.78 141.593 676.732C147.679 669.525 144.317 659.276 145.193 650.509C152.509 577.318 141.922 503.096 128.219 430.81C127.376 426.36 125.887 421.188 126.933 416.633C128.643 409.193 161.723 439.722 161.91 439.871C216.059 483.043 274.784 522.099 336.538 557.555C387.482 586.806 441.838 616.924 498.049 639.21C499.531 639.797 503.67 640.961 502.935 639.743C498.957 633.146 493.219 627.377 488.79 620.981C458.06 576.598 432.865 529.386 408.292 482.51C382.017 432.387 360.26 381.345 340.91 329.116C322.86 280.397 304.939 231.31 300.789 180.198C300.202 172.963 298.375 167.527 307.733 172.736C319.202 179.121 333.889 189.207 343.482 195.975C417.776 248.387 490.265 302.675 563.502 356.085C655.603 423.252 746.066 492.798 841.131 557.129C846.86 561.006 863.119 572.068 860.291 566.403C858.385 562.585 855.065 559.366 852.447 555.85C824.996 518.983 824.677 519.387 794.066 473.343C721.814 364.662 649.065 254.365 591.406 139.691C572.439 101.969 547.572 54.6428 548.971 12.1995C549.244 3.91911 554.154 1.35577 561.83 7.08284C574.466 16.5101 596.567 37.9595 604.78 45.8845C657.317 96.5794 707.29 149.094 762.176 198.107C833.24 261.568 911.367 318.645 991.197 374.313C1000.46 380.774 1009.94 387.034 1018.97 393.714C1023.51 397.068 1013.18 384.851 1010.36 380.389C974.925 324.442 948.934 264.802 929.087 203.863C919.735 175.146 910.637 139.643 904.398 109.843C901.903 97.9279 896.274 77.8688 898.997 64.6458C900.271 58.4605 904.974 60.5836 909.027 63.793C955.059 100.244 993.983 145.086 1032.86 186.487C1092.53 250.034 1148.07 316.979 1212.12 377.618C1222.59 387.537 1233.48 397.732 1246.97 405.014C1262.25 413.264 1260.58 398.567 1260.85 389.13C1263.84 287.419 1244.22 184.99 1254.42 83.5137C1256.84 59.4876 1262.13 24.79 1284 6.65645"
-          stroke="#5B0101"
-          strokeWidth="8"
-          strokeLinecap="round"
-          className="animate-path"
-        />
-      </svg>
+  const { products: authProducts } = AuthData(); // Data from AuthWrapper
+  const [products, setProducts] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemWidth, setItemWidth] = useState(400); // Default width for larger screens
+  const [visibleItems, setVisibleItems] = useState(4);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollStart, setScrollStart] = useState(0);
+  const [customPointer, setCustomPointer] = useState({ x: 0, y: 0, visible: false });
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-      <Container>
-        
-        <div className="relative w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block">
-          
-          <h1 id="item-0" className="text-start font-serif font-extrabold text-3xl sm:text-5xl  xl:text-[5rem]  text-text1 text-wrap break-words py-3">adipiscing elit, 
-          <img
-          id="item-1"
-            src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165684/frontend/ppdely8eybqia7ho5ubf.png"
-            alt="Right Visual"
-            className="float-right w-1/2 h-[20rem] object-cover object-bottom overflow-hidden  m-2 border-text3 border-[1rem] rounded-[5rem]"
-            draggable="false"
-          />
-          sed do adipiscing elit,  lorem ipsum dolor sit sdsa  adipiscing elit,sdd sdasfdgsedssdfssdfsds lorem ipsum dolor sit sdsa 
-            <img
-            id="item-3"
-            src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731174349/frontend/h8aaqo6mbzzwo0rnpqez.png"
-            alt="Left Visual"
-            className="float-left w-1/2 h-[15rem] object-cover object-bottom overflow-hidden  border-text3 border-[1rem] rounded-[5rem] m-2 "
-            draggable="false"
-          />adipiscing elit, sed do  asdfasfasdg  </h1>
-          
-          
-          
-          
+  // Check for products in LocalStorage or AuthData
+  useEffect(() => {
+    const fetchProducts = () => {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products")) || [];
+      if (localStorageProducts.length) {
+        setProducts(localStorageProducts);
+      } else {
+        setProducts(authProducts || []);
+      }
+    };
+
+    fetchProducts();
+
+    // Update products if localStorage changes
+    const handleStorageChange = () => {
+      const localStorageProducts = JSON.parse(localStorage.getItem("products")) || [];
+      setProducts(localStorageProducts.length ? localStorageProducts : authProducts || []);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [authProducts]);
+
+  // Determine item width, visible items, and small screen status dynamically
+  useEffect(() => {
+    const updateItemWidth = () => {
+      const isSmall = window.innerWidth < 768;
+      setIsSmallScreen(isSmall);
+      if (isSmall) {
+        setItemWidth(250);
+        setVisibleItems(1);
+      } else {
+        setItemWidth(400);
+        setVisibleItems(4);
+      }
+    };
+
+    updateItemWidth();
+    window.addEventListener("resize", updateItemWidth);
+    return () => {
+      window.removeEventListener("resize", updateItemWidth);
+    };
+  }, []);
+
+  const handleMouseDown = (e) => {
+    if (!isSmallScreen) {
+      setIsDragging(true);
+      setStartX(e.clientX);
+      setScrollStart(currentIndex * itemWidth);
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging && !isSmallScreen) {
+      const deltaX = e.clientX - startX;
+      const newScroll = Math.max(
+        0,
+        Math.min(scrollStart - deltaX, (products?.length - visibleItems) * itemWidth)
+      );
+      setCurrentIndex(Math.round(newScroll / itemWidth));
+    }
+    setCustomPointer({ x: e.clientX, y: e.clientY, visible: !isSmallScreen });
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseEnter = () => setCustomPointer((prev) => ({ ...prev, visible: true }));
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setCustomPointer((prev) => ({ ...prev, visible: false }));
+  };
+
+  const handleItemClick = (product) => {
+    if (!isDragging) {
+      window.open(`/product/${product.id}`, "_blank");
+    }
+  };
+
+  return (
+    <div className="intro_section__wrapper bg-bg1 min-h-screen flex items-center justify-center relative w-full overflow-hidden">
+      {customPointer.visible && (
+        <div
+          className="custom-pointer fixed z-50 w-20 h-20 p-5 rounded-full hidden md:flex justify-center items-center text-text1 md:bg-text3"
+          style={{
+            left: `${customPointer.x}px`,
+            top: `${customPointer.y}px`,
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          drag
         </div>
-      </Container>
+      )}
+      <div className="w-11/12 max-w-7xl relative py-10">
+        <h1 className="text-text1 text-6xl text-left font-serif font-bold capitalize">our products</h1>
+        <Container>
+          <div className="flex flex-row gap-2 justify-end relative">
+            <button
+              onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+              className="z-10 p-3 bg-text3 text-white rounded-full shadow-lg hover:bg-text6 transition"
+              disabled={currentIndex === 0}
+            >
+              ←
+            </button>
+            <button
+              onClick={() =>
+                setCurrentIndex((prev) =>
+                  Math.min(prev + 1, products?.length - visibleItems)
+                )
+              }
+              className="z-10 p-3 bg-text3 text-white rounded-full shadow-lg hover:bg-text6 transition"
+              disabled={currentIndex + visibleItems >= products?.length}
+            >
+              →
+            </button>
+          </div>
+        </Container>
+
+        <div
+          className={`relative ${
+            isSmallScreen ? "overflow-x-auto scrollbar-hide custom-scrollbar" : "cursor-none"
+          }`}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <motion.div
+            className="flex flex-row h-full relative gap-4 mb-10 mx-auto left-0"
+            initial={{ x: 0 }}
+            animate={isSmallScreen ? {} : { x: -currentIndex * itemWidth }}
+            transition={{ duration: 0.5 }}
+            style={{
+              display: "flex",
+              width: `${products?.length * itemWidth}px`,
+            }}
+          >
+            {!products?.length ? (
+              <div>Loading...</div>
+            ) : (
+              products.map((product, index) => (
+                <motion.div
+                  key={index}
+                  onClick={() => handleItemClick(product)}
+                  className="product w-[250px] md:w-[400px] h-[400px] md:h-[80vh] relative flex flex-col justify-end"
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="relative h-[90%] w-full">
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      draggable="false"
+                      loading="lazy"
+                      className="w-full z-0 h-full absolute object-cover object-center"
+                    />
+                  </div>
+                  <div className="z-10">
+                    <h3 className="text-text1 font-display text-left text-sm md:text-lg">{product.name}</h3>
+                    <h3 className="text-text1 text-xl font-bold font-serif text-left md:text-2xl">${product.price}</h3>
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </motion.div>
+        </div>
+      </div>
     </div>
   );
 };
