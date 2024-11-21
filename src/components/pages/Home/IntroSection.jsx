@@ -109,10 +109,11 @@ const IntroSection = () => {
           drag
         </div>
       )}
-      <div className="w-11/12 max-w-7xl relative py-10">
-        <h1 className="text-text1 text-6xl text-left font-serif font-bold capitalize">our products</h1>
-        <Container>
-          <div className="flex flex-row gap-2 justify-end relative">
+      <div className="w-11/12 max-w-7xl relative ">
+        <h1 className="text-text1 text-6xl text-left font-serif font-bold mt-4 capitalize">our products</h1>
+        <Container classes="my-0">
+          <div className="flex flex-row gap-2 justify-end items-center relative">
+            <h4 className="text-text2 font-serif">click to scroll</h4>
             <button
               onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
               className="z-10 p-3 bg-text3 text-white rounded-full shadow-lg hover:bg-text6 transition"
@@ -145,7 +146,7 @@ const IntroSection = () => {
           onMouseLeave={handleMouseLeave}
         >
           <motion.div
-            className="flex flex-row h-full relative gap-4 mb-10 mx-auto left-0"
+            className="flex flex-row h-full relative gap-4 mb-[3rem] mx-auto left-0"
             initial={{ x: 0 }}
             animate={isSmallScreen ? {} : { x: -currentIndex * itemWidth }}
             transition={{ duration: 0.5 }}

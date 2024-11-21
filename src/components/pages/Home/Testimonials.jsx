@@ -16,25 +16,24 @@ const Testimonials = () => {
             <img src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731428132/frontend/o0wp7lbmd1isb7otgzpz.png" alt="bakground" className="object-cover md:object-fill md:w-full absolute h-full inset-0" />
             <Container classes="relative flex justify-center items-center box-border ">
               
-                <div className="w-full m-auto px-8 py-[2rem] md:py-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block " >
+                <div className="w-full m-auto px-8 py-[2rem] md:pt-[5rem] flex flex-col h-full md:justify-center xl:justify-start items-center md:block " >
                   <img
                     src="https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png"
                     alt="house"
                     className="float-right w-[10rem]  h-[10rem] md:w-[15rem] md:h-[15rem] xl:w-[18rem] xl:h-[18rem]  pt-[2%]"
                   />
-                  <h1 className="text-start font-serif font-extrabold text-3xl sm:text-5xl  xl:text-[5rem]  text-text1 text-wrap break-words py-3">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elite
-                    lite lit elit. Eligendi laborum volup l laborum volup l laborum volup l Eligendi laborum volup l laborum volup l laborum volup l Eligendi laborum volup l laborum volup l laborum volup l
+                  <h1 className="text-start font-serif font-extrabold text-3xl sm:text-5xl  xl:text-6xl  text-text1 text-wrap break-words py-3">
+                  Discover our exquisite collection of handcrafted wool brooches, meticulously designed to add a unique, artistic touch to any outfit. Quality, creativity, and elegance.
                   </h1>
                 </div>
             </Container>
           </div>
 
           <div className=" relative z-15 py-[4rem] pb-[10rem] min-h-screen h-fit mt-[-1rem] w-screen bg-bg4" style={{backgroundImage: 'url("https://res.cloudinary.com/dujdz2jbl/image/upload/v1731270495/frontend/a9k9ru2nqpftkgg38uww.png")'}}>
-             <h1 className="z-15 font-serif font-extrabold text-3xl sm:text-5xl  mb-10 xl:text-[5rem]  text-text1">
+             <h1 className="z-15 font-serif font-extrabold text-3xl sm:text-5xl m-0 p-0 xl:text-[5rem]  text-text1">
                     Testimonials
                 </h1>
-            <Container classes="w-screen min-h-screen flex flex-col sm:grid grid-cols-1 justify-center items-center text-center sm:grid-cols-2 md:grid-cols-3 gap-8 py-[10rem] md:px-12">
+            <Container classes="w-screen min-h-screen flex flex-col sm:grid grid-cols-1 justify-center items-center text-center sm:grid-cols-2 md:grid-cols-3 gap-8 py-[2rem] md:px-12">
             <Link to="https://www.etsy.com/shop/anfihandmade/?etsrc=sdt#reviews" target="_blank"><motion.div
                   key='sadgs'
                   className=" testimonial p-3 md:p-6 bg-white h-[10rem] w-[10rem] sm:h-[12rem] sm:w-[12rem]  md:h-[13rem] md:w-[13rem]  xl:h-[15rem] xl:w-[15rem] shadow-lg flex flex-col justify-center items-center text-center transform relative justify-self-center"
