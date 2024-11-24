@@ -1,0 +1,183 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+.home_header__wrapper{
+    background-image: url('https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165684/frontend/ppdely8eybqia7ho5ubf.png');
+    background-position:bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100svh;
+}
+/* .intro_section__wrapper {
+  background-image: url('https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165684/frontend/ppdely8eybqia7ho5ubf.png');
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+} */
+
+@keyframes draw-line {
+  from {
+    stroke-dasharray: 0, 1000;
+  }
+  to {
+    stroke-dasharray: 1000, 0;
+  }
+}
+
+.animate-path {
+  animation: draw-line 3s ease forwards;
+}
+.angry-grid {
+    display: grid; 
+    height: 100vh;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    
+    gap: 20px;
+    
+ }
+ .angry-grid *{
+    z-index: 1;
+    width: 100%;
+  height: 100%;
+  overflow: hidden;
+ }
+   
+ #item-0 {
+    
+    grid-row-start: 1;
+    grid-column-start: 1;
+ 
+    grid-row-end: 3;
+    grid-column-end: 4;
+    
+ }
+ #item-1 {
+ 
+    grid-row-start: 1;
+    grid-column-start: 4;
+ 
+    grid-row-end: 3;
+    grid-column-end: 7;
+    
+ }
+ #item-2 {
+ 
+    grid-row-start: 3;
+    grid-column-start: 1;
+ 
+    grid-row-end: 4;
+    grid-column-end: 7;
+    
+ }
+ #item-3 {
+    grid-row-start: 4;
+    grid-column-start: 1;
+ 
+    grid-row-end: 6;
+    grid-column-end: 3;
+    
+ }
+ #item-4 {
+ 
+    grid-row-start: 4;
+    grid-column-start: 3;
+ 
+    grid-row-end: 6;
+    grid-column-end: 7;
+    
+ }
+ #item-5 {
+ 
+    grid-row-start: 6;
+    grid-column-start: 1;
+ 
+    grid-row-end: 7;
+    grid-column-end: 7;
+    
+ }
+ .left-visual,
+.right-visual {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.brooch-silhouette {
+   -webkit-filter: drop-shadow(0 0 25px #ffffffcf);
+  filter: drop-shadow(0 0 40px #ffffffcf);
+}
+
+.triangle {
+   width: 0px;
+   height: 0px;
+   border-radius: 10px;
+   border-style: solid;
+   border-width: 0 100px 150px 100px;
+   border-color: transparent transparent #FF4532 transparent;
+   transform: rotate(0deg);
+}
+
+/* .houseImageText{
+   text-align: justify;
+}
+.houseImage{
+   shape-outside: url(https://res.cloudinary.com/dujdz2jbl/image/upload/v1731342084/frontend/wugxa1uwhrhl4ss8mlia.png);
+   float: right;
+} */
+
+.article {
+   max-width: 600px;
+   margin: auto;
+   font-family: Arial, sans-serif;
+   line-height: 1.6;
+ }
+ 
+ .profile-image {
+   float: right;            /* Align the image to the right */
+   margin: 0 0 10px 10px;   /* Margin between the image and text */
+   width: 150px;            /* Set desired width for the image */
+   height: auto;
+ }
+ 
+ .article h2 {
+   font-size: 1.5em;
+   margin-top: 0;
+ }
+ 
+ .article p {
+   text-align: justify;      /* Justifies text for a clean look */
+   overflow: hidden;         /* Ensures layout remains intact if content overflows */
+ }
+ 
+ .article::after {
+   content: "";
+   display: table;
+   clear: both;              /* Ensures that the layout clears float after the image */
+ }
+
+ .painting, .testimonial{
+  transition: all .3s ease-in-out;
+ }
+ .testimonial:hover{
+  -webkit-filter: drop-shadow(0 0 10px #00000077);
+  filter: drop-shadow(0 0 10px #00000092);
+ }
+.painting:hover{ 
+  transform: scale(1.02);
+  -webkit-filter: drop-shadow(0 0 20px #ffffff77);
+  filter: drop-shadow(0 0 20px #ffffff92);
+}
+
+.custom-pointer {
+  cursor: none;
+  pointer-events: none;
+  transition: transform 0.1s ease;
+}
+.intro_section__wrapper {
+  -webkit-user-select: none; /* Для Safari/Chrome */
+  -ms-user-select: none;    /* Для IE/Edge */
+  user-select: none;        /* Для современных браузеров */
+}

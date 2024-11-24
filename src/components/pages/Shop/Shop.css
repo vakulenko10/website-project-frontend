@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.products-container {
+  padding: 0 .5rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 33% 33% 33% ;
+  flex-wrap: wrap;
+  gap: .5rem;
+  position: relative;
+  justify-content: center;
+}
+
+.product-card {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: 600ms cubic-bezier(0.37, 0, 0.63, 1);;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    display: grid;
+    grid-template-columns: 49% 49%;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    display: grid;
+    grid-template-columns: 99%;
+  }
+}
+
+/* Zwiększenie rozmiaru zdjęć */
+
+
+/* Product name and price styling */
+.product-name {
+  font-size: 1.25rem; /* Dopasowanie czcionki dla nazwy produktu */
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+.product-price {
+  font-size: 1.25rem; /* Dopasowanie czcionki dla ceny */
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form styling */
+.form-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.form-button {
+  background-color: #baa291;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #a5a29b;
+}
+
+.edit-button {
+  background-color: #f0ad4e;
+}
+
+.edit-button:hover {
+  background-color: #ec971f;
+}
+
+/* Button styling - Add to Cart */
+.product-card .action-button {
+  background-color: transparent; /* Usuń tło */
+  color: #baa291; /* Ustaw kolor tekstu */
+  padding: 8px 16px;
+  border: 2px solid #baa291; /* Dodaj obramowanie */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Efekt przejścia dla tła i koloru */
+}
+
+.product-card .action-button:hover {
+  background-color: #BAA291; /* Tło przy najechaniu */
+  color: white; /* Zmien kolor tekstu przy najechaniu */
+}
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.overlay-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Hide the scrollbar but keep the functionality */
+.custom-scrollbar {
+  overflow-y: scroll; /* Ensure that scrolling is enabled */
+  scrollbar-width: none; /* For Firefox */
+}
+
+/* For Webkit Browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px; /* No width for the scrollbar */
+  height: 0px; /* Hide horizontal scrollbar if any */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the scrollbar thumb invisible */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Make the track invisible */
+}
+
+

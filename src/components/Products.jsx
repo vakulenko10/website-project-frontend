@@ -1,140 +1,136 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
+import { deleteProductById, fetchProducts, updateProduct } from '../services/productAPI';
+import './pages/Shop/Shop.css';
+import { FaShoppingCart } from 'react-icons/fa';
+import ProductForm from './ProductForm';
+import { Link } from 'react-router-dom';
+import Filter from './Filter';
+import ProductCard from './ProductCard';
 
 const Products = () => {
-  const {user, addToCart} = AuthData()
+  const { user, addToCart, token, setProducts } = AuthData();
   console.log("user:", user)
-  console.log(user.isAdmin)
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(user.isAdmin); 
-  console.log("isAdmin:",isAdmin)// Admin status state
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    material: '',
-    color: '',
-    images: []
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
+  const [formData, setFormData] = useState({ color:'', description: '', id: '', images: [], material: ''
   });
   const [editingProductId, setEditingProductId] = useState(null);
-  
-  // Fetch products on component load
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/products', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const data = await response.json();
-      setProducts(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      setLoading(false);
-    }
-  };
-
+  const [localProducts, setLocalProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null)
   useEffect(() => {
-    fetchProducts();
-    const adminStatus = localStorage.getItem('is_admin') === 'true'; // Assume admin status in localStorage
-    setIsAdmin(adminStatus);
-  }, []);
-
-  // Handle form changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
+    // Zablokowanie przewijania tła, gdy overlay jest otwarty
+    if (isOverlayOpen) {
+      document.body.style.overflow = 'hidden'; // Zablokowanie scrolla strony
+    } else {
+      document.body.style.overflow = 'auto'; // Przywrócenie scrolla strony
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOverlayOpen, token]);
+  const fetchProductsData = async () => {
+    setLoading(true);
+    const productsResponse = await fetchProducts();
+    if (productsResponse) {
+      setProducts(productsResponse);
+      setLocalProducts(productsResponse)  
+      localStorage.setItem("products", JSON.stringify(productsResponse))
+    } else {
+      console.error('Failed to fetch products');
+    }
+    setLoading(false);
+  };
+useEffect(()=>{
+  fetchProductsData();
+}, [])
+  const toggleOverlay = () => {
+    setIsOverlayOpen(!isOverlayOpen);
+    // setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] }); // reset formularza
   };
 
-  // Handle submit for creating or updating product
+  const handleEditProduct = (product) =>{
+    console.log("product:",product)
+    setEditingProductId(product.id);
+    setFormData(product);
+    toggleOverlay();
+  }
+  const handleDeleteProduct = async (productId) =>{
+    try{
+      const response = await deleteProductById(productId, token)
+      if(response){
+        alert(`product with id:${productId} was successfully deleted`)
+        await fetchProductsData()
+      }else{
+        console.error('Failed to delete product in backend:', response);
+      }
+    }
+    catch(error){
+      console.error(error);
+    }
+  }
+  useEffect(()=>{
+    !isOverlayOpen && setEditingProductId(null)
+  },[isOverlayOpen])
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = editingProductId
-      ? `http://localhost:5000/products/${editingProductId}`
-      : 'http://localhost:5000/products';
-    const method = editingProductId ? 'PUT' : 'POST';
-    console.log("url:", url)
-    console.log("method:", method)
     try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('jwt')}` // Adjust token retrieval as needed
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-      if (response.ok) {
+      const data = await updateProduct(editingProductId, token, formData);
+      if (data) {
         alert(data.message || 'Product saved successfully');
-        setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] });
-        setEditingProductId(null);
-        setIsEditing(false);
-        fetchProducts(); // Refresh product list
+        const updatedProducts = await fetchProducts();
+        localStorage.setItem('products', JSON.stringify(updatedProducts))
+        setLocalProducts(updatedProducts)
+        if (updatedProducts) setProducts(updatedProducts);
+        toggleOverlay(); // zamknij nakładkę po zapisaniu
       } else {
-        alert(`Error: ${data.error}`);
+        alert('Error saving product');
       }
     } catch (error) {
       console.error('Error saving product:', error);
     }
   };
-
-  // Start editing a product
-  const handleEdit = (product) => {
-    if (user.isAdmin) { // Check if user is admin before allowing edit
-      setIsEditing(true);
-      setEditingProductId(product.id);
-      setFormData({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        material: product.material,
-        color: product.color,
-        images: product.images
-      });
-    } else {
-      alert("You do not have permission to edit products.");
+  useEffect(() => {
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+      setLocalProducts(JSON.parse(savedProducts));
     }
-  };
-
+    setLoading(false);
+  }, []);
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      
+    <div className="bg-bg5 min-h-screen w-full relative py-8 pt-[100px]">
       {user.isAdmin && (
-        <>
-          <h2>{isEditing ? 'Edit Product' : 'Create New Product'}</h2>
-          <form onSubmit={handleSubmit}>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Product Name" required />
-            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
-            <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
-            <input type="text" name="material" value={formData.material} onChange={handleChange} placeholder="Material" />
-            <input type="text" name="color" value={formData.color} onChange={handleChange} placeholder="Color" />
-            <input type="text" name="images" value={formData.images[0] || ''} onChange={(e) => handleChange({ target: { name: 'images', value: [e.target.value] } })} placeholder="Image URL" />
-            <button type="submit" onClick={handleSubmit}>{isEditing ? 'Update Product' : 'Create Product'}</button>
-          </form>
-        </>
+        <button
+          onClick={toggleOverlay}
+          className="bg-color6 text-text1 px-4 py-2 mb-4 rounded hover:bg-text6 transition"
+        >
+          Create Product
+        </button>
       )}
 
-      <h2>Products</h2>
-      <div className="products-container">
-        {products.map(product => (
-          <div key={product.id} className="product-card">
-            <img src={product.images[0]} alt={product.name} className="product-image" />
-            <h3 className="product-name">{product.name}</h3>
-            <p className="product-description">{product.description}</p>
-            <p className="product-price">${product.price.toFixed(2)}</p>
-            <p className="product-material">Material: {product.material}</p>
-            <p className="product-color">Color: {product.color}</p>
-            <button onClick={() => addToCart(product.id, 1)}>add to the cart</button>
-            {user.isAdmin && <button onClick={() => handleEdit(product)}>Edit</button>}
-          </div>
+      {/* <h2 className="text-text3 font-display text-2xl mb-6">Products</h2> */}
+      <div className='w-full block md:flex '>
+      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='md:w-[300px] py-10 md:text-start px-3'/>
+      <div className="products-container relative">
+        {filteredProducts&&filteredProducts.map((product) => (
+           <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
+        ))}
+        {!filteredProducts&&localProducts.map((product) => (
+            <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
         ))}
       </div>
+      </div>
+     
+      <ProductForm
+  isOverlayOpen={isOverlayOpen}
+  editingProductId={editingProductId}
+  formData={formData}
+  setFormData={setFormData}
+  handleSubmit={handleSubmit}
+  toggleOverlay={toggleOverlay}
+/>
     </div>
   );
 };

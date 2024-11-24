@@ -2,41 +2,37 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import Container from '../../Container'; // Assuming you have this reusable Container component
 import Loader from '../../Loader';
-
+import { AuthData } from '../../../auth/AuthWrapper';
+import RefreshToken from '../../RefreshToken';
+import { getProfile } from '../../../services';
 const Profile = () => {
-  const [profileData, setProfileData] = useState({
+  const [profileData, setProfileData] = useState(localStorage.getItem("user")?localStorage.getItem("user"):{
     username: '',
     email: '',
     role: '',
   });
-
+//  const {user} = AuthData()
+//  console.log("user in profile component:", user)
   const [isEditing, setIsEditing] = useState(false); // Edit mode toggle
   const [loading, setLoading] = useState(true); // Loading state
-
+  const { token } = AuthData();
   // Fetch profile data from the API when the component mounts
   useEffect(() => {
+    
     const fetchProfileData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/profile', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}`, // Include JWT token if necessary
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch profile data');
-        }
-        const data = await response.json();
+        setLoading(true);
+        const data = await getProfile(token);
         setProfileData(data);
-        setLoading(false);
       } catch (error) {
-        console.error('Error fetching profile data:', error);
-        setLoading(false); // Ensure loading is stopped even if there's an error
+        console.error('Error fetching profile:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchProfileData();
-  }, []);
+    if (token) fetchProfileData();
+  }, [token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +53,7 @@ const Profile = () => {
         method: 'PUT', // Assuming you're using PUT for updating profile data
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include JWT token if necessary
+          'Authorization': `Bearer ${token}`, // Include JWT token if necessary
         },
         body: JSON.stringify(profileData),
       });
@@ -77,7 +73,8 @@ const Profile = () => {
   }
 
   return (
-    <main>
+    <main className='pt-[50px]'>
+      {/* <RefreshToken/> */}
       <Container>
         {isEditing ? (
           <form onSubmit={handleSaveClick}>
