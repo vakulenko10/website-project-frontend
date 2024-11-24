@@ -200,7 +200,7 @@ export const AuthWrapper = ({ children }) => {
       }
 
       try {
-        const response = await fetch("http://127.0.0.1:5000/profile", {
+        const response = await fetch("https://handmade-shop-a953b604ceb8.herokuapp.com/profile", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -299,7 +299,7 @@ export const AuthWrapper = ({ children }) => {
       }
   
       try {
-        const response = await fetch("http://127.0.0.1:5000/profile", {
+        const response = await fetch("https://handmade-shop-a953b604ceb8.herokuapp.com/profile", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });

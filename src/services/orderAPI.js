@@ -1,6 +1,6 @@
 export const getOrders = async (token) => {
   try {
-    const response = await fetch("http://localhost:5000/orders", {
+    const response = await fetch("https://handmade-shop-a953b604ceb8.herokuapp.com/orders", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const editTheOrder = async (orderId, editedOrder, token) => {
       editedOrder
     );
 
-    const response = await fetch(`http://localhost:5000/orders/${orderId}`, {
+    const response = await fetch(`https://handmade-shop-a953b604ceb8.herokuapp.com/orders/${orderId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const createOrder = async (products, description, address, token) => {
       address
     );
 
-    const response = await fetch(`http://localhost:5000/orders`, {
+    const response = await fetch(`https://handmade-shop-a953b604ceb8.herokuapp.com/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export const createOrder = async (products, description, address, token) => {
 
 export const getOrderById = async (orderId, token) => {
   try {
-    const response = await fetch(`http://localhost:5000/orders/${orderId}`, {
+    const response = await fetch(`https://handmade-shop-a953b604ceb8.herokuapp.com/orders/${orderId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

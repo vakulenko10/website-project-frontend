@@ -1,6 +1,6 @@
 export const fetchProducts = async () =>{
     try {
-      const response = await fetch('http://localhost:5000/products', {
+      const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/products', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -24,8 +24,8 @@ export const fetchProducts = async () =>{
   
 export const updateProduct = async (editingProductId, token, formData) =>{
     const url = editingProductId
-        ? `http://localhost:5000/products/${editingProductId}`
-        : 'http://localhost:5000/products';
+        ? `https://handmade-shop-a953b604ceb8.herokuapp.com/products/${editingProductId}`
+        : 'https://handmade-shop-a953b604ceb8.herokuapp.com/products';
       const method = editingProductId ? 'PUT' : 'POST';
       console.log("url:", url)
       console.log("method:", method)
@@ -50,7 +50,7 @@ export const updateProduct = async (editingProductId, token, formData) =>{
 
   export const fetchProductById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/products?id=${id}`, {
+      const response = await fetch(`https://handmade-shop-a953b604ceb8.herokuapp.com/products?id=${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const updateProduct = async (editingProductId, token, formData) =>{
 
 export const deleteProductById = async (id, token) =>{
   try {
-    const response = await fetch(`http://localhost:5000/products/${id}`, {
+    const response = await fetch(`https://handmade-shop-a953b604ceb8.herokuapp.com/products/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

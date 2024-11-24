@@ -1,7 +1,7 @@
 export const getCart = async (token) => {
     // setLoading(true);
     try {
-        const response = await fetch('http://localhost:5000/cart', {
+        const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/cart', {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
@@ -18,7 +18,7 @@ export const getCart = async (token) => {
   
   export const addItemToTheCart = async (productId, quantity, token) => {
     try {
-        const response = await fetch('http://localhost:5000/cart', {
+        const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const getCart = async (token) => {
   };
   export const updateCartItems = async (updatedItems, token) => {
   try {
-    const response = await fetch('http://localhost:5000/cart', {
+    const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/cart', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const getCart = async (token) => {
   
   export const deleteProductFromCart = async (token, productId) => {
     // URL of the cart deletion endpoint
-    const url = 'http://localhost:5000/cart'; // Adjust this URL to match your backend URL
+    const url = 'https://handmade-shop-a953b604ceb8.herokuapp.com/cart'; // Adjust this URL to match your backend URL
   
     // Request body
     const body = JSON.stringify({
@@ -100,7 +100,7 @@ export const getCart = async (token) => {
     }
   };
   export const deleteAllProductsFromCart = async (token) => {
-    const url = 'http://localhost:5000/cart/all'; // Adjust this URL based on your backend endpoint
+    const url = 'https://handmade-shop-a953b604ceb8.herokuapp.com/cart/all'; // Adjust this URL based on your backend endpoint
     
     try {
       const response = await fetch(url, {
