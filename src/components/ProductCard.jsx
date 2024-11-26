@@ -1,10 +1,12 @@
 import React from "react";
 import { AuthData } from "../auth/AuthWrapper";
 import { FaShoppingCart } from "react-icons/fa";
+import { useCursor } from "./CursorWrapper";
 // import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
   const { user, addToCart } = AuthData();
+  const { updateCursorData } = useCursor(); 
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -14,12 +16,22 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
   const handleChildClick = (e) => {
     e.stopPropagation(); // Prevent the parent onClick from being triggered
   };
+  const handleMouseEnter = () => {
+    updateCursorData(`click`);
+  };
+
+  // Handle mouse leave to clear cursor data
+  const handleMouseLeave = () => {
+    updateCursorData(null);
+  };
 
   return (
     <div
       key={product.id}
       className="product-card border-color3 transition group bg-text1 h-[400px] relative overflow-hidden"
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
     >
       {/* Product Image */}
       <img

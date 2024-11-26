@@ -20,6 +20,9 @@ html {
     font-size: 16px;
     scroll-behavior: smooth;
 }
+html *{
+  cursor: none;
+}
 html, body {
   overflow-x: hidden;
 }

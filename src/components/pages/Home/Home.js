@@ -13,11 +13,13 @@ import WelcomeSection from "./WelcomeSection"
 import SecondSection from "./SecondSection"
 import ProductShowcase from "./ProductShowcase"
 import FirstGridSection from "./FirstGridSection"
+import CustomCursor from "../../CustomCursor"
 export const Home = () => {
 
     return (
-        <main className="m-0 p-0">
+        <main className="m-0 p-0 homepage">
             {/* <Links /> */}
+            <CustomCursor/>
             <WelcomeSection/>
             <SecondSection/>
             <ProductShowcase/>
