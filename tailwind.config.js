@@ -10,6 +10,7 @@ module.exports = {
         bg3: '#5B0101',
         bg4: '#A5A29B',
         bg5: '#F8F8F8',
+        bg6: '#EBEADF',
 
         // Text Colors
         text1: '#FFFFFF',
