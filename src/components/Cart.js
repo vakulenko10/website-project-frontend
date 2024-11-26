@@ -40,7 +40,7 @@ const Cart = () => {
     });
 };
 
-  if (loading) return <p>Loading cart...</p>;
+  if (loading && user.isAuthenticated) return <p>Loading cart...</p>;
 
   return (
     <div className="relative cart">

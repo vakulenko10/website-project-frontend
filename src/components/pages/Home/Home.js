@@ -9,17 +9,24 @@ import ProductHighlight from "./ProductHighlight"
 import Testimonials from "./Testimonials"
 import Contact from "./Contact"
 import Links from "./Links"
+import WelcomeSection from "./WelcomeSection"
+import SecondSection from "./SecondSection"
+import ProductShowcase from "./ProductShowcase"
+import FirstGridSection from "./FirstGridSection"
 export const Home = () => {
 
     return (
         <main className="m-0 p-0">
-            <Links />
-            
-            <HeroSection/>
-            <IntroSection/> 
+            {/* <Links /> */}
+            <WelcomeSection/>
+            <SecondSection/>
+            <ProductShowcase/>
+            <FirstGridSection/>
+            {/* <HeroSection/> */}
+            {/* <IntroSection/>  */}
             {/* <ProductHighlight/> */}
-            <Testimonials/>
-            <Contact/>
+            {/* <Testimonials/> */}
+            {/* <Contact/> */}
     
          </main>
     )
