@@ -18,7 +18,7 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
   return (
     <div
       key={product.id}
-      className="product-card border-color3 transition group bg-text1 h-[400px] relative overflow-hidden"
+      className="product-card border-color3 rounded-xl transition group bg-text1 h-[400px] relative overflow-hidden"
       onClick={handleClick}
     >
       {/* Product Image */}
