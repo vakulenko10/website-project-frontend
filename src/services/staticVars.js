@@ -125,9 +125,9 @@ export const highLightProducts = [
   ];
 
   export const links = [
-    { label: 'inst', href: "https://www.instagram.com/", icon: <FaInstagram fontSize="2rem" /> },
-    { label: 'Etsy', href: "https://www.etsy.com/", icon: <FaEtsy fontSize="2rem" /> },
-    { label: 'Shop', href: "/shop", icon: <GiShoppingCart fontSize="2rem" /> },
+    { label: 'inst', href: "https://www.instagram.com/", icon: <FaInstagram fontSize="2rem" />, img: 'https://res.cloudinary.com/dujdz2jbl/image/upload/v1732571497/frontend/l09vncpewsfvhr0ndauh.jpg' },
+    { label: 'Etsy', href: "https://www.etsy.com/", icon: <FaEtsy fontSize="2rem" />, img: 'https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165145/frontend/yqnvcjpdxkcqg7c5yrfm.png' },
+    { label: 'Shop', href: "/shop", icon: <GiShoppingCart fontSize="2rem" /> , img: 'https://res.cloudinary.com/dujdz2jbl/image/upload/v1731165143/frontend/fpmgsch3sfmjhxylesua.png' },
   ];
  export  const getRandomRotation = () => {
     const rotations = [-10, -5, -3, 0, 3, 5, 10];
