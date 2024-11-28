@@ -13,6 +13,8 @@ import WelcomeSection from "./WelcomeSection"
 import SecondSection from "./SecondSection"
 import ProductShowcase from "./ProductShowcase"
 import FirstGridSection from "./FirstGridSection"
+import TestimonialsSection from "./TestimonialsSection"
+import FollowUsSection from "./FollowUsSection"
 export const Home = () => {
 
     return (
@@ -22,6 +24,8 @@ export const Home = () => {
             <SecondSection/>
             <ProductShowcase/>
             <FirstGridSection/>
+            <TestimonialsSection/>
+            <FollowUsSection/>
             {/* <HeroSection/> */}
             {/* <IntroSection/>  */}
             {/* <ProductHighlight/> */}
