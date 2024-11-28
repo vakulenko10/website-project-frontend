@@ -89,8 +89,8 @@ export const AuthWrapper = ({ children }) => {
     }
   };
 
-  const handleSignup = async (username, email, password, role = "user") => {
-    const message = await signup(username, password, email, role);
+  const handleSignup = async (username, email, password) => {
+    const message = await signup(username, password, email, "user");
     if (message) console.log("Signup successful:", message);
   };
 
