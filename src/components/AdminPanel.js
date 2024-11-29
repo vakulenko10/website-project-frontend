@@ -33,8 +33,8 @@ const AdminPanel = () => {
     e.preventDefault();
 
     const url = isEditing
-      ? `http://localhost:5000/products/${productId}`
-      : 'http://localhost:5000/products';
+      ? `https://handmade-shop-a953b604ceb8.herokuapp.com/products/${productId}`
+      : 'https://handmade-shop-a953b604ceb8.herokuapp.com/products';
 
     const method = isEditing ? 'PUT' : 'POST';
 

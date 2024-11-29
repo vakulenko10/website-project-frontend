@@ -1,77 +1,220 @@
+// import React, { useState, useEffect } from 'react';
+// import { AuthData } from '../auth/AuthWrapper';
+// import { deleteProductById, fetchProducts, updateProduct } from '../services/productAPI';
+// import './pages/Shop/Shop.css';
+// import { FaShoppingCart } from 'react-icons/fa';
+// import ProductForm from './ProductForm';
+// import { Link } from 'react-router-dom';
+// import Filter from './Filter';
+// import ProductCard from './ProductCard';
+
+// const Products = () => {
+//   const { user, addToCart, token, setProducts } = AuthData();
+//   console.log("user:", user)
+//   const [loading, setLoading] = useState(true);
+//   const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
+//   const [formData, setFormData] = useState({ color:'', description: '', id: '', images: [], material: ''
+//   });
+//   const [editingProductId, setEditingProductId] = useState(null);
+//   const [localProducts, setLocalProducts] = useState(null);
+//   const [filteredProducts, setFilteredProducts] = useState(null)
+//   useEffect(() => {
+//     // Zablokowanie przewijania tła, gdy overlay jest otwarty
+//     if (isOverlayOpen) {
+//       document.body.style.overflow = 'hidden'; // Zablokowanie scrolla strony
+//     } else {
+//       document.body.style.overflow = 'auto'; // Przywrócenie scrolla strony
+//     }
+//     return () => {
+//       document.body.style.overflow = 'auto';
+//     };
+//   }, [isOverlayOpen, token]);
+//   const fetchProductsData = async () => {
+//     setLoading(true);
+//     const productsResponse = await fetchProducts();
+//     if (productsResponse) {
+//       setProducts(productsResponse);
+//       setLocalProducts(productsResponse)  
+//       localStorage.setItem("products", JSON.stringify(productsResponse))
+//     } else {
+//       console.error('Failed to fetch products');
+//     }
+//     setLoading(false);
+//   };
+// useEffect(()=>{
+//   fetchProductsData();
+// }, [])
+//   const toggleOverlay = () => {
+//     setIsOverlayOpen(!isOverlayOpen);
+//     // setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] }); // reset formularza
+//   };
+
+//   const handleEditProduct = (product) =>{
+//     console.log("product:",product)
+//     setEditingProductId(product.id);
+//     setFormData(product);
+//     toggleOverlay();
+//   }
+//   const handleDeleteProduct = async (productId) =>{
+//     try{
+//       const response = await deleteProductById(productId, token)
+//       if(response){
+//         alert(`product with id:${productId} was successfully deleted`)
+//         await fetchProductsData()
+//       }else{
+//         console.error('Failed to delete product in backend:', response);
+//       }
+//     }
+//     catch(error){
+//       console.error(error);
+//     }
+//   }
+//   useEffect(()=>{
+//     !isOverlayOpen && setEditingProductId(null)
+//   },[isOverlayOpen])
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const data = await updateProduct(editingProductId, token, formData);
+//       if (data) {
+//         alert(data.message || 'Product saved successfully');
+//         const updatedProducts = await fetchProducts();
+//         localStorage.setItem('products', JSON.stringify(updatedProducts))
+//         setLocalProducts(updatedProducts)
+//         if (updatedProducts) setProducts(updatedProducts);
+//         toggleOverlay(); // zamknij nakładkę po zapisaniu
+//       } else {
+//         alert('Error saving product');
+//       }
+//     } catch (error) {
+//       console.error('Error saving product:', error);
+//     }
+//   };
+//   useEffect(() => {
+//     const savedProducts = localStorage.getItem('products');
+//     if (savedProducts) {
+//       setLocalProducts(JSON.parse(savedProducts));
+//     }
+//     setLoading(false);
+//   }, []);
+//   if (loading) return <div>Loading...</div>;
+
+//   return (
+//     <div className="bg-bg5 min-h-screen w-full relative py-8 pt-[100px]">
+//       {user.isAdmin && (
+//         <button
+//           onClick={toggleOverlay}
+//           className="bg-color6 text-text1 px-4 py-2 mb-4 rounded hover:bg-text6 transition"
+//         >
+//           Create Product
+//         </button>
+//       )}
+
+//       {/* <h2 className="text-text3 font-display text-2xl mb-6">Products</h2> */}
+//       <div className='w-full block md:flex '>
+//       <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='md:w-[300px] py-10 md:text-start px-3'/>
+//       <div className="products-container relative">
+//         {filteredProducts&&filteredProducts.map((product) => (
+//            <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
+//         ))}
+//         {!filteredProducts&&localProducts.map((product) => (
+//             <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
+//         ))}
+//       </div>
+//       </div>
+     
+//       <ProductForm
+//   isOverlayOpen={isOverlayOpen}
+//   editingProductId={editingProductId}
+//   formData={formData}
+//   setFormData={setFormData}
+//   handleSubmit={handleSubmit}
+//   toggleOverlay={toggleOverlay}
+// />
+//     </div>
+//   );
+// };
+
+// export default Products;
+
+
+
 import React, { useState, useEffect } from 'react';
 import { AuthData } from '../auth/AuthWrapper';
 import { deleteProductById, fetchProducts, updateProduct } from '../services/productAPI';
 import './pages/Shop/Shop.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import ProductForm from './ProductForm';
-import { Link } from 'react-router-dom';
 import Filter from './Filter';
 import ProductCard from './ProductCard';
 
 const Products = () => {
   const { user, addToCart, token, setProducts } = AuthData();
-  console.log("user:", user)
   const [loading, setLoading] = useState(true);
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
-  const [formData, setFormData] = useState({ color:'', description: '', id: '', images: [], material: ''
-  });
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [formData, setFormData] = useState({ color: '', description: '', id: '', images: [], material: '' });
   const [editingProductId, setEditingProductId] = useState(null);
   const [localProducts, setLocalProducts] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState(null)
+  const [filteredProducts, setFilteredProducts] = useState(null);
+
   useEffect(() => {
-    // Zablokowanie przewijania tła, gdy overlay jest otwarty
     if (isOverlayOpen) {
-      document.body.style.overflow = 'hidden'; // Zablokowanie scrolla strony
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto'; // Przywrócenie scrolla strony
+      document.body.style.overflow = 'auto';
     }
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isOverlayOpen, token]);
+
   const fetchProductsData = async () => {
     setLoading(true);
     const productsResponse = await fetchProducts();
     if (productsResponse) {
       setProducts(productsResponse);
-      setLocalProducts(productsResponse)  
-      localStorage.setItem("products", JSON.stringify(productsResponse))
+      setLocalProducts(productsResponse);
+      localStorage.setItem('products', JSON.stringify(productsResponse));
     } else {
       console.error('Failed to fetch products');
     }
     setLoading(false);
   };
-useEffect(()=>{
-  fetchProductsData();
-}, [])
+
+  useEffect(() => {
+    fetchProductsData();
+  }, []);
+
   const toggleOverlay = () => {
     setIsOverlayOpen(!isOverlayOpen);
-    // setFormData({ name: '', description: '', price: '', material: '', color: '', images: [] }); // reset formularza
   };
 
-  const handleEditProduct = (product) =>{
-    console.log("product:",product)
+  const handleEditProduct = (product) => {
     setEditingProductId(product.id);
     setFormData(product);
     toggleOverlay();
-  }
-  const handleDeleteProduct = async (productId) =>{
-    try{
-      const response = await deleteProductById(productId, token)
-      if(response){
-        alert(`product with id:${productId} was successfully deleted`)
-        await fetchProductsData()
-      }else{
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const response = await deleteProductById(productId, token);
+      if (response) {
+        alert(`Product with id:${productId} was successfully deleted`);
+        await fetchProductsData();
+      } else {
         console.error('Failed to delete product in backend:', response);
       }
-    }
-    catch(error){
+    } catch (error) {
       console.error(error);
     }
-  }
-  useEffect(()=>{
-    !isOverlayOpen && setEditingProductId(null)
-  },[isOverlayOpen])
+  };
+
+  useEffect(() => {
+    if (!isOverlayOpen) {
+      setEditingProductId(null);
+    }
+  }, [isOverlayOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -79,10 +222,10 @@ useEffect(()=>{
       if (data) {
         alert(data.message || 'Product saved successfully');
         const updatedProducts = await fetchProducts();
-        localStorage.setItem('products', JSON.stringify(updatedProducts))
-        setLocalProducts(updatedProducts)
-        if (updatedProducts) setProducts(updatedProducts);
-        toggleOverlay(); // zamknij nakładkę po zapisaniu
+        localStorage.setItem('products', JSON.stringify(updatedProducts));
+        setLocalProducts(updatedProducts);
+        setProducts(updatedProducts);
+        toggleOverlay();
       } else {
         alert('Error saving product');
       }
@@ -90,6 +233,7 @@ useEffect(()=>{
       console.error('Error saving product:', error);
     }
   };
+
   useEffect(() => {
     const savedProducts = localStorage.getItem('products');
     if (savedProducts) {
@@ -97,6 +241,7 @@ useEffect(()=>{
     }
     setLoading(false);
   }, []);
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -110,27 +255,43 @@ useEffect(()=>{
         </button>
       )}
 
-      {/* <h2 className="text-text3 font-display text-2xl mb-6">Products</h2> */}
-      <div className='w-full block md:flex '>
-      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='md:w-[300px] py-10 md:text-start px-3'/>
-      <div className="products-container relative">
-        {filteredProducts&&filteredProducts.map((product) => (
-           <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
-        ))}
-        {!filteredProducts&&localProducts.map((product) => (
-            <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
-        ))}
+      {/* Filtry umieszczone nad produktami */}
+      <Filter
+        items={localProducts}
+        setFilteredItems={setFilteredProducts}
+        itemsName="products"
+        classes="w-full mb-8 px-3"
+      />
+
+      {/* Siatka produktów */}
+      <div className="products-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-3">
+        {filteredProducts
+          ? filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                handleEditProduct={handleEditProduct}
+                handleDeleteProduct={handleDeleteProduct}
+              />
+            ))
+          : localProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                handleEditProduct={handleEditProduct}
+                handleDeleteProduct={handleDeleteProduct}
+              />
+            ))}
       </div>
-      </div>
-     
+
       <ProductForm
-  isOverlayOpen={isOverlayOpen}
-  editingProductId={editingProductId}
-  formData={formData}
-  setFormData={setFormData}
-  handleSubmit={handleSubmit}
-  toggleOverlay={toggleOverlay}
-/>
+        isOverlayOpen={isOverlayOpen}
+        editingProductId={editingProductId}
+        formData={formData}
+        setFormData={setFormData}
+        handleSubmit={handleSubmit}
+        toggleOverlay={toggleOverlay}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 export const signup = async (username, password, email, role = 'user') => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/signup', {
+      const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export const signup = async (username, password, email, role = 'user') => {
   
 export const login = async (username, password, email) =>{
     try {
-        const response = await fetch('http://127.0.0.1:5000/login', {
+        const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const login = async (username, password, email) =>{
 }
 export const getProfile = async (token) =>{
     try {
-        const response = await fetch('http://localhost:5000/profile', {
+        const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`, // Include JWT token if necessary
@@ -77,7 +77,7 @@ export const getProfile = async (token) =>{
 
 export const refreshAccessToken = async (token) => {
   try {
-    const response = await fetch("http://127.0.0.1:5000/refresh", {
+    const response = await fetch("https://handmade-shop-a953b604ceb8.herokuapp.com/refresh", {
       method: "POST",
       credentials: "include",
       headers: {

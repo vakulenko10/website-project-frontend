@@ -31,7 +31,7 @@ const Cart = () => {
         const isOpen = !prevState;
         
         if (isOpen) {
-            document.body.classList.add("cart-no-scroll");
+          document.body.classList.add("cart-no-scroll");
         } else {
             document.body.classList.remove("cart-no-scroll");
         }

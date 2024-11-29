@@ -3,7 +3,7 @@
 export const makePayment = async (order, token, stripe, elements, cardElement) => {
     try {
       // Step 1: Create Payment Intent
-      const paymentIntentResponse = await fetch('http://127.0.0.1:5000/create-payment-intent', {
+      const paymentIntentResponse = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

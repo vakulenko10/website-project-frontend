@@ -5,7 +5,7 @@ const RefreshToken = () => {
     const {user, setToken} = AuthData();
     const refreshToken = async () => {
         try {
-          const response = await fetch('http://localhost:5000/refresh', {
+          const response = await fetch('https://handmade-shop-a953b604ceb8.herokuapp.com/refresh', {
             method: 'POST',
             credentials: 'include',  // Include cookies in the request
           });
