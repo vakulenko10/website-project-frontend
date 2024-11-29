@@ -7,12 +7,13 @@ import Carousel from "../../Carousel";
 import { AuthData } from "../../../auth/AuthWrapper";
 import ProductForm from "../../ProductForm";
 import { FaShoppingCart } from "react-icons/fa";
+
 const ProductDetails = () => {
   const { id } = useParams(); // Get the product ID from the route
   const [product, setProduct] = useState(null);
   const { user, addToCart, token, products, setProducts } = AuthData();
   console.log("user:", user);
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false); // nowy stan do kontrolowania widoczności nakładki
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false); // Control overlay visibility
   const [formData, setFormData] = useState({
     color: "",
     description: "",
@@ -22,10 +23,12 @@ const ProductDetails = () => {
   });
   const [editingProductId, setEditingProductId] = useState(null);
   const navigate = useNavigate();
+
   const fetchProduct = async () => {
     const productData = await fetchProductById(id); // Fetch product details by ID
     setProduct(productData[0]);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,71 +55,87 @@ const ProductDetails = () => {
     setFormData(product);
     toggleOverlay();
   };
+
   useEffect(() => {
-    !isOverlayOpen && setEditingProductId(null);
+    if (!isOverlayOpen) {
+      setEditingProductId(null);
+    }
   }, [isOverlayOpen]);
 
   useEffect(() => {
     fetchProduct();
   }, [id]);
 
-  if (!product) return <div>Loading...</div>;
+  if (!product) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return (
-    <main className="product-detail bg-bg5 max-h-screen h-screen overflow-hidden box-border max-w-screen py-8 pt-[100px] relative">
+    <main className="product-detail bg-bg6 min-h-screen overflow-hidden box-border max-w-screen py-8 pt-[100px] relative">
       <Container classes="relative">
-        <div className="grid grid-cols-2 relative">
-          <Carousel
-            slides={product.images}
-            classes={"bg-color3 bg-opacity-50"}
-          />
-          <div className="flex flex-col gap-2 text-start pl-10">
-            <h1 className="text-3xl text-text5 font-display pb-2">
+        <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-16">
+          {/* Carousel Section */}
+          <div className="w-full md:w-1/2">
+            <Carousel slides={product.images} classes="bg-color3 bg-opacity-50 rounded-lg shadow-lg" />
+          </div>
+
+          {/* Product Information Section */}
+          <div className="w-full md:w-1/2 flex flex-col gap-4 text-center md:text-left">
+            <h1 className="text-3xl md:text-5xl font-display text-text5 ">
               {product.name}
             </h1>
-            <h1 className="text-text3 font-serif font-extrabold text-6xl pb-4">
-              ${product.price}{" "}
-              <span className="line-through text-text6 decoration-4 decoration-text3">
+            <div className="flex items-center justify-center md:justify-start">
+              <span className="text-text3 font-serif font-extrabold text-4xl md:text-6xl">
+                ${product.price}
+              </span>
+              <span className="line-through text-text6 decoration-4 decoration-text3 text-xl md:text-2xl ml-4">
                 ${(product.price * 1.4).toFixed(2)}
               </span>
-            </h1>
-            <p className="text-color4 font-display  text-2xl">
-              <span className="pr-2">Material -</span> {product.material}
-            </p>
-            <p className="text-color4 font-display  text-2xl">
-              <span className="pr-2">Color -</span> {product.color}
-            </p>
-            <p className="text-color4 font-serif  text-xl">
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-color4 font-display text-lg md:text-xl">
+                <span className="">Material:</span> {product.material}
+              </p>
+              <p className="text-color4 font-display text-lg md:text-xl">
+                <span className="">Color:</span> {product.color}
+              </p>
+            </div>
+            <p className="text-color4 font-serif text-base md:text-lg">
               {product.description}
             </p>
-            {user.isAdmin && (
-              <button
-                onClick={() => handleEditProduct(product)}
-                className="bg-color6 text-text1 px-4 py-2 rounded mt-2 hover:bg-text6 transition"
-              >
-                Edit
-              </button>
-            )}
-            {user.isAuthenticated&&<button
-                  onClick={() => addToCart(product.id, 1)}
-                  className=" transition w-10 flex justify-center rounded-full items-center"
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-4">
+              {user.isAdmin && (
+                <button
+                  onClick={() => handleEditProduct(product)}
+                  className="bg-color6 text-text1 px-6 py-2 rounded-lg hover:bg-text6 transition duration-300"
                 >
-                  <FaShoppingCart className="text-6xl fill-text3 hover:fill-text6 transition" />
-                </button>}
-                
+                  Edit
+                </button>
+              )}
+              {user.isAuthenticated && (
+                <button
+                  onClick={() => addToCart(product.id, 1)}
+                  className="flex items-center justify-center w-12 h-12 bg-color6 rounded-full hover:bg-text6 transition duration-300"
+                  aria-label="Add to Cart"
+                >
+                  <FaShoppingCart className="text-2xl text-text3  transition duration-300" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
-        
       </Container>
+
+      {/* Product Form Overlay */}
       <Container classes="overflow-hidden">
-      <ProductForm
-        isOverlayOpen={isOverlayOpen}
-        editingProductId={editingProductId}
-        formData={formData}
-        setFormData={setFormData}
-        handleSubmit={handleSubmit}
-        toggleOverlay={toggleOverlay}
-      />
+        <ProductForm
+          isOverlayOpen={isOverlayOpen}
+          editingProductId={editingProductId}
+          formData={formData}
+          setFormData={setFormData}
+          handleSubmit={handleSubmit}
+          toggleOverlay={toggleOverlay}
+        />
       </Container>
     </main>
   );

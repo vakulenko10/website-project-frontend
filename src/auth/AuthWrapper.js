@@ -89,8 +89,8 @@ export const AuthWrapper = ({ children }) => {
     }
   };
 
-  const handleSignup = async (username, email, password, role = "user") => {
-    const message = await signup(username, password, email, role);
+  const handleSignup = async (username, email, password) => {
+    const message = await signup(username, password, email, "user");
     if (message) console.log("Signup successful:", message);
   };
 
@@ -98,19 +98,22 @@ export const AuthWrapper = ({ children }) => {
     const data = await login(username, password, email);
 
     if (data) {
-      console.log("data:", data);
-      setAccessToken(data.token);
-      setToken(data.token);
-      setRefreshToken(data.refresh_token);
-      console.log("refresh_token:", data.refresh_token);
-      setUser({ ...data.user, isAuthenticated: true });
-      localStorage.setItem("user", JSON.stringify({ ...data.user, isAuthenticated: true }));
-      console.log("Login successful");
-      console.log(user);
+        console.log("data:", data);
+        setAccessToken(data.token);
+        setToken(data.token);
+        setRefreshToken(data.refresh_token);
+        console.log("refresh_token:", data.refresh_token);
+        setUser({ ...data.user, isAuthenticated: true });
+        localStorage.setItem("user", JSON.stringify({ ...data.user, isAuthenticated: true }));
+        console.log("Login successful");
+        
+        return { success: true };  // Return success flag
     } else {
-      console.log("Login failed");
+        console.log("Login failed");
+        return { success: false, message: "Login failed, some data you provided is wrong" };  // Return failure flag with error message
     }
-  };
+};
+
   
   const logout = () => {
     Cookies.remove("access_token");
