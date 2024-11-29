@@ -1,0 +1,18 @@
+.custom-cursor {
+    cursor: none;
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    pointer-events: none; /* Prevent interference with mouse events */
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+  }
+  
+  .cursor-wave {
+    width: 25px;
+    height: 25px;
+    pointer-events: none; /* Ensure the waves don’t interfere with clicks */
+    position: absolute;
+  }
+  

@@ -18,8 +18,9 @@ import FollowUsSection from "./FollowUsSection"
 export const Home = () => {
 
     return (
-        <main className="m-0 p-0">
+        <main className="m-0 p-0 homepage">
             {/* <Links /> */}
+            {/* <CustomCursor/> */}
             <WelcomeSection/>
             <SecondSection/>
             <ProductShowcase/>

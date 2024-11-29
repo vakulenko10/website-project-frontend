@@ -3,17 +3,25 @@ import './App.css';
 import { AuthWrapper } from './auth/AuthWrapper';
 import { RenderHeader, RenderRoutes } from './components/structure/RenderNavigation';
 import Cart from './components/Cart';
+import CustomCursor from './components/CustomCursor';
+import { CursorProvider } from './components/CursorWrapper';
 
 
 function App() {
   return (
     <div className="App">
+      
       <BrowserRouter>
-        <AuthWrapper>
+         <CursorProvider>
+          <AuthWrapper>
+         
+          <CustomCursor/>
           <RenderHeader />
           <RenderRoutes />
           <Cart />
+          
         </AuthWrapper>
+        </CursorProvider>
       </BrowserRouter>      
     </div>
   );
