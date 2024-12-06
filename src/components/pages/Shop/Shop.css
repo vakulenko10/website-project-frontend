@@ -6,9 +6,10 @@
   padding: 0 .5rem;
   display: grid;
   width: 100%;
-  grid-template-columns: 33% 33% 33% ;
+  grid-template-columns: 30% 30% 30% ;
+  grid-template-rows: max-content;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 1rem;
   position: relative;
   justify-content: center;
 }
@@ -32,12 +33,12 @@
   }
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .products-container {
     display: grid;
     grid-template-columns: 99%;
   }
-}
+} */
 
 /* Zwiększenie rozmiaru zdjęć */
 

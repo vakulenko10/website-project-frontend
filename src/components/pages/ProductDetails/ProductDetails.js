@@ -74,7 +74,10 @@ const ProductDetails = () => {
         <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-8 md:gap-16">
           {/* Carousel Section */}
           <div className="w-full md:w-1/2">
-            <Carousel slides={product.images} classes="bg-color3 bg-opacity-50 rounded-lg shadow-lg" />
+            <Carousel
+              slides={product.images}
+              classes="bg-color3 bg-opacity-50 rounded-lg shadow-lg"
+            />
           </div>
 
           {/* Product Information Section */}
@@ -114,11 +117,14 @@ const ProductDetails = () => {
               )}
               {user.isAuthenticated && (
                 <button
-                  onClick={() => addToCart(product.id, 1)}
-                  className="flex items-center justify-center w-12 h-12 bg-color6 rounded-full hover:bg-text6 transition duration-300"
-                  aria-label="Add to Cart"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(product.id, 1);
+                  }}
+                  className="bg-color6 text-text1 px-6 py-3 rounded-full hover:bg-text6 transition shadow-lg top-3 right-3 flex items-center justify-center space-x-2 "
                 >
-                  <FaShoppingCart className="text-2xl text-text3  transition duration-300" />
+                  <FaShoppingCart className="text-xl" />
+                  <span className="text-xs font-serif">Add to Cart</span>
                 </button>
               )}
             </div>

@@ -7,6 +7,7 @@ import ProductForm from './ProductForm';
 import { Link } from 'react-router-dom';
 import Filter from './Filter';
 import ProductCard from './ProductCard';
+import Container from './Container';
 
 const Products = () => {
   const { user, addToCart, token, setProducts } = AuthData();
@@ -100,7 +101,9 @@ useEffect(()=>{
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="bg-bg5 min-h-screen w-full relative py-8 pt-[100px]">
+    <div className="bg-bg6 min-h-screen w-full relative py-8 pt-[100px]">
+      
+        <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='sticky flex-col overflow-hidden box-border bottom-0  md:w-[300px] py-10 md:text-start px-3'/>
       {user.isAdmin && (
         <button
           onClick={toggleOverlay}
@@ -111,8 +114,9 @@ useEffect(()=>{
       )}
 
       {/* <h2 className="text-text3 font-display text-2xl mb-6">Products</h2> */}
-      <div className='w-full block md:flex '>
-      <Filter items={localProducts} setFilteredItems={setFilteredProducts} itemsName={'products'} classes='md:w-[300px] py-10 md:text-start px-3'/>
+      <div >
+        <Container classes='md:flex '>
+      
       <div className="products-container relative">
         {filteredProducts&&filteredProducts.map((product) => (
            <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
@@ -121,6 +125,7 @@ useEffect(()=>{
             <ProductCard product={product} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct}/>
         ))}
       </div>
+      </Container>
       </div>
      
       <ProductForm

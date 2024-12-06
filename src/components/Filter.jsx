@@ -129,7 +129,7 @@ const Filter = ({ items, setFilteredItems, itemsName, classes = '' }) => {
 
       {/* Display Applied Filters */}
       <Container classes={'max-w-[500px] md:mt-3 rounded-lg p-1 bg-text2 '}>
-        <div className="mt-4">
+        {filters&&<div className="mt-4">
           <h4 className="text-text3 font-serif font-medium mb-2">
             Applied Filters:
           </h4>
@@ -161,7 +161,7 @@ const Filter = ({ items, setFilteredItems, itemsName, classes = '' }) => {
               </span>
             )}
           </div>
-        </div>
+        </div>}
       </Container>
 
       {/* Filter Form */}

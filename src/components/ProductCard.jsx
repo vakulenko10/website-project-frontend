@@ -6,10 +6,11 @@ import { useCursor } from "./CursorWrapper";
 
 const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
   const { user, addToCart } = AuthData();
-  const { updateCursorData } = useCursor(); 
+  const { updateCursorData } = useCursor();
 
   const handleClick = (e) => {
     e.preventDefault();
+    
     window.open(`/product/${product.id}`, "_blank");
   };
 
@@ -17,7 +18,7 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
     e.stopPropagation(); // Prevent the parent onClick from being triggered
   };
   const handleMouseEnter = () => {
-    updateCursorData(`click`);
+    // updateCursorData(`click`);
   };
 
   // Handle mouse leave to clear cursor data
@@ -28,10 +29,11 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
   return (
     <div
       key={product.id}
-      className="product-card border-color3 rounded-xl transition group bg-text1 h-[400px] relative overflow-hidden"
+      className="product-card border-color3 rounded-xl transition group bg-text1 min-h-[200px] md:min-h-[400px] relative overflow-hidden"
       onClick={handleClick}
-      onMouseEnter={handleMouseEnter} 
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+
     >
       {/* Product Image */}
       <img
@@ -39,25 +41,8 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
         alt={product.name}
         className="product-image w-full h-full absolute inset-0 object-cover object-end z-0 group-hover:scale-105 transition"
       />
-
-      {/* Attributes Container */}
-      <div
-        className="attributesContainer absolute bottom-0 left-0 w-full p-3 bg-color5 
-        transform transition-all duration-300 group-hover:max-h-[60%] max-h-[20%] overflow-hidden"
-      >
-        {/* Product Name and Price */}
-        <div className="flex justify-between items-center">
-          <span className="text-text1 font-serif text-xs text-left">{product.name}</span>
-          <span className="text-text1 font-bold">${product.price}</span>
-        </div>
-        <div className=" flex flex-col justify-start items-start opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="text-text1 text-xs font-serif my-1">
-            status: {product.status}
-          </span>
-        </div>
-        {/* Action Buttons (hidden by default) */}
-        <div
-          className="action-buttons flex justify-around mt-4 opacity-0 group-hover:opacity-100 transition-opacity"
+       <div
+          className="absolute top-1 right-3 flex flex-col gap-2 justify-end items-end mt-4"
           onClick={handleChildClick} // Prevent parent redirection
         >
           {/* <Link
@@ -69,29 +54,50 @@ const ProductCard = ({ product, handleEditProduct, handleDeleteProduct }) => {
           </Link> */}
           {user.isAuthenticated && (
             <button
-              onClick={() => addToCart(product.id, 1)}
-              className="bg-color6 text-text1 px-4 py-2 rounded hover:bg-text6 transition"
+              onClick={(e) => {e.stopPropagation(); addToCart(product.id, 1)}}
+              className="bg-color6 text-text1 px-6 py-3 rounded-full hover:bg-text6 transition shadow-lg top-3 right-3 flex items-center justify-center space-x-2 "
             >
               <FaShoppingCart className="text-xl" />
+              <span className="text-xs font-serif">Add to Cart</span>
             </button>
           )}
           {user.isAdmin && (
             <>
               <button
                 onClick={() => handleDeleteProduct(product.id)}
-                className="bg-color6 text-text1 px-4 py-2 rounded hover:bg-text6 transition"
+                className="bg-color6 text-text1 px-4 py-2 rounded-full hover:bg-text6 transition"
               >
                 Delete
               </button>
               <button
                 onClick={() => handleEditProduct(product)}
-                className="bg-color6 text-text1 px-4 py-2 rounded hover:bg-text6 transition"
+                className="bg-color6 text-text1 px-4 py-2 rounded-full hover:bg-text6 transition"
               >
                 Edit
               </button>
             </>
           )}
         </div>
+       
+      {/* Attributes Container */}
+      <div
+        className="attributesContainer absolute bottom-0 left-0 w-full p-3 bg-color2 
+        transform transition-all duration-300 group-hover:max-h-[60%] max-h-[20%] overflow-hidden"
+      >
+        {/* Product Name and Price */}
+        <div className="flex justify-between items-center">
+          <span className="text-text1 font-serif text-xs text-left">
+            {product.name}
+          </span>
+          <span className="text-text1 font-bold">${product.price}</span>
+        </div>
+        <div className=" flex flex-col justify-start items-start opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="text-text1 text-xs font-serif my-1">
+            status: {product.status}
+          </span>
+        </div>
+        {/* Action Buttons (hidden by default) */}
+       
       </div>
     </div>
   );

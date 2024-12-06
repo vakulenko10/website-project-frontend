@@ -10,7 +10,7 @@ const FollowUsSection = () => {
       </h2>
 
       {/* Links */}<Container>
-      <div className=" h-full flex flex-col sm:grid sm:grid-cols-3 gap-6 w-full mx-auto">
+      <div className=" h-full flex flex-col sm:grid sm:grid-cols-3 gap-6 w-full mx-auto  ">
         {links.map((link, index) => (
           <a
             key={index}
@@ -20,11 +20,11 @@ const FollowUsSection = () => {
             className="relative group h-full"
           >
             {/* Image */}
-            <div className="h-full rounded-xl shadow-md overflow-hidden">
+            <div className="h-full rounded-xl shadow-md overflow-hidden group ">
               <img
                 src={link.img}
                 alt={link.label}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover group-hover:scale-105 transition"
               />
             </div>
             {/* Icon Overlay */}
